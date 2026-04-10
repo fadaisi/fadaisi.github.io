@@ -417,7 +417,7 @@
       </div>
     </div>
 
-    <div class="win95" style="left:290px; top:96px;">
+    <div class="win95" style="left:80px; top:200px;">
       <div class="titlebar">
         <span>Message.exe</span>
         <div class="controls"><div class="win-btn">X</div></div>
@@ -429,7 +429,7 @@
       </div>
     </div>
 
-    <div class="win95" style="left:560px; top:165px;">
+    <div class="win95" style="left:380px; top:200px;">
       <div class="titlebar red">
         <span>Scan Data</span>
         <div class="controls"><div class="win-btn">X</div></div>
@@ -441,7 +441,7 @@
       </div>
     </div>
 
-    <div class="win95" style="left:180px; top:355px;">
+    <div class="win95" style="left:680px; top:200px;">
       <div class="titlebar">
         <span>Identity.sys</span>
         <div class="controls"><div class="win-btn">X</div></div>
@@ -453,7 +453,7 @@
       </div>
     </div>
 
-    <div class="win95" style="left:500px; top:410px;">
+    <div class="win95" style="left:180px; top:420px;">
       <div class="titlebar red">
         <span>Profile.dat</span>
         <div class="controls"><div class="win-btn">X</div></div>
@@ -465,7 +465,7 @@
       </div>
     </div>
 
-    <div class="win95" style="left:770px; top:315px;">
+    <div class="win95" style="left:480px; top:420px;">
       <div class="titlebar">
         <span>Logbook.txt</span>
         <div class="controls"><div class="win-btn">X</div></div>
