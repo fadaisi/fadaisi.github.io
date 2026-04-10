@@ -402,7 +402,7 @@
   <section id="page1" class="screen active">
     <div class="page-label">FADAISI.EXE</div>
     <div class="page-sub">
-      corpo como tecnologia viva / rebuilding narratives through technology / hair as system / matter remembers
+      corpo como tecnologia viva _ rebuilding narratives through technology _ hair as system_ matter remembers
     </div>
 
     <div class="win95" style="left:24px; top:150px;">
@@ -412,12 +412,12 @@
       </div>
       <div class="body">
         <b>FADAISI</b>
-        the body is not separate from the system.
+        !body is the system!
         <div class="statusbar">critical presence detected</div>
       </div>
     </div>
 
-    <div class="win95" style="left:80px; top:200px;">
+    <div class="win95" style="left:120px; top:200px;">
       <div class="titlebar">
         <span>Message.exe</span>
         <div class="controls"><div class="win-btn">X</div></div>
@@ -429,7 +429,7 @@
       </div>
     </div>
 
-    <div class="win95" style="left:380px; top:200px;">
+    <div class="win95" style="left:480px; top:200px;">
       <div class="titlebar red">
         <span>Scan Data</span>
         <div class="controls"><div class="win-btn">X</div></div>
