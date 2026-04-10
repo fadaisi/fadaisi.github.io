@@ -402,8 +402,7 @@
   <section id="page1" class="screen active">
     <div class="page-label">FADAISI.EXE</div>
     <div class="page-sub">
-      corpo como tecnologia viva _ rebuilding narratives through technology _ hair as system_ matter remembers
-    </div>
+      BODY AS TECNOLOGY | REBUILDING NARRATIVES THROUGH TECHNOLOGY | HAIR A SYSTEM </div>
 
     <div class="win95" style="left:24px; top:150px;">
       <div class="titlebar red">
@@ -417,7 +416,7 @@
       </div>
     </div>
 
-    <div class="win95" style="left:120px; top:200px;">
+    <div class="win95" style="left:48px; top:200px;">
       <div class="titlebar">
         <span>Message.exe</span>
         <div class="controls"><div class="win-btn">X</div></div>
@@ -429,7 +428,7 @@
       </div>
     </div>
 
-    <div class="win95" style="left:480px; top:200px;">
+    <div class="win95" style="left:92px; top:300px;">
       <div class="titlebar red">
         <span>Scan Data</span>
         <div class="controls"><div class="win-btn">X</div></div>
