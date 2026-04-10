@@ -23,19 +23,19 @@
       margin:0;
       height:100%;
       width:100%;
-      overflow:hidden;
+      overflow:hidden; /* Evita scroll infinito na home */
       background:var(--bg);
       font-family:Tahoma, "MS Sans Serif", Arial, sans-serif;
     }
 
-    /* Efeito de Scanline */
+    /* Efeito de Overlay/Scanline */
     body::before{
       content:"";
       position:fixed;
       inset:0;
       background: repeating-linear-gradient(0deg, rgba(0,0,0,.03) 0 1px, transparent 1px 4px);
       pointer-events:none;
-      z-index:999;
+      z-index:1000;
     }
 
     .screen{
@@ -44,52 +44,52 @@
       height:100vh;
       display:none;
       overflow: hidden;
-      background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(244,244,241,.95));
     }
 
     .screen.active{display:block}
 
-    /* Títulos Fixos */
+    /* Cabeçalhos - Usando clamp para fonte não estourar em tela pequena */
     .page-label{
       position:absolute;
-      left:24px;
-      top:18px;
-      font-size: clamp(32px, 5vw, 54px);
+      left:3vw;
+      top:2vh;
+      font-size: clamp(30px, 6vw, 54px);
       font-family:"Arial Black", Arial, sans-serif;
       z-index:100;
       margin: 0;
+      line-height: 1;
     }
 
     .page-sub{
       position:absolute;
-      left:24px;
-      top: clamp(70px, 10vh, 86px);
-      font-size: 11px;
+      left:3vw;
+      top: clamp(75px, 12vh, 90px);
+      font-size: clamp(10px, 1.5vw, 13px);
       font-family:"Courier New", monospace;
       z-index:100;
-      background:rgba(255,255,255,0.7);
-      padding:4px 8px;
-      border:1px solid #ddd;
-      max-width: 80%;
+      background:rgba(255,255,255,0.8);
+      padding:5px 10px;
+      border:1px solid #ccc;
+      max-width: 90vw;
     }
 
-    /* Janelas Win95 - Agora mais "inteligentes" */
+    /* Janelas Win95 - Largura flexível com min/max */
     .win95{
       position:absolute;
-      width: 240px;
+      width: clamp(180px, 20vw, 260px);
       background:var(--mid);
       border-top:2px solid var(--white);
       border-left:2px solid var(--white);
       border-right:2px solid var(--black);
       border-bottom:2px solid var(--black);
       box-shadow:var(--shadow);
-      z-index:10;
+      z-index:50;
     }
 
     .win95 .titlebar{
       background:linear-gradient(90deg, #000, #4a4a4a);
       color:#fff;
-      padding:3px 8px;
+      padding:4px 8px;
       font-size:11px;
       font-weight:bold;
       display:flex;
@@ -100,65 +100,55 @@
     .win95 .titlebar.red{ background:linear-gradient(90deg, #7a0000, var(--red)); }
 
     .win-btn{
-      width:16px;
-      height:14px;
-      background:var(--mid);
-      border:1px solid #000;
-      font-size:9px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#000;
+      width:16px; height:14px;
+      background:var(--mid); border:1px solid #000;
+      display:flex; align-items:center; justify-content:center;
+      font-size:9px; color:#000; cursor: pointer;
     }
 
-    .win95 .body{ padding:10px; font-size:12px; line-height:1.2; }
-    .win95 .body b{ display:block; font-size:20px; font-family:"Arial Black"; text-transform:uppercase; margin-bottom: 4px; }
+    .win95 .body{ padding:10px; font-size:12px; line-height:1.3; }
+    .win95 .body b{ display:block; font-size:1.2rem; font-family:"Arial Black"; text-transform:uppercase; margin-bottom: 5px; }
 
     .statusbar{
-      margin-top:8px;
-      border:1px solid var(--gray);
-      background:#eee;
-      padding:2px 4px;
-      font-size:10px;
-      font-family:monospace;
+      margin-top:10px; border:1px solid var(--gray);
+      background:#eee; padding:2px 5px; font-size:10px; font-family:monospace;
     }
 
-    /* Botão Estrela */
+    /* Botão Estrela - Responsivo */
     .star-btn{
       position:absolute;
-      width: clamp(100px, 15vw, 140px);
-      height: clamp(100px, 15vw, 140px);
+      width: clamp(110px, 18vw, 160px);
+      height: clamp(110px, 18vw, 160px);
       background:#fff200;
       clip-path:polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-      border:none;
-      cursor:pointer;
-      color:var(--red);
-      font-weight:900;
-      font-family:"Arial Black";
-      z-index:110;
-      transition: transform 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-size: 14px;
+      border:none; cursor:pointer;
+      color:var(--red); font-weight:900; font-family:"Arial Black";
+      z-index:200; transition: 0.3s;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; font-size: 1rem;
     }
-    .star-btn:hover{ transform: scale(1.1) rotate(-5deg); }
+    .star-btn:hover{ transform: scale(1.1) rotate(-5deg); filter: brightness(1.1); }
 
-    /* Estilos da Página 2 e 3 */
-    .figure{ position:absolute; width:20vw; min-width: 150px; z-index:5; cursor:pointer; }
-    .figure img{ width:100%; mix-blend-mode:multiply; }
-    
-    .page3-wrap{ position:absolute; inset:0; padding: 150px 24px 80px; overflow-y:auto; z-index: 5; }
-    .page3-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px; }
+    /* Estilos das Figuras da Página 2 */
+    .figure{ position:absolute; width: 22vw; min-width: 140px; z-index:10; }
+    .figure img{ width:100%; mix-blend-mode:multiply; pointer-events: none; }
+
+    /* Página 3 Grid */
+    .page3-wrap{ position:absolute; inset:0; padding: 160px 5vw 100px; overflow-y:auto; }
+    .page3-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:25px; }
     .card{ background:var(--paper); border:2px solid #000; padding:20px; box-shadow: var(--shadow); }
 
-    /* Ajustes para Mobile - Onde tudo costuma quebrar */
+    /* MÁGICA DA FLEXIBILIDADE: Se a tela for pequena, as janelas se soltam */
     @media (max-width: 768px) {
       .screen { overflow-y: auto; }
-      .win95 { position: relative !important; left: auto !important; top: auto !important; margin: 100px auto 20px !important; width: 90%; }
-      #page1 { padding-top: 120px; }
-      .page-label { font-size: 28px; }
+      .win95 { 
+        position: relative !important; 
+        left: auto !important; top: auto !important; 
+        margin: 120px auto 20px !important; 
+        width: 90vw; 
+      }
+      #page1 { padding-top: 20px; }
+      .star-btn { position: fixed; bottom: 20px; right: 20px; }
     }
   </style>
 </head>
@@ -168,50 +158,50 @@
     <h1 class="page-label">FADAISI.EXE</h1>
     <div class="page-sub">BODY AS TECHNOLOGY | REBUILDING NARRATIVES | HAIR A SYSTEM</div>
 
-    <div class="win95" style="left:5%; top:22%;">
+    <div class="win95" style="left:5%; top:25%;">
       <div class="titlebar red"><span>Virus Alert</span><div class="win-btn">X</div></div>
-      <div class="body"><b>FADAISI</b>!body is the system!<div class="statusbar">critical presence</div></div>
+      <div class="body"><b>FADAISI</b>!body is the system!<div class="statusbar">critical presence detected</div></div>
     </div>
 
-    <div class="win95" style="left:35%; top:18%;">
+    <div class="win95" style="left:40%; top:20%;">
       <div class="titlebar"><span>Message.exe</span><div class="win-btn">X</div></div>
-      <div class="body"><b>DEV</b>visual logic / unstable image<div class="statusbar">loaded successfully</div></div>
+      <div class="body"><b>DEV</b>visual logic / unstable image<div class="statusbar">loaded</div></div>
     </div>
 
-    <div class="win95" style="left:12%; top:55%;">
+    <div class="win95" style="left:15%; top:60%;">
       <div class="titlebar red"><span>Scan Data</span><div class="win-btn">X</div></div>
-      <div class="body"><b>DATA</b>query / structure / signal<div class="statusbar">scanning patterns...</div></div>
+      <div class="body"><b>DATA</b>query / structure / signal<div class="statusbar">scanning...</div></div>
     </div>
 
-    <div class="win95" style="left:65%; top:25%;">
+    <div class="win95" style="left:68%; top:30%;">
       <div class="titlebar"><span>Identity.sys</span><div class="win-btn">X</div></div>
-      <div class="body"><b>YAWO</b>corpo como arquivo<div class="statusbar">archive active</div></div>
+      <div class="body"><b>YAWO</b>corpo como arquivo<div class="statusbar">active</div></div>
     </div>
 
-    <div class="win95" style="left:45%; top:60%;">
+    <div class="win95" style="left:50%; top:65%;">
       <div class="titlebar red"><span>Profile.dat</span><div class="win-btn">X</div></div>
-      <div class="body"><b>ARTISTA</b>hair as language / body as interface<div class="statusbar">presence active</div></div>
+      <div class="body"><b>ARTISTA</b>hair as language / body interface<div class="statusbar">online</div></div>
     </div>
 
-    <button class="star-btn" style="right:5%; bottom:8%;" data-go="page2">PAGE 2</button>
+    <button class="star-btn" style="right:5vw; bottom:5vh;" data-go="page2">PAGE 2</button>
   </section>
 
   <section id="page2" class="screen">
     <h1 class="page-label">COLLAGE</h1>
-    <div class="page-sub">hover to move / body as system</div>
+    <div class="page-sub">MOUSE INTERACTIVE COLLAGE | SYSTEM V.02</div>
 
-    <div class="figure" style="left:10%; top:25%;" data-home-x="10" data-home-y="25">
+    <div class="figure" style="left:10%; top:30%;" data-home-x="10" data-home-y="30">
       <img src="https://i.ibb.co/NdmM3zXr/Mulher-e-instala-o-escult-rica-em-cena-calma-removebg-preview.png">
     </div>
-    <div class="figure" style="left:40%; top:35%;" data-home-x="40" data-home-y="35">
+    <div class="figure" style="left:42%; top:25%;" data-home-x="42" data-home-y="25">
       <img src="https://i.ibb.co/fYrnFvJF/Ecossistema-tecnol-gico-e-org-nico-em-galeria.png">
     </div>
-    <div class="figure" style="left:70%; top:20%;" data-home-x="70" data-home-y="20">
+    <div class="figure" style="left:72%; top:35%;" data-home-x="72" data-home-y="35">
       <img src="https://i.ibb.co/wFFfKCkb/Gemini-Generated-Image-yl3meoyl3meoyl3m.png">
     </div>
 
-    <button class="star-btn" style="left:5%; bottom:8%;" data-go="page1">BACK</button>
-    <button class="star-btn" style="right:5%; bottom:8%;" data-go="page3">PAGE 3</button>
+    <button class="star-btn" style="left:5vw; bottom:5vh;" data-go="page1">BACK</button>
+    <button class="star-btn" style="right:5vw; bottom:5vh;" data-go="page3">PAGE 3</button>
   </section>
 
   <section id="page3" class="screen">
@@ -220,20 +210,20 @@
       <div class="page3-grid">
         <div class="card">
           <h2>Essência</h2>
-          <p>Artista e diretora criativa brasileira que trabalha com cabelo como linguagem principal, explorando o corpo como interface entre matéria e tecnologia.</p>
+          <p>Artista e diretora criativa brasileira explorando o corpo como interface entre matéria, memória e tecnologia.</p>
         </div>
         <div class="card">
-          <h2>Conceitos</h2>
-          <div class="statusbar">matter remembers</div>
-          <div class="statusbar">technology also feels</div>
+          <h3>Manifesto</h3>
+          <div class="statusbar">the body is not separate from the system</div>
+          <div class="statusbar">matter remembers / technology also feels</div>
         </div>
       </div>
     </div>
-    <button class="star-btn" style="left:5%; bottom:8%;" data-go="page1">HOME</button>
+    <button class="star-btn" style="left:5vw; bottom:5vh;" data-go="page1">HOME</button>
   </section>
 
   <script>
-    // Navegação simples
+    // Navegação entre telas
     const screens = document.querySelectorAll('.screen');
     document.querySelectorAll('[data-go]').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -242,8 +232,8 @@
       });
     });
 
-    // Interatividade da Página 2
-    const mouse = { x: window.innerWidth/2, y: window.innerHeight/2 };
+    // Lógica das figuras que seguem o mouse na Página 2
+    const mouse = { x: 0, y: 0 };
     window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
 
     const figures = document.querySelectorAll('.figure');
@@ -253,15 +243,15 @@
         const homeY = (parseFloat(el.dataset.homeY) / 100) * window.innerHeight;
         
         const isHover = el.matches(':hover');
-        // Suavização do movimento (lerp)
         let targetX = isHover ? mouse.x - (el.offsetWidth/2) : homeX + Math.sin(Date.now()*0.001 + idx)*15;
         let targetY = isHover ? mouse.y - (el.offsetHeight/2) : homeY + Math.cos(Date.now()*0.001 + idx)*15;
 
         let currX = parseFloat(el.style.left) || homeX;
         let currY = parseFloat(el.style.top) || homeY;
 
-        el.style.left = (currX + (targetX - currX) * 0.08) + 'px';
-        el.style.top = (currY + (targetY - currY) * 0.08) + 'px';
+        // Movimento suave (Lerp)
+        el.style.left = (currX + (targetX - currX) * 0.1) + 'px';
+        el.style.top = (currY + (targetY - currY) * 0.1) + 'px';
       });
       requestAnimationFrame(animate);
     }
