@@ -16,6 +16,7 @@
     }
 
     *{box-sizing:border-box}
+
     html,body{
       margin:0;
       height:100%;
@@ -35,7 +36,7 @@
         radial-gradient(circle at 85% 75%, rgba(0,100,255,.09), transparent 22%);
       pointer-events:none;
       mix-blend-mode:multiply;
-      opacity:.7;
+      opacity:.6;
       z-index:999;
     }
 
@@ -62,7 +63,7 @@
       color:#111;
       z-index:1;
       mix-blend-mode:multiply;
-      opacity:.88;
+      opacity:.9;
     }
 
     .page-sub{
@@ -164,24 +165,25 @@
 
     .printer-box{
       position:absolute;
-      right:5vw;
-      bottom:6vh;
-      width:min(38vw,420px);
+      right:2.5vw;
+      bottom:3vh;
+      width:min(18vw,200px);
       border:2px solid #000;
       background:#fff;
       box-shadow:var(--shadow);
-      padding:10px;
+      padding:8px;
       z-index:4;
     }
 
     .printer-box .cap{
       background:#000;
       color:#fff;
-      padding:6px 10px;
-      margin:-10px -10px 10px -10px;
+      padding:5px 8px;
+      margin:-8px -8px 8px -8px;
       text-transform:uppercase;
-      font-size:16px;
-      letter-spacing:.06em;
+      font-size:11px;
+      letter-spacing:.04em;
+      font-family:"Courier New", monospace;
     }
 
     .printer-box img{
@@ -206,22 +208,9 @@
       position:absolute;
       inset:0;
       background:url('https://i.ibb.co/bj92kr1Y/artifact.jpg') center/cover no-repeat;
-      opacity:.08;
+      opacity:.06;
       mix-blend-mode:multiply;
-      filter:contrast(1.15) saturate(1.05);
-      pointer-events:none;
-    }
-
-    .smile{
-      position:absolute;
-      right:9vw;
-      top:31vh;
-      font-size:210px;
-      color:#111;
-      opacity:.65;
-      z-index:1;
-      transform:rotate(-8deg);
-      font-family:Arial, Helvetica, sans-serif;
+      filter:contrast(1.05) saturate(1.02);
       pointer-events:none;
     }
 
@@ -239,13 +228,6 @@
       max-width:30vw;
     }
 
-    .box-outline{
-      position:absolute;
-      border:2px solid #000;
-      pointer-events:none;
-      z-index:1;
-    }
-
     .figure{
       position:absolute;
       width:22vw;
@@ -260,14 +242,14 @@
     }
 
     .figure.hovered{
-      filter:drop-shadow(0 0 0 #000) drop-shadow(12px 12px 0 rgba(255,0,0,.2));
+      filter:drop-shadow(0 0 0 #000) drop-shadow(12px 12px 0 rgba(255,0,0,.18));
     }
 
     .figure img{
       width:100%;
       display:block;
       mix-blend-mode:multiply;
-      filter:contrast(1.08) saturate(1.05);
+      filter:contrast(1.04) saturate(1.02);
     }
 
     .page3-wrap{
@@ -280,16 +262,10 @@
 
     .page3-grid{
       display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:24px;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
       align-items:start;
-      min-height:100%;
       padding-bottom:60px;
-    }
-
-    .stack{
-      display:grid;
-      gap:18px;
     }
 
     .card{
@@ -313,21 +289,6 @@
       margin:0 0 10px 0;
     }
 
-    .tag-grid{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-
-    .tag{
-      border:2px solid #000;
-      background:#fff;
-      padding:10px 14px;
-      font-size:18px;
-      text-transform:uppercase;
-      box-shadow:4px 4px 0 rgba(0,0,0,.12);
-    }
-
     .quotes{
       display:grid;
       gap:10px;
@@ -343,70 +304,46 @@
       font-size:14px;
     }
 
-    .visual-board{
-      position:sticky;
-      top:0;
+    .gallery-grid{
       display:grid;
-      gap:18px;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
     }
 
-    .mood{
-      position:relative;
+    .gallery-item{
       background:#fff;
       border:2px solid #000;
       box-shadow:var(--shadow);
-      padding:12px;
+      padding:10px;
+      transform:rotate(var(--rot, 0deg));
     }
 
-    .mood .cap{
-      margin:-12px -12px 12px -12px;
+    .gallery-item .cap{
+      margin:-10px -10px 10px -10px;
       background:#000;
       color:#fff;
       padding:6px 10px;
-      font-size:15px;
+      font-size:13px;
       text-transform:uppercase;
-      letter-spacing:.06em;
+      letter-spacing:.05em;
+      font-family:"Courier New", monospace;
     }
 
-    .mood img{
+    .gallery-item img{
       width:100%;
       display:block;
       border:2px solid #000;
-      background:#eee;
-    }
-
-    .mood-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-
-    .mood.tilt1{transform:rotate(-2deg)}
-    .mood.tilt2{transform:rotate(2.2deg)}
-    .mood.tilt3{transform:rotate(-1deg)}
-
-    .mini-label{
-      position:absolute;
-      right:12px;
-      top:42px;
-      background:var(--yellow);
-      color:#ff0000;
-      border:2px solid #000;
-      padding:6px 8px;
-      font-size:13px;
-      text-transform:uppercase;
-      box-shadow:4px 4px 0 rgba(0,0,0,.12);
     }
 
     @media (max-width: 980px){
-      .page-label{font-size:50px}
+      .page-label{font-size:48px}
       .page-sub{top:11.5vh;max-width:88vw}
       .window{width:180px}
-      .printer-box{width:54vw}
+      .printer-box{width:min(28vw,160px)}
       .star-btn{width:138px;height:138px;font-size:24px}
       .figure{width:38vw;min-width:140px}
       .page3-grid{grid-template-columns:1fr}
-      .visual-board{position:relative}
+      .gallery-grid{grid-template-columns:1fr}
       .navline{max-width:48vw}
     }
   </style>
@@ -459,7 +396,7 @@
     <button class="star-btn" style="left:4vw; bottom:7vh" data-go="page2">PAGE 2</button>
 
     <div class="printer-box">
-      <div class="cap">photo output / current identity print</div>
+      <div class="cap">photo output</div>
       <img src="https://i.ibb.co/jPwXsVzh/Impressora-rob-tica-e-retrato-impresso-removebg-preview.png" alt="Impressora com retrato">
     </div>
 
@@ -468,37 +405,30 @@
 
   <section id="page2" class="screen">
     <div class="page2-bgimg"></div>
+
     <div class="page-label">PAGE 2 / MOVING COLLAGE</div>
     <div class="page-sub">
       hover each cutout and it starts following the mouse / old web montage / body as interface / hair as system
     </div>
 
-    <div class="smile">☺</div>
-
     <div class="navline">fadaisi system / mouse reactive cutouts / technology also feels</div>
 
-    <div class="noise-text" style="left:3vw;top:20vh;color:#ff0000">FADAISI</div>
-    <div class="noise-text" style="left:14vw;top:8vh;color:#111">DEV</div>
-    <div class="noise-text" style="left:65vw;top:12vh;color:#1033ff">DATA</div>
-    <div class="noise-text" style="left:82vw;top:24vh;color:#111">YAWO</div>
-    <div class="noise-text" style="left:73vw;top:80vh;color:#ff0000">ARTISTA</div>
-    <div class="noise-text" style="left:8vw;top:86vh;color:#1033ff">RESEARCHER</div>
-    <div class="noise-text" style="left:55vw;top:56vh;color:#111">MATTER REMEMBERS</div>
+    <div class="noise-text" style="left:6vw;top:22vh;color:#ff0000">FADAISI</div>
+    <div class="noise-text" style="left:15vw;top:10vh;color:#111">DEV</div>
+    <div class="noise-text" style="left:68vw;top:14vh;color:#1033ff">DATA</div>
+    <div class="noise-text" style="left:75vw;top:76vh;color:#ff0000">ARTISTA</div>
+    <div class="noise-text" style="left:10vw;top:84vh;color:#1033ff">RESEARCHER</div>
+    <div class="noise-text" style="left:53vw;top:60vh;color:#111">MATTER REMEMBERS</div>
 
-    <div class="box-outline" style="left:6vw; top:15vh; width:17vw; height:18vh"></div>
-    <div class="box-outline" style="left:67vw; top:13vh; width:22vw; height:12vh"></div>
-    <div class="box-outline" style="left:61vw; top:60vh; width:27vw; height:22vh"></div>
-    <div class="box-outline" style="left:29vw; top:8vh; width:16vw; height:70vh; border-radius:50%"></div>
-
-    <div class="figure" style="left:7vw; top:24vh;" data-home-x="7" data-home-y="24">
+    <div class="figure" style="left:8vw; top:28vh;" data-home-x="8" data-home-y="28">
       <img src="https://i.ibb.co/NdmM3zXr/Mulher-e-instala-o-escult-rica-em-cena-calma-removebg-preview.png" alt="Mulher e instalação escultórica">
     </div>
 
-    <div class="figure" style="left:37vw; top:24vh; width:24vw;" data-home-x="37" data-home-y="24">
+    <div class="figure" style="left:38vw; top:22vh; width:25vw;" data-home-x="38" data-home-y="22">
       <img src="https://i.ibb.co/fYrnFvJF/Ecossistema-tecnol-gico-e-org-nico-em-galeria.png" alt="Ecossistema tecnológico e orgânico">
     </div>
 
-    <div class="figure" style="left:70vw; top:28vh; width:18vw;" data-home-x="70" data-home-y="28">
+    <div class="figure" style="left:72vw; top:30vh; width:17vw;" data-home-x="72" data-home-y="30">
       <img src="https://i.ibb.co/wFFfKCkb/Gemini-Generated-Image-yl3meoyl3meoyl3m.png" alt="Imagem gerada">
     </div>
 
@@ -508,87 +438,44 @@
 
   <section id="page3" class="screen">
     <div class="page-label">PAGE 3 / DOSSIER</div>
-    <div class="page-sub">about / practice / research / notes / archive</div>
+    <div class="page-sub">about / practice / research / archive</div>
 
     <div class="page3-wrap">
       <div class="page3-grid">
-        <div class="stack">
-          <div class="card">
-            <h2>Essência</h2>
-            <p>Artista e diretora criativa brasileira que trabalha com cabelo como linguagem principal, explorando o corpo como interface entre matéria, memória e tecnologia.</p>
-            <p>Sua prática investiga o corpo negro como tecnologia viva, articulando cabelo, matéria e sistemas digitais como linguagem.</p>
-          </div>
+        <div class="card">
+          <h2>Essência</h2>
+          <p>Artista e diretora criativa brasileira que trabalha com cabelo como linguagem principal, explorando o corpo como interface entre matéria, memória e tecnologia.</p>
+          <p>Sua prática investiga o corpo negro como tecnologia viva, articulando cabelo, matéria e sistemas digitais como linguagem.</p>
 
-          <div class="card">
-            <h3>Bio</h3>
-            <p>Artista, escultora e diretora criativa baseada no Rio de Janeiro. Sua prática investiga o corpo como tecnologia viva, utilizando cabelo, matéria e sistemas digitais para construir narrativas sobre identidade, ancestralidade e presença.</p>
-            <p>Transita entre escultura, performance e imagem, criando obras que operam entre o orgânico e o artificial.</p>
-          </div>
-
-          <div class="card">
-            <h3>Keywords</h3>
-            <div class="tag-grid">
-              <div class="tag">Cabelo</div>
-              <div class="tag">Corpo</div>
-              <div class="tag">Tecnologia</div>
-              <div class="tag">Matéria</div>
-              <div class="tag">Memória</div>
-              <div class="tag">Interface</div>
-              <div class="tag">Sistema</div>
-              <div class="tag">Ancestralidade</div>
-              <div class="tag">Presença</div>
-              <div class="tag">Techno-organic</div>
-              <div class="tag">Materialidade digital</div>
-              <div class="tag">Inteligência tátil</div>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>Frases-chave</h3>
-            <div class="quotes">
-              <div class="quote">rebuilding narratives through technology</div>
-              <div class="quote">the body is not separate from the system</div>
-              <div class="quote">cabelo como linguagem e sistema</div>
-              <div class="quote">technology also feels</div>
-              <div class="quote">matter remembers</div>
-              <div class="quote">body as interface</div>
-            </div>
+          <div class="quotes">
+            <div class="quote">rebuilding narratives through technology</div>
+            <div class="quote">the body is not separate from the system</div>
+            <div class="quote">cabelo como linguagem e sistema</div>
+            <div class="quote">technology also feels</div>
+            <div class="quote">matter remembers</div>
+            <div class="quote">body as interface</div>
           </div>
         </div>
 
-        <div class="visual-board">
-          <div class="mood tilt1">
+        <div class="gallery-grid">
+          <div class="gallery-item" style="--rot:-2deg;">
             <div class="cap">Image 01</div>
-            <span class="mini-label">FADAISI</span>
             <img src="https://i.ibb.co/bj92kr1Y/artifact.jpg" alt="artifact">
           </div>
 
-          <div class="mood-grid">
-            <div class="mood tilt2">
-              <div class="cap">Image 02</div>
-              <img src="https://i.ibb.co/b568BgHk/5a7f7a4a0767ff3da9321c2f691350cd.jpg" alt="image 2">
-            </div>
-
-            <div class="mood tilt3">
-              <div class="cap">Image 03</div>
-              <img src="https://i.ibb.co/Cs42kr17/4-5.jpg" alt="image 3">
-            </div>
-
-            <div class="mood tilt1">
-              <div class="cap">Image 04</div>
-              <img src="https://i.ibb.co/LLH2ZtM/Ebervdpiccas-Janice-Mascarenhas-preselection-5.jpg" alt="image 4">
-            </div>
-
-            <div class="mood tilt2">
-              <div class="cap">Printer identity</div>
-              <img src="https://i.ibb.co/jPwXsVzh/Impressora-rob-tica-e-retrato-impresso-removebg-preview.png" alt="printer">
-            </div>
+          <div class="gallery-item" style="--rot:2deg;">
+            <div class="cap">Image 02</div>
+            <img src="https://i.ibb.co/b568BgHk/5a7f7a4a0767ff3da9321c2f691350cd.jpg" alt="image 2">
           </div>
 
-          <div class="card">
-            <h3>Next</h3>
-            <p>Esse agora pode virar portfólio real com suas obras, instalações, projetos, textos, GitHub e pesquisa.</p>
-            <p>Ou pode continuar mais radical, mais caótico e mais web 1.0.</p>
+          <div class="gallery-item" style="--rot:-1deg;">
+            <div class="cap">Image 03</div>
+            <img src="https://i.ibb.co/Cs42kr17/4-5.jpg" alt="image 3">
+          </div>
+
+          <div class="gallery-item" style="--rot:1.5deg;">
+            <div class="cap">Image 04</div>
+            <img src="https://i.ibb.co/LLH2ZtM/Ebervdpiccas-Janice-Mascarenhas-preselection-5.jpg" alt="image 4">
           </div>
         </div>
       </div>
@@ -621,7 +508,7 @@
       mouse.y = e.clientY;
     });
 
-    const figures = [...document.querySelectorAll('.figure')].map((el, index) => {
+    const figures = [...document.querySelectorAll('.figure')].map(el => {
       const homeX = parseFloat(el.dataset.homeX || 10);
       const homeY = parseFloat(el.dataset.homeY || 10);
       const x = (homeX / 100) * window.innerWidth;
@@ -649,8 +536,8 @@
         const homeX = (parseFloat(el.dataset.homeX) / 100) * window.innerWidth;
         const homeY = (parseFloat(el.dataset.homeY) / 100) * window.innerHeight;
 
-        let tx = homeX + Math.sin(Date.now() * 0.0012 + idx) * 8;
-        let ty = homeY + Math.cos(Date.now() * 0.001 + idx) * 10;
+        let tx = homeX + Math.sin(Date.now() * 0.0012 + idx) * 6;
+        let ty = homeY + Math.cos(Date.now() * 0.001 + idx) * 8;
 
         if (hovered) {
           tx = mouse.x - rect.width / 2;
