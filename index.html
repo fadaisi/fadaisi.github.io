@@ -1,203 +1,785 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FADAISI.EXE</title>
+  <title>FADAISI</title>
   <style>
-    :root{
-      --bg:#f4f4f1;
-      --paper:#efefec;
-      --white:#ffffff;
-      --mid:#d9d9d4;
-      --gray:#9a9a94;
-      --black:#000000;
-      --red:#d81919;
-      --shadow:4px 4px 0 rgba(0,0,0,.14);
+    :root {
+      --bg: #f4f3ef;
+      --paper: #f7f6f2;
+      --ink: #0a0a0a;
+      --blue: #2142ff;
+      --red: #d71d1d;
+      --line: rgba(0,0,0,0.15);
+      --shadow: 5px 5px 0 rgba(0,0,0,0.12);
+      --window: #ece9d8;
+      --window-dark: #245edb;
+      --window-dark-2: #3d7bff;
     }
 
-    *{box-sizing:border-box}
+    * { box-sizing: border-box; }
 
-    html,body{
-      margin:0; height:100%; width:100%;
-      overflow:hidden; background:var(--bg);
-      font-family:Tahoma, "MS Sans Serif", Arial, sans-serif;
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--ink);
     }
 
-    /* Efeito de Scanline (Monitor Antigo) */
-    body::before{
-      content:""; position:fixed; inset:0;
-      background: repeating-linear-gradient(0deg, rgba(0,0,0,.03) 0 1px, transparent 1px 4px);
-      pointer-events:none; z-index:999;
+    body {
+      font-family: "Times New Roman", Times, serif;
+      background-image:
+        linear-gradient(to bottom, rgba(255,255,255,0.65), rgba(255,255,255,0.2)),
+        repeating-linear-gradient(to right, transparent 0 79px, rgba(0,0,0,0.03) 79px 80px),
+        repeating-linear-gradient(to bottom, transparent 0 79px, rgba(0,0,0,0.03) 79px 80px);
+      overflow: hidden;
     }
 
-    .screen{
-      position:relative; width:100vw; height:100vh;
-      display:none; overflow: hidden;
-      background: linear-gradient(180deg, rgba(255,255,255,.7), rgba(244,244,241,.9));
-    }
-    .screen.active{display:block}
-
-    /* Cabeçalhos Estabilizados */
-    .page-label{
-      position:absolute; left:3vw; top:2vh;
-      font-size: clamp(30px, 6vw, 54px);
-      font-family:"Arial Black", sans-serif; z-index:100;
-    }
-    .page-sub{
-      position:absolute; left:3vw; top: clamp(75px, 11vh, 90px);
-      font-size: clamp(10px, 1.2vw, 13px); font-family:monospace;
-      z-index:100; background:rgba(255,255,255,0.7);
-      padding:5px; border:1px solid #ccc; max-width: 85vw;
+    .site {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
     }
 
-    /* Janelas Win95 - Usando % para não sumirem da tela */
-    .win95{
-      position:absolute; width: clamp(210px, 20vw, 270px);
-      background:var(--mid); border:2px solid;
-      border-color: var(--white) var(--black) var(--black) var(--white);
-      box-shadow: var(--shadow); z-index:10;
+    .view {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(18px);
+      transition: opacity 260ms ease, transform 260ms ease;
+      padding: 18px;
     }
-    .win95 .titlebar{
-      background:linear-gradient(90deg, #000, #444); color:#fff;
-      padding:3px 8px; font-size:11px; font-weight:bold;
-      display:flex; justify-content:space-between;
+
+    .view.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
     }
-    .win95 .titlebar.red{ background:linear-gradient(90deg, #800, var(--red)); }
-    .win-btn{ width:16px; height:14px; background:var(--mid); border:1px solid #000; font-size:9px; display:flex; align-items:center; justify-content:center; }
 
-    .win95 .body{ padding:12px; font-size:12px; line-height:1.2; min-height: 100px; }
-    .win95 .body b{ display:block; font-size:18px; font-family:"Arial Black"; text-transform:uppercase; margin-bottom: 4px; }
-    .statusbar{ margin-top:8px; border:1px solid var(--gray); background:#eee; padding:2px 4px; font-size:10px; font-family:monospace; }
-
-    /* Botão Estrela */
-    .star-btn{
-      position:absolute; width: clamp(110px, 15vw, 150px); height: clamp(110px, 15vw, 150px);
-      background:#fff200; clip-path:polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-      border:none; cursor:pointer; color:var(--red); font-weight:900; font-family:"Arial Black";
-      z-index:200; transition: 0.2s; display: flex; align-items: center; justify-content: center; text-align: center;
+    .grain::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(0,0,0,0.05), transparent 24%),
+        radial-gradient(circle at 80% 80%, rgba(215,29,29,0.06), transparent 24%),
+        repeating-linear-gradient(to bottom, rgba(0,0,0,0.03) 0 1px, transparent 1px 4px);
+      mix-blend-mode: multiply;
+      opacity: 0.5;
     }
-    .star-btn:hover{ transform: scale(1.1) rotate(-5deg); }
 
-    /* Figuras da Colagem (Página 2) */
-    .figure{ position:absolute; width:20vw; min-width: 160px; z-index:5; cursor:pointer; }
-    .figure img{ width:100%; mix-blend-mode:multiply; pointer-events: none; }
+    .topbar {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      right: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      z-index: 5;
+      gap: 16px;
+    }
 
-    /* Página 3 - Dossier */
-    .page3-wrap{ position:absolute; inset:0; padding: 150px 5% 100px; overflow-y:auto; z-index:5; }
-    .page3-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px; }
-    .card{ background:var(--paper); border:2px solid #000; padding:20px; box-shadow: var(--shadow); }
-    .gallery-item{ background:#fff; border:1px solid #000; padding:5px; transform: rotate(var(--rot, 0deg)); margin-bottom: 10px; }
-    .gallery-item img{ width:100%; filter: grayscale(1); }
+    .tag {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.72);
+      padding: 7px 10px;
+      font: 12px/1.2 "Helvetica Now Display", Arial, Helvetica, sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      backdrop-filter: blur(3px);
+    }
 
-    /* Ajuste Mobile */
-    @media (max-width: 768px) {
-      .screen { overflow-y: auto; }
-      .win95 { position: relative !important; left: auto !important; top: auto !important; margin: 110px auto 20px !important; width: 90%; }
-      .page-label { font-size: 28px; position: fixed; background: var(--bg); width: 100%; padding-bottom: 10px; }
-      .star-btn { position: fixed; bottom: 15px; right: 15px; width: 90px; height: 90px; font-size: 11px; }
+    .nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav button,
+    .xp-button {
+      appearance: none;
+      border: 1px solid #000;
+      background: var(--paper);
+      color: var(--ink);
+      cursor: pointer;
+      padding: 8px 12px;
+      font: 12px/1 "Helvetica Now Display", Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.14);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .nav button:hover,
+    .xp-button:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.18);
+    }
+
+    .page1-grid {
+      position: absolute;
+      inset: 90px 18px 18px 18px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-rows: auto 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .hero {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      align-items: end;
+    }
+
+    .hero-left {
+      min-width: 0;
+    }
+
+    .title {
+      margin: 0;
+      font-family: "Perfect DOS VGA 437", "Courier New", monospace;
+      font-size: clamp(4rem, 12vw, 10rem);
+      line-height: 0.88;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      word-break: break-word;
+      text-wrap: balance;
+    }
+
+    .subtitle {
+      margin-top: 14px;
+      max-width: 760px;
+      font-family: "PxPlus IBM VGA9", "Courier New", monospace;
+      font-size: clamp(0.9rem, 1.7vw, 1.2rem);
+      line-height: 1.45;
+      letter-spacing: 0.04em;
+      text-transform: lowercase;
+    }
+
+    .hero-right {
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100%;
+    }
+
+    .statement {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.8);
+      padding: 14px;
+      box-shadow: var(--shadow);
+      font-family: "Helvetica Now Display", Arial, Helvetica, sans-serif;
+    }
+
+    .statement .small {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .statement strong {
+      display: block;
+      font-size: clamp(1.2rem, 2vw, 1.9rem);
+      line-height: 1.06;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+
+    .editorial-lines {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-start;
+      font-family: "Helvetica Now Display", Arial, Helvetica, sans-serif;
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      font-weight: 700;
+      line-height: 0.96;
+      text-transform: uppercase;
+    }
+
+    .editorial-lines span:nth-child(2n) { color: var(--blue); }
+    .editorial-lines span:nth-child(3n) { color: var(--red); }
+
+    .xp-zone {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+      gap: 18px;
+      align-content: start;
+    }
+
+    .xp-window {
+      background: var(--window);
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-right: 2px solid #1f1f1f;
+      border-bottom: 2px solid #1f1f1f;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .xp-titlebar {
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 0 6px 0 8px;
+      background: linear-gradient(90deg, var(--window-dark), var(--window-dark-2));
+      color: #fff;
+      font: 700 12px/1 "Helvetica Now Display", Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .xp-actions {
+      display: flex;
+      gap: 3px;
+      flex-shrink: 0;
+    }
+
+    .xp-actions span {
+      width: 16px;
+      height: 14px;
+      border-top: 1px solid #fff;
+      border-left: 1px solid #fff;
+      border-right: 1px solid #000;
+      border-bottom: 1px solid #000;
+      background: #e9e9e9;
+      color: #000;
+      display: grid;
+      place-items: center;
+      font: 10px/1 Arial, sans-serif;
+    }
+
+    .xp-body {
+      padding: 16px 14px 14px;
+    }
+
+    .xp-body h2 {
+      margin: 0 0 10px;
+      font: 700 1.15rem/1 "Helvetica Now Display", Arial, Helvetica, sans-serif;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .xp-body p {
+      margin: 0;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 1rem;
+      line-height: 1.25;
+    }
+
+    .xp-body p + p { margin-top: 6px; }
+
+    .notes {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .media-layer {
+      position: absolute;
+      inset: 110px 18px 18px 18px;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .floating-media {
+      position: absolute;
+      pointer-events: auto;
+      user-select: none;
+      transition: transform 160ms ease, filter 160ms ease;
+      filter: drop-shadow(6px 6px 0 rgba(0,0,0,0.14));
+    }
+
+    .floating-media:hover {
+      transform: translateY(-4px) rotate(-1deg);
+      filter: drop-shadow(10px 10px 0 rgba(33,66,255,0.16));
+    }
+
+    .video-frame {
+      width: min(28vw, 360px);
+      background: #111;
+      border: 1px solid rgba(0,0,0,0.25);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .video-frame .cap,
+    .cutout-frame .cap,
+    .pixel-frame .cap {
+      background: rgba(255,255,255,0.88);
+      border-bottom: 1px solid rgba(0,0,0,0.18);
+      padding: 7px 10px;
+      font: 11px/1.2 "Helvetica Now Display", Arial, Helvetica, sans-serif;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .video-frame video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      background: #000;
+    }
+
+    .cutout-frame,
+    .pixel-frame {
+      background: transparent;
+      width: min(18vw, 240px);
+    }
+
+    .cutout-frame img,
+    .pixel-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .pixel-frame img {
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    .cursor-glitter {
+      position: fixed;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.95) 0 20%, rgba(33,66,255,0.85) 21% 45%, rgba(215,29,29,0.65) 46% 68%, rgba(255,255,255,0) 69% 100%);
+      pointer-events: none;
+      z-index: 20;
+      mix-blend-mode: screen;
+      box-shadow: 0 0 14px rgba(33,66,255,0.45), 0 0 22px rgba(215,29,29,0.25);
+      transform: translate(-50%, -50%);
+    }
+
+    .glitter-trail {
+      position: fixed;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 19;
+      background: radial-gradient(circle, rgba(255,255,255,0.95) 0 30%, rgba(33,66,255,0.7) 31% 62%, rgba(255,255,255,0) 63% 100%);
+      box-shadow: 0 0 10px rgba(33,66,255,0.35);
+      animation: sparkleFade 700ms linear forwards;
+    }
+
+    @keyframes sparkleFade {
+      from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.2);
+      }
+    }
+
+    .note {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.7);
+      padding: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .note .label {
+      display: block;
+      margin-bottom: 6px;
+      font: 11px/1.2 "Helvetica Now Display", Arial, Helvetica, sans-serif;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .note .text {
+      font-family: "PxPlus IBM VGA9", "Courier New", monospace;
+      font-size: 0.95rem;
+      line-height: 1.35;
+    }
+
+    .view.page2 {
+      padding-top: 72px;
+      color: #101010;
+    }
+
+    .page2-wrap {
+      position: absolute;
+      inset: 72px 18px 18px;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 18px;
+      min-height: 0;
+    }
+
+    .ascii-panel,
+    .profile-panel {
+      min-height: 0;
+      background: rgba(255,255,255,0.75);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .ascii-head,
+    .profile-head {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      font: 12px/1.2 "Helvetica Now Display", Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: rgba(255,255,255,0.8);
+    }
+
+    .ascii-screen {
+      height: calc(100% - 39px);
+      padding: 16px;
+      background: linear-gradient(180deg, #f8f8f5 0%, #efeee9 100%);
+      font-family: "PxPlus IBM VGA9", "Courier New", monospace;
+      overflow: auto;
+    }
+
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.14;
+      font-size: clamp(0.72rem, 1vw, 0.9rem);
+    }
+
+    .ascii-line { transition: color 120ms ease, background 120ms ease; }
+    .ascii-line:hover { color: var(--blue); background: rgba(33,66,255,0.06); }
+
+    .profile-body {
+      padding: 16px;
+      display: grid;
+      gap: 16px;
+      overflow: auto;
+      height: calc(100% - 39px);
+    }
+
+    .profile-block {
+      border: 1px solid var(--line);
+      padding: 14px;
+      background: rgba(255,255,255,0.76);
+    }
+
+    .profile-block h2 {
+      margin: 0 0 10px;
+      font: 700 0.95rem/1.1 "Helvetica Now Display", Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--blue);
+    }
+
+    .profile-block p {
+      margin: 0;
+      font-family: "PxPlus IBM VGA9", "Courier New", monospace;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .profile-block p + p { margin-top: 8px; }
+
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .skill-box {
+      border: 1px solid var(--line);
+      padding: 10px;
+      background: rgba(244,243,239,0.86);
+      font-family: "PxPlus IBM VGA9", "Courier New", monospace;
+      line-height: 1.35;
+    }
+
+    .footer-controls {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      display: flex;
+      gap: 10px;
+      z-index: 6;
+    }
+
+    .micro-caption {
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      font: 12px/1.2 "PxPlus IBM VGA9", "Courier New", monospace;
+      letter-spacing: 0.04em;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+      box-shadow: var(--shadow);
+      z-index: 5;
+    }
+
+    @media (max-width: 980px) {
+      body { overflow: auto; }
+      .site { height: auto; min-height: 100vh; }
+      .view { position: relative; min-height: 100vh; }
+      .page1-grid,
+      .page2-wrap,
+      .hero {
+        position: relative;
+        inset: auto;
+        grid-template-columns: 1fr;
+      }
+      .page1-grid { margin-top: 72px; }
+      .xp-zone { grid-template-columns: 1fr; }
+      .footer-controls,
+      .micro-caption { position: relative; left: auto; right: auto; bottom: auto; margin-top: 16px; }
     }
   </style>
 </head>
 <body>
-
-  <section id="page1" class="screen active">
-    <h1 class="page-label">FADAISI.EXE</h1>
-    <div class="page-sub">body as technology / matter remembers / hair as system</div>
-
-    <div class="win95" style="left:5%; top:20%; z-index:20;">
-      <div class="titlebar red"><span>Virus Alert</span><div class="win-btn">X</div></div>
-      <div class="body"><b>FADAISI</b>the body is not separate from the system.<div class="statusbar">critical status</div></div>
-    </div>
-
-    <div class="win95" style="left:35%; top:12%; z-index:15;">
-      <div class="titlebar"><span>Message.exe</span><div class="win-btn">X</div></div>
-      <div class="body"><b>DEV</b>organized code / unstable image.<div class="statusbar">loaded</div></div>
-    </div>
-
-    <div class="win95" style="left:12%; top:55%; z-index:18;">
-      <div class="titlebar red"><span>Scan Data</span><div class="win-btn">X</div></div>
-      <div class="body"><b>DATA</b>query / structure / signal.<div class="statusbar">scanning...</div></div>
-    </div>
-
-    <div class="win95" style="left:65%; top:25%; z-index:12;">
-      <div class="titlebar"><span>Identity.sys</span><div class="win-btn">X</div></div>
-      <div class="body"><b>YAWO</b>corpo como arquivo online.<div class="statusbar">active</div></div>
-    </div>
-
-    <button class="star-btn" style="right:5%; bottom:8%;" data-go="page2">PAGE 2</button>
-  </section>
-
-  <section id="page2" class="screen">
-    <h1 class="page-label">COLLAGE</h1>
-    <div class="page-sub">hover to move / technology also feels</div>
-
-    <div class="figure" style="left:10%; top:25%;" data-home-x="10" data-home-y="25">
-      <img src="https://i.ibb.co/NdmM3zXr/Mulher-e-instala-o-escult-rica-em-cena-calma-removebg-preview.png">
-    </div>
-    <div class="figure" style="left:42%; top:30%;" data-home-x="42" data-home-y="30">
-      <img src="https://i.ibb.co/fYrnFvJF/Ecossistema-tecnol-gico-e-org-nico-em-galeria.png">
-    </div>
-    <div class="figure" style="left:72%; top:22%;" data-home-x="72" data-home-y="22">
-      <img src="https://i.ibb.co/wFFfKCkb/Gemini-Generated-Image-yl3meoyl3meoyl3m.png">
-    </div>
-
-    <button class="star-btn" style="left:5%; bottom:8%;" data-go="page1">BACK</button>
-    <button class="star-btn" style="right:5%; bottom:8%;" data-go="page3">PAGE 3</button>
-  </section>
-
-  <section id="page3" class="screen">
-    <h1 class="page-label">DOSSIER</h1>
-    <div class="page3-wrap">
-      <div class="page3-grid">
-        <div class="card">
-          <h2>Essência</h2>
-          <p>Artista e diretora criativa explorando o corpo negro como tecnologia viva e o cabelo como linguagem.</p>
-          <div class="statusbar">presence / archive</div>
-        </div>
-        <div class="card">
-          <h2>Imagens</h2>
-          <div class="gallery-item" style="--rot:-2deg;"><img src="https://i.ibb.co/bj92kr1Y/artifact.jpg"></div>
-          <div class="gallery-item" style="--rot:2deg;"><img src="https://i.ibb.co/LLH2ZtM/Ebervdpiccas-Janice-Mascarenhas-preselection-5.jpg"></div>
+  <main class="site">
+    <section class="view page1 active grain" id="page1">
+      <div class="topbar">
+        <div class="tag">portfolio system / page 01</div>
+        <div class="nav">
+          <button type="button" data-view="page1">page 1</button>
+          <button type="button" data-view="page2">page 2</button>
         </div>
       </div>
-    </div>
-    <button class="star-btn" style="left:5%; bottom:8%;" data-go="page1">HOME</button>
-  </section>
+
+      <div class="media-layer" aria-hidden="false">
+        <figure class="floating-media video-frame" style="right: 2vw; top: 14px; transform: rotate(1.5deg);">
+          <figcaption class="cap">video slot</figcaption>
+          <video autoplay muted loop playsinline>
+            <source src="YOUR-VIDEO.mp4" type="video/mp4" />
+          </video>
+        </figure>
+
+        <figure class="floating-media cutout-frame" style="left: 58vw; top: 260px; transform: rotate(-3deg);">
+          <figcaption class="cap">cutout photo</figcaption>
+          <img src="YOUR-CUTOUT.png" alt="Cutout portrait" />
+        </figure>
+
+        <figure class="floating-media pixel-frame" style="left: 76vw; top: 430px; transform: rotate(4deg);">
+          <figcaption class="cap">pixel png</figcaption>
+          <img src="YOUR-PIXEL-PNG.png" alt="Pixel artwork" />
+        </figure>
+      </div>
+
+      <div class="page1-grid">
+        <header class="hero">
+          <div class="hero-left">
+            <h1 class="title">FADAISI</h1>
+            <div class="subtitle">body as technology / matter remembers / hair as system</div>
+          </div>
+
+          <div class="hero-right">
+            <div class="statement">
+              <span class="small">editorial structure / no images</span>
+              <strong>text becomes image and layout becomes signal</strong>
+            </div>
+
+            <div class="editorial-lines" aria-hidden="true">
+              <span>query</span>
+              <span>structure</span>
+              <span>signal</span>
+              <span>body as archive</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="xp-zone">
+          <article class="xp-window">
+            <div class="xp-titlebar">
+              <span>window 01</span>
+              <div class="xp-actions"><span>—</span><span>□</span><span>×</span></div>
+            </div>
+            <div class="xp-body">
+              <h2>YAWO</h2>
+              <p>body as system</p>
+              <p>ancestral interface</p>
+            </div>
+          </article>
+
+          <article class="xp-window">
+            <div class="xp-titlebar">
+              <span>window 02</span>
+              <div class="xp-actions"><span>—</span><span>□</span><span>×</span></div>
+            </div>
+            <div class="xp-body">
+              <h2>DATA</h2>
+              <p>query</p>
+              <p>structure</p>
+              <p>signal</p>
+            </div>
+          </article>
+
+          <article class="xp-window">
+            <div class="xp-titlebar">
+              <span>window 03</span>
+              <div class="xp-actions"><span>—</span><span>□</span><span>×</span></div>
+            </div>
+            <div class="xp-body">
+              <h2>LOGIC &amp; CREATIVITY</h2>
+              <p>organized code</p>
+              <p>unstable image</p>
+              <p>machine learning systems</p>
+            </div>
+          </article>
+
+          <article class="xp-window">
+            <div class="xp-titlebar">
+              <span>window 04</span>
+              <div class="xp-actions"><span>—</span><span>□</span><span>×</span></div>
+            </div>
+            <div class="xp-body">
+              <h2>PLANNING</h2>
+              <p>process</p>
+              <p>structure</p>
+              <p>strategy</p>
+            </div>
+          </article>
+        </div>
+
+        <aside class="notes">
+          <div class="note">
+            <span class="label">core idea</span>
+            <div class="text">a portfolio where typography carries presence and code reveals internal structure.</div>
+          </div>
+          <div class="note">
+            <span class="label">visual direction</span>
+            <div class="text">clean, graphic, intentional. strong hierarchy, off-white background, restrained blue and red accents.</div>
+          </div>
+          <div class="note">
+            <span class="label">avoid</span>
+            <div class="text">decorative chaos / heavy glitch / random nostalgia / weak composition.</div>
+          </div>
+        </aside>
+      </div>
+
+      <div class="micro-caption">click page 2 to enter the code view</div>
+    </section>
+
+    <section class="view page2 grain" id="page2">
+      <div class="topbar">
+        <div class="tag">profile / page 02</div>
+        <div class="nav">
+          <button type="button" data-view="page1">page 1</button>
+          <button type="button" data-view="page2">page 2</button>
+        </div>
+      </div>
+
+      <div class="page2-wrap">
+        <section class="ascii-panel">
+          <div class="ascii-head">ascii / terminal field</div>
+          <div class="ascii-screen">
+<pre>
+<span class="ascii-line">FILE 02 — PROFILE</span>
+<span class="ascii-line">==============================================</span>
+<span class="ascii-line">processing...</span>
+<span class="ascii-line">input / output</span>
+<span class="ascii-line">body as interface</span>
+<span class="ascii-line">archive loading</span>
+<span class="ascii-line">----------------------------------------------</span>
+<span class="ascii-line">::::::::::@@@@@@@%%%%%%%%%#########:::::::::::</span>
+<span class="ascii-line">::::::@@@@@:::::::signal / matter / memory::::</span>
+<span class="ascii-line">::::@:::::::::::::code / structure / image::::</span>
+<span class="ascii-line">:::@@@@@@:::::::body body body as system::::::</span>
+<span class="ascii-line">::::::@@@:::::::hair hair hair as language::::</span>
+<span class="ascii-line">::::#####%%%%%%%@@@@@#########################</span>
+<span class="ascii-line">----------------------------------------------</span>
+<span class="ascii-line">read mode: active</span>
+<span class="ascii-line">visual noise: controlled</span>
+<span class="ascii-line">system status: stable</span>
+</pre>
+          </div>
+        </section>
+
+        <section class="profile-panel">
+          <div class="profile-head">about / data / transition</div>
+          <div class="profile-body">
+            <article class="profile-block">
+              <h2>bio</h2>
+              <p>brazilian artist and creative director working across technology, data and digital culture.</p>
+              <p>early exploration with hardware, device disassembly and sculpture developed a material understanding of systems. over time, this practice moved through art, fashion and creative direction, using body and hair as language.</p>
+              <p>since 2021, active in digital environments with focus on crypto, NFTs and online distribution.</p>
+            </article>
+
+            <article class="profile-block">
+              <h2>current direction</h2>
+              <p>currently transitioning into data, with studies in python, SQL and business intelligence, developed through an autonomous learning process using machine learning systems.</p>
+              <p>seeking opportunities as data assistant or junior data analyst, integrating creative experience with data-driven systems.</p>
+            </article>
+
+            <article class="profile-block">
+              <h2>skills</h2>
+              <div class="skills">
+                <div class="skill-box">python</div>
+                <div class="skill-box">SQL</div>
+                <div class="skill-box">business intelligence</div>
+                <div class="skill-box">data organization</div>
+                <div class="skill-box">analysis</div>
+                <div class="skill-box">visualization</div>
+              </div>
+            </article>
+
+            <article class="profile-block">
+              <h2>closing line</h2>
+              <p>connecting technology, culture and data analysis through a coherent and structured visual language.</p>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <div class="footer-controls">
+        <button class="xp-button" type="button" data-view="page1">back to page 1</button>
+      </div>
+    </section>
+  </main>
 
   <script>
-    // Navegação (Muda a classe 'active' entre as sections)
-    const screens = document.querySelectorAll('.screen');
-    document.querySelectorAll('[data-go]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const target = btn.dataset.go;
-        screens.forEach(s => s.classList.toggle('active', s.id === target));
+    const buttons = document.querySelectorAll('[data-view]');
+    const views = document.querySelectorAll('.view');
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const target = button.getAttribute('data-view');
+        views.forEach((view) => {
+          view.classList.toggle('active', view.id === target);
+        });
       });
     });
 
-    // Lógica da Colagem Móvel
-    const mouse = { x: 0, y: 0 };
-    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    const cursor = document.createElement('div');
+    cursor.className = 'cursor-glitter';
+    document.body.appendChild(cursor);
 
-    const figs = document.querySelectorAll('.figure');
-    function animate() {
-      figs.forEach((el, idx) => {
-        const homeX = (parseFloat(el.dataset.homeX) / 100) * window.innerWidth;
-        const homeY = (parseFloat(el.dataset.homeY) / 100) * window.innerHeight;
-        const isHover = el.matches(':hover');
+    window.addEventListener('mousemove', (event) => {
+      cursor.style.left = `${event.clientX}px`;
+      cursor.style.top = `${event.clientY}px`;
 
-        let targetX = isHover ? mouse.x - (el.offsetWidth/2) : homeX + Math.sin(Date.now()*0.001 + idx)*12;
-        let targetY = isHover ? mouse.y - (el.offsetHeight/2) : homeY + Math.cos(Date.now()*0.001 + idx)*12;
+      const spark = document.createElement('div');
+      spark.className = 'glitter-trail';
+      spark.style.left = `${event.clientX + (Math.random() * 12 - 6)}px`;
+      spark.style.top = `${event.clientY + (Math.random() * 12 - 6)}px`;
+      document.body.appendChild(spark);
 
-        let currX = parseFloat(el.style.left) || homeX;
-        let currY = parseFloat(el.style.top) || homeY;
-
-        el.style.left = (currX + (targetX - currX) * 0.1) + 'px';
-        el.style.top = (currY + (targetY - currY) * 0.1) + 'px';
-      });
-      requestAnimationFrame(animate);
-    }
-    animate();
+      setTimeout(() => spark.remove(), 700);
+    });
   </script>
 </body>
 </html>
+
