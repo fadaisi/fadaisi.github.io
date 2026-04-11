@@ -214,10 +214,23 @@
     .editorial-lines span:nth-child(3n) { color: var(--red); }
 
     .xp-zone {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(220px, 1fr));
-      gap: 18px;
+      position: relative;
+      min-height: 560px;
+      display: block;
       align-content: start;
+    }
+
+    .xp-window {
+      position: absolute;
+      width: 210px;
+      background: var(--window);
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-right: 2px solid #1f1f1f;
+      border-bottom: 2px solid #1f1f1f;
+      box-shadow: var(--shadow);
+      min-width: 0;
+      will-change: transform;
     }
 
     .xp-window {
@@ -310,26 +323,94 @@
       filter: drop-shadow(10px 10px 0 rgba(33,66,255,0.16));
     }
 
-    .video-frame {
-      width: min(28vw, 360px);
-      background: #111;
-      border: 1px solid rgba(0,0,0,0.25);
-      box-shadow: var(--shadow);
+    .video-window {
+      position: absolute;
+      width: min(31vw, 390px);
+      background: var(--window);
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-right: 2px solid #1f1f1f;
+      border-bottom: 2px solid #1f1f1f;
+      box-shadow: 9px 9px 0 rgba(0,0,0,0.15);
+      overflow: hidden;
+      z-index: 7;
+      will-change: transform;
+    }
+
+    .video-window .xp-titlebar {
+      cursor: grab;
+    }
+
+    .video-window .xp-titlebar:active {
+      cursor: grabbing;
+    }
+
+    .player-shell {
+      padding: 8px;
+      background: #d4d0c8;
+    }
+
+    .player-screen {
+      border: 1px solid #000;
+      background: #000;
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.18);
       overflow: hidden;
     }
 
-    .video-frame .cap,
-    .cutout-frame .cap,
-    .pixel-frame .cap {
-      background: rgba(255,255,255,0.88);
-      border-bottom: 1px solid rgba(0,0,0,0.18);
-      padding: 7px 10px;
-      font: 11px/1.2 "Helvetica Now Display", Arial, Helvetica, sans-serif;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
+    .player-screen video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      background: #000;
     }
 
-    .video-frame video {
+    .player-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 0 0;
+      font: 11px/1 "Helvetica Now Display", Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .player-btn {
+      width: 22px;
+      height: 20px;
+      border-top: 1px solid #fff;
+      border-left: 1px solid #fff;
+      border-right: 1px solid #000;
+      border-bottom: 1px solid #000;
+      background: #ece9d8;
+      display: grid;
+      place-items: center;
+      font: 10px/1 Arial, sans-serif;
+      color: #000;
+      flex-shrink: 0;
+    }
+
+    .player-bar {
+      flex: 1;
+      height: 12px;
+      border-top: 1px solid #808080;
+      border-left: 1px solid #808080;
+      border-right: 1px solid #fff;
+      border-bottom: 1px solid #fff;
+      background: linear-gradient(90deg, #245edb 0 42%, #c9c7bd 42% 100%);
+    }
+
+    .player-time {
+      min-width: 44px;
+      text-align: right;
+      font-size: 10px;
+    }
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      background: #000;
+    }
       display: block;
       width: 100%;
       aspect-ratio: 4 / 5;
@@ -561,12 +642,26 @@
       </div>
 
       <div class="media-layer" aria-hidden="false">
-        <figure class="floating-media video-frame" style="right: 2vw; top: 14px; transform: rotate(1.5deg);">
-          <figcaption class="cap">video slot</figcaption>
-          <video autoplay muted loop playsinline>
-            <source src="YOUR-VIDEO.mp4" type="video/mp4" />
-          </video>
-        </figure>
+        <article class="video-window floating-media xp-window" data-depth="0.12" style="left: 29vw; top: 52px; width: min(31vw, 390px); z-index: 7; transform: rotate(2.2deg);">
+          <div class="xp-titlebar">
+            <span>media player</span>
+            <div class="xp-actions"><span>—</span><span>□</span><span>×</span></div>
+          </div>
+          <div class="player-shell">
+            <div class="player-screen">
+              <video autoplay muted loop playsinline>
+                <source src="https://files.catbox.moe/m8gq3z.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="player-controls" aria-hidden="true">
+              <div class="player-btn">▶</div>
+              <div class="player-btn">❚❚</div>
+              <div class="player-btn">■</div>
+              <div class="player-bar"></div>
+              <div class="player-time">00:12</div>
+            </div>
+          </div>
+        </article>
 
         <figure class="floating-media cutout-frame" style="left: 58vw; top: 260px; transform: rotate(-3deg);">
           <figcaption class="cap">cutout photo</figcaption>
@@ -601,8 +696,8 @@
           </div>
         </header>
 
-        <div class="xp-zone">
-          <article class="xp-window">
+        <div class="xp-zone" id="xpZone">
+          <article class="xp-window" data-depth="0.22" style="left: 14px; top: 20px; width: 186px; z-index: 2; transform: rotate(-2deg);">
             <div class="xp-titlebar">
               <span>window 01</span>
               <div class="xp-actions"><span>—</span><span>□</span><span>×</span></div>
@@ -614,7 +709,7 @@
             </div>
           </article>
 
-          <article class="xp-window">
+          <article class="xp-window" data-depth="0.3" style="left: 170px; top: 132px; width: 170px; z-index: 1; transform: rotate(1.4deg);">
             <div class="xp-titlebar">
               <span>window 02</span>
               <div class="xp-actions"><span>—</span><span>□</span><span>×</span></div>
@@ -627,7 +722,7 @@
             </div>
           </article>
 
-          <article class="xp-window">
+          <article class="xp-window" data-depth="0.18" style="left: 20px; top: 286px; width: 214px; z-index: 3; transform: rotate(-1deg);">
             <div class="xp-titlebar">
               <span>window 03</span>
               <div class="xp-actions"><span>—</span><span>□</span><span>×</span></div>
@@ -640,7 +735,7 @@
             </div>
           </article>
 
-          <article class="xp-window">
+          <article class="xp-window" data-depth="0.27" style="left: 214px; top: 366px; width: 178px; z-index: 2; transform: rotate(2.3deg);">
             <div class="xp-titlebar">
               <span>window 04</span>
               <div class="xp-actions"><span>—</span><span>□</span><span>×</span></div>
@@ -650,6 +745,18 @@
               <p>process</p>
               <p>structure</p>
               <p>strategy</p>
+            </div>
+          </article>
+
+          <article class="xp-window" data-depth="0.24" style="left: 388px; top: 240px; width: 160px; z-index: 1; transform: rotate(-1.6deg);">
+            <div class="xp-titlebar">
+              <span>window 05</span>
+              <div class="xp-actions"><span>—</span><span>□</span><span>×</span></div>
+            </div>
+            <div class="xp-body">
+              <h2>SIGNAL</h2>
+              <p>text as image</p>
+              <p>moving layers</p>
             </div>
           </article>
         </div>
@@ -767,6 +874,60 @@
     cursor.className = 'cursor-glitter';
     document.body.appendChild(cursor);
 
+    const xpWindows = document.querySelectorAll('.xp-window, .video-window');
+
+    // ✦ DRAG SYSTEM (mouse + touch)
+    xpWindows.forEach(win => {
+      let offsetX = 0;
+      let offsetY = 0;
+      let isDragging = false;
+
+      const startDrag = (x, y) => {
+        isDragging = true;
+        const rect = win.getBoundingClientRect();
+        offsetX = x - rect.left;
+        offsetY = y - rect.top;
+        win.style.zIndex = 999;
+      };
+
+      const moveDrag = (x, y) => {
+        if (!isDragging) return;
+        win.style.left = (x - offsetX) + 'px';
+        win.style.top = (y - offsetY) + 'px';
+        win.style.transform = 'none';
+      };
+
+      const stopDrag = () => {
+        isDragging = false;
+      };
+
+      // mouse
+      const dragHandle = win.querySelector('.xp-titlebar') || win;
+      dragHandle.addEventListener('mousedown', e => {
+        startDrag(e.clientX, e.clientY);
+      });
+
+      window.addEventListener('mousemove', e => {
+        moveDrag(e.clientX, e.clientY);
+      });
+
+      window.addEventListener('mouseup', stopDrag);
+
+      // touch (mobile)
+      dragHandle.addEventListener('touchstart', e => {
+        const touch = e.touches[0];
+        startDrag(touch.clientX, touch.clientY);
+      }, { passive: true });
+
+      window.addEventListener('touchmove', e => {
+        const touch = e.touches[0];
+        moveDrag(touch.clientX, touch.clientY);
+      }, { passive: true });
+
+      window.addEventListener('touchend', stopDrag);
+    });
+
+    // ✦ GLITTER CURSOR
     window.addEventListener('mousemove', (event) => {
       cursor.style.left = `${event.clientX}px`;
       cursor.style.top = `${event.clientY}px`;
@@ -776,10 +937,25 @@
       spark.style.left = `${event.clientX + (Math.random() * 12 - 6)}px`;
       spark.style.top = `${event.clientY + (Math.random() * 12 - 6)}px`;
       document.body.appendChild(spark);
-
       setTimeout(() => spark.remove(), 700);
+    });
+
+    // ✦ FLOAT MOTION (when not dragging)
+    window.addEventListener('mousemove', (event) => {
+      const normalizedY = event.clientY / window.innerHeight;
+      const normalizedX = event.clientX / window.innerWidth;
+
+      xpWindows.forEach((win, index) => {
+        if (win.style.transform === 'none') return; // skip dragged
+
+        const depth = parseFloat(win.dataset.depth || '0.2');
+        const swayY = (normalizedY - 0.5) * 60 * depth * 3;
+        const swayX = (normalizedX - 0.5) * 20 * depth * 2;
+        const baseRotation = [-2, 1.4, -1, 2.3, -1.6, 2.2][index] || 0;
+
+        win.style.transform = `translate(${swayX}px, ${swayY}px) rotate(${baseRotation}deg)`;
+      });
     });
   </script>
 </body>
 </html>
-
