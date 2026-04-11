@@ -46,7 +46,7 @@
     .site {
       position: relative;
       width: 100vw;
-      height: 100vh;
+      min-height: 100vh;
       overflow: hidden;
     }
 
@@ -131,8 +131,8 @@
     }
 
     ..page1-grid {
-  position: absolute;
-  inset: 40px 18px 18px 18px;
+  position: relative;
+  margin: 40px 18px 18px 18px;
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
       grid-template-rows: auto 1fr;
@@ -658,6 +658,30 @@
         margin-top: 16px;
       }
     }
+    @media (max-width: 768px) {
+
+  body {
+    overflow-y: auto;
+  }
+
+  .view {
+    position: relative;
+    height: auto;
+  }
+
+  .page1-grid {
+    position: relative;
+    inset: unset;
+    margin-top: 100px;
+  }
+
+  .media-layer {
+    position: relative;
+    inset: unset;
+    margin-top: 20px;
+  }
+
+}
   </style>
 </head>
 <body>
