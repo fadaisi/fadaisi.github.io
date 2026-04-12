@@ -401,194 +401,180 @@
 }
      body {
      cursor: auto;
-}
-/* ==== desktop view === */ 
-     @media (min-width: 900px) {
-     :root {
+    }
+     /* ==== desktop view ==== */
+    @media (min-width: 900px) {
+    :root {
         --page-width: 1000px;
     }
-     .page {
-      padding: 8px 8px 100px;
+    .page {
+        width: min(100%, var(--page-width));
+        margin: 0 auto;
+        padding: 8px 8px 100px;
+        transform: none;
     }
-     .meta-bar {
-     font-size: 12px;
-     margin-bottom: 26px;
+    .meta-bar {
+        font-size: 12px;
+        margin-bottom: 26px;
     }
-
-     .hero {
-     gap: 14px;
-     margin-bottom: 24px;
+    .hero {
+        gap: 14px;
+        margin-bottom: 24px;
     }
-
     .hero-logo {
         width: 380px;
     }
-
     .hero-title {
         font-size: 20px;
         margin-top: 0;
     }
-
     .top-links {
         margin: 20px 0 42px;
         padding: 0 18px;
     }
-
     .pill {
         min-width: 112px;
         padding: 10px 24px;
         font-size: 11px;
     }
-
     .intro-grid {
         grid-template-columns: 1fr 1fr;
         gap: 60px;
         padding: 0 110px 0 118px;
     }
-
     .process-grid {
         grid-template-columns: 1fr 320px;
         gap: 34px;
         padding: 0 116px 0 48px;
     }
-
     .gallery {
         width: 320px;
         gap: 18px;
     }
-
     .media-card {
         width: 151px;
     }
-
     .about-grid {
         grid-template-columns: 1fr 1fr;
         gap: 60px;
         padding: 0 110px 0 118px;
     }
-
     .archive-panel {
         padding: 0 118px;
     }
-    } 
- /* ==== mobile view === */ 
+    }
+    /* ==== mobile view ==== */
     @media (max-width: 899px) {
-      :root {
+    :root {
         --page-width: 1000px;
-      }
-
-      .page {
+    }
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+    .page {
+        width: 1000px;
+        margin: 0;
         padding: 8px 8px 100px;
-      }
-
-      .meta-bar {
+        transform: scale(calc(100vw / 1000));
+        transform-origin: top left;
+    }
+    .meta-bar {
         font-size: 12px;
         margin-bottom: 26px;
-      }
-
-      .hero {
+    }
+    .hero {
         gap: 14px;
         margin-bottom: 24px;
-      }
+    }
     .hero-logo {
-      width: 380px;
+        width: 380px;
     }
-
-     .hero-title {
-     margin-top: 0; 
+    .hero-title {
+        font-size: 20px;
+        margin-top: 0;
     }
-      }
-
-      .top-links {
+    .top-links {
         margin: 20px 0 42px;
         padding: 0 18px;
-      }
-
-      .pill {
+    }
+    .pill {
         min-width: 112px;
         padding: 10px 24px;
         font-size: 11px;
-      }
-
-      .intro-grid {
+    }
+    .intro-grid {
+        grid-template-columns: 1fr 1fr;
         gap: 60px;
         padding: 0 110px 0 118px;
-      }
-
-      .code-line,
-      .info-line,
-      .section-tag,
-      .join-link,
-      .cta,
-      .archive-box p,
-      .archive-box li {
+    }
+    .code-line,
+    .info-line,
+    .section-tag,
+    .join-link,
+    .cta,
+    .archive-box p,
+    .archive-box li {
         font-size: 11px;
-      }
-
-      .intro-copy p,
-      .process-copy p,
-      .about-copy p {
+    }
+    .intro-copy p,
+    .process-copy p,
+    .about-copy p {
         font-size: 11px;
         line-height: 1.58;
         margin-bottom: 16px;
-      }
-
-      .cta-row {
+    }
+    .cta-row {
         min-height: 36px;
-      }
-
-      .cta {
+    }
+    .cta {
         min-width: 176px;
         padding: 6px 18px;
         border-width: 1.2px;
-      }
-
-      .section-tag {
+    }
+    .section-tag {
         margin: 6px 0 16px;
-      }
-
-      .process-grid {
+    }
+    .process-grid {
         grid-template-columns: 1fr 320px;
         gap: 34px;
         padding: 0 116px 0 48px;
-      }
-
-      .ascii-block {
+    }
+    .ascii-block {
         width: 360px;
         margin-top: 8px;
-      }
-
-      .gallery {
+    }
+    .gallery {
         width: 320px;
         gap: 18px;
-      }
-
-      .media-card {
+    }
+    .media-card {
         width: 151px;
-      }
-
-      .about-grid {
+    }
+    .about-grid {
+        grid-template-columns: 1fr 1fr;
         gap: 60px;
         padding: 0 110px 0 118px;
-      }
-
-      .join-link {
+    }
+    .join-link {
         margin-top: 16px;
-      }
-
-      .archive-panel {
+    }
+    .archive-panel {
         padding: 0 118px;
-      }
-
-      .archive-box {
+    }
+    .archive-box {
         padding: 18px;
-      }
-
-      .archive-box h2 {
+    }
+    .archive-box h2 {
         font-size: 13px;
         margin-bottom: 12px;
-      }
-    
+    }
+    .sparkle-cursor {
+        display: none;
+    }
+}
   </style>
 </head>
 <body>
