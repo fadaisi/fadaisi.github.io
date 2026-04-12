@@ -111,22 +111,24 @@
       justify-content: flex-end;
     }
 
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 54px;
-      padding: 6px 13px;
-      border-radius: 999px;
-      background: var(--pill);
-      color: var(--accent);
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      line-height: 1;
-      transition: transform 0.18s ease, opacity 0.18s ease;
-    }
+   .pill {
+        display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     padding: 0;
+     min-width: unset;
+     background: none;
+     border: none;
+     color: var(--accent);
+     font-family: Arial, Helvetica, sans-serif;
+     font-size: 12px;
+     text-transform: uppercase;
+     letter-spacing: 0.08em;
+     text-decoration: underline;
+     line-height: 1;
+     cursor: pointer;
+     transition: opacity 0.18s ease;
+        }
 
     .pill:hover,
     .cta:hover,
@@ -349,8 +351,141 @@
         opacity: 0;
         transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.2);
       }
-    }
+    } 
+    
+     .hero-logo {
+      width: min(92vw, 320px);
+      margin-bottom: -8px;
+}
 
+.hero-title {
+  font-size: 16px;
+}
+
+.meta-bar {
+  font-size: 7px;
+  gap: 12px;
+}
+
+.top-links {
+  margin: 10px 0 20px;
+  padding: 0 16px;
+}
+
+.pill {
+  font-size: 11px;
+}
+
+.intro-grid,
+.process-grid,
+.about-grid {
+  grid-template-columns: 1fr;
+  gap: 20px;
+  padding: 0 16px;
+}
+
+.cta-row {
+  justify-content: center;
+}
+
+.process-grid {
+  margin-bottom: 20px;
+}
+
+.gallery {
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.media-card {
+  width: 100%;
+}
+
+.ascii-block {
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+.archive-panel {
+  padding: 0 16px;
+}
+
+body {
+  cursor: auto;
+}
+
+@media (min-width: 900px) {
+  :root {
+    --page-width: 1000px;
+  }
+
+  .page {
+    padding: 8px 8px 100px;
+  }
+
+  .meta-bar {
+    font-size: 12px;
+    margin-bottom: 26px;
+  }
+
+  .hero {
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .hero-logo {
+    width: 380px;
+  }
+
+  .hero-title {
+    font-size: 20px;
+    margin-top: 0;
+  }
+
+  .top-links {
+    margin: 20px 0 42px;
+    padding: 0 18px;
+  }
+
+  .pill {
+    min-width: 112px;
+    padding: 10px 24px;
+    font-size: 11px;
+  }
+
+  .intro-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    padding: 0 110px 0 118px;
+  }
+
+  .process-grid {
+    grid-template-columns: 1fr 320px;
+    gap: 34px;
+    padding: 0 116px 0 48px;
+  }
+
+  .gallery {
+    width: 320px;
+    gap: 18px;
+  }
+
+  .media-card {
+    width: 151px;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    padding: 0 110px 0 118px;
+  }
+
+  .archive-panel {
+    padding: 0 118px;
+  }
+}
     @media (min-width: 900px) {
       :root {
         --page-width: 1000px;
@@ -545,7 +680,8 @@
       </div>
     </section>
 
-    <p class="section-tag">info.nnbix</p>
+    <p class="section-tag">informação abaixo</p>
+
 
     <section class="process-grid">
       <div>
