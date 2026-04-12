@@ -1,1042 +1,663 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FADAISI</title>
+  <title>LIVE STUDIO 2026</title>
   <style>
     :root {
-      --bg: #f4f3ef;
-      --paper: #f7f6f2;
-      --ink: #0a0a0a;
-      --blue: #2142ff;
-      --red: #d71d1d;
-      --line: rgba(0,0,0,0.15);
-      --shadow: 5px 5px 0 rgba(0,0,0,0.12);
-      --window: #ece9d8;
-      --window-dark: #245edb;
-      --window-dark-2: #3d7bff;
+      --bg: #efefef;
+      --text: #111111;
+      --muted: #d8d8d8;
+      --accent: #ef2b2b;
+      --pill: #f4f0f0;
+      --pink: #ff66c4;
+      --page-width: 390px;
     }
 
-    * { box-sizing: border-box; }
-
-    html, body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      min-height: 100%;
-      background: var(--bg);
-      color: var(--ink);
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      font-family: "Times New Roman", Times, serif;
-      background-image:
-        linear-gradient(to bottom, rgba(255,255,255,0.65), rgba(255,255,255,0.2)),
-        repeating-linear-gradient(to right, transparent 0 79px, rgba(0,0,0,0.03) 79px 80px),
-        repeating-linear-gradient(to bottom, transparent 0 79px, rgba(0,0,0,0.03) 79px 80px);
-      overflow: hidden;
-      overscroll-behavior: none;
-    }
-
-    body.dragging {
-      overflow: hidden !important;
-      user-select: none;
-      cursor: grabbing;
-    }
-
-    .site {
-      position: relative;
-      width: 100vw;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
       min-height: 100vh;
-      overflow: hidden;
+      overflow-x: hidden;
+      cursor: none;
     }
 
-    .view {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateX(18px);
-      transition: opacity 260ms ease, transform 260ms ease;
-      padding: 18px;
-      overflow: hidden;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    .view.active {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateX(0);
+    img,
+    iframe {
+      display: block;
+      max-width: 100%;
     }
 
-    .grain::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 20% 10%, rgba(0,0,0,0.05), transparent 24%),
-        radial-gradient(circle at 80% 80%, rgba(215,29,29,0.06), transparent 24%),
-        repeating-linear-gradient(to bottom, rgba(0,0,0,0.03) 0 1px, transparent 1px 4px);
-      mix-blend-mode: multiply;
-      opacity: 0.5;
+    button {
+      font: inherit;
+      background: none;
+      border: none;
     }
 
-    .topbar {
-      position: absolute;
-      top: 18px;
-      left: 18px;
-      right: 18px;
+    .page {
+      width: min(100%, var(--page-width));
+      margin: 0 auto;
+      padding: 4px 4px 56px;
+      position: relative;
+    }
+
+    .meta-bar {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      z-index: 12;
-      gap: 16px;
-    }
-
-    .tag {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.72);
-      padding: 7px 10px;
-      font: 12px/1.2 "Helvetica Now Display", Arial, Helvetica, sans-serif;
-      letter-spacing: 0.08em;
+      align-items: center;
+      color: var(--accent);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 8px;
       text-transform: uppercase;
-      backdrop-filter: blur(3px);
-    }
-
-    .nav {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .nav button,
-    .xp-button {
-      appearance: none;
-      border: 1px solid #000;
-      background: var(--paper);
-      color: var(--ink);
-      cursor: pointer;
-      padding: 8px 12px;
-      font: 12px/1 "Helvetica Now Display", Arial, Helvetica, sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      box-shadow: 3px 3px 0 rgba(0,0,0,0.14);
-      transition: transform 120ms ease, box-shadow 120ms ease;
-    }
-
-    .nav button:hover,
-    .xp-button:hover {
-      transform: translate(-1px, -1px);
-      box-shadow: 4px 4px 0 rgba(0,0,0,0.18);
-    }
-
-    ..page1-grid {
-  position: relative;
-  margin: 40px 18px 18px 18px;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      grid-template-rows: auto 1fr;
-      gap: 18px;
-      align-items: start;
+      letter-spacing: 0.04em;
+      margin-bottom: 18px;
+      line-height: 1;
+      white-space: nowrap;
     }
 
     .hero {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 18px;
-      align-items: end;
-    }
-
-    .hero-left {
-      min-width: 0;
-    }
-
-    .title {
-      margin: 0;
-      font-family: "Perfect DOS VGA 437", "Courier New", monospace;
-      font-size: clamp(4rem, 12vw, 10rem);
-      line-height: 0.88;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      word-break: break-word;
-      text-wrap: balance;
-    }
-
-    .subtitle {
-      margin-top: 14px;
-      max-width: 760px;
-      font-family: "PxPlus IBM VGA9", "Courier New", monospace;
-      font-size: clamp(0.9rem, 1.7vw, 1.2rem);
-      line-height: 1.45;
-      letter-spacing: 0.04em;
-      text-transform: lowercase;
-    }
-
-    .hero-right {
-      align-self: stretch;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      min-height: 100%;
-    }
-
-    .statement {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.8);
-      padding: 14px;
-      box-shadow: var(--shadow);
-      font-family: "Helvetica Now Display", Arial, Helvetica, sans-serif;
-    }
-
-    .statement .small {
-      display: block;
-      margin-bottom: 10px;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .statement strong {
-      display: block;
-      font-size: clamp(1.2rem, 2vw, 1.9rem);
-      line-height: 1.06;
-      text-transform: uppercase;
-      color: var(--blue);
-    }
-
-    .editorial-lines {
-      margin-top: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      align-items: flex-start;
-      font-family: "Helvetica Now Display", Arial, Helvetica, sans-serif;
-      font-size: clamp(1rem, 2vw, 1.5rem);
-      font-weight: 700;
-      line-height: 0.96;
-      text-transform: uppercase;
-    }
-
-    .editorial-lines span:nth-child(2n) { color: var(--blue); }
-    .editorial-lines span:nth-child(3n) { color: var(--red); }
-
-    .xp-zone {
-      position: relative;
-      min-height: 560px;
-      display: block;
-      align-content: start;
-    }
-
-    .xp-window {
-      position: absolute;
-      width: 210px;
-      background: var(--window);
-      border-top: 2px solid #fff;
-      border-left: 2px solid #fff;
-      border-right: 2px solid #1f1f1f;
-      border-bottom: 2px solid #1f1f1f;
-      box-shadow: var(--shadow);
-      min-width: 0;
-      will-change: transform, left, top;
-    }
-
-    .xp-titlebar {
-      height: 26px;
-      display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      padding: 0 6px 0 8px;
-      background: linear-gradient(90deg, var(--window-dark), var(--window-dark-2));
-      color: #fff;
-      font: 700 12px/1 "Helvetica Now Display", Arial, Helvetica, sans-serif;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .hero-logo {
+      width: 128px;
+      object-fit: contain;
+    }
+
+    .hero-title-image {
+      width: 196px;
+      object-fit: contain;
+    }
+
+    .top-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      margin: 12px 0 24px;
+      gap: 16px;
+    }
+
+    .pill-wrap {
+      display: flex;
+    }
+
+    .pill-wrap.right {
+      justify-content: flex-end;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 54px;
+      padding: 6px 13px;
+      border-radius: 999px;
+      background: var(--pill);
+      color: var(--accent);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      transition: transform 0.18s ease, opacity 0.18s ease;
+    }
+
+    .pill:hover,
+    .cta:hover,
+    .join-link:hover,
+    .archive-link:hover,
+    .sparkle-cursor .cursor-core:hover {
+      transform: translateY(-1px);
+      opacity: 0.92;
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: start;
+      margin-bottom: 14px;
+      padding: 0 42px 0 50px;
+    }
+
+    .code-line,
+    .info-line {
+      color: var(--accent);
+      font-size: 8px;
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+
+    .intro-copy p,
+    .process-copy p,
+    .about-copy p {
+      font-size: 8px;
+      line-height: 1.5;
+      text-align: justify;
+      margin-bottom: 12px;
+    }
+
+    .intro-right {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cta-row {
+      display: flex;
+      justify-content: flex-start;
+      min-height: 22px;
+      align-items: center;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 108px;
+      padding: 4px 10px;
+      border: 1px solid #111;
+      border-radius: 999px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: rgba(255, 255, 255, 0.28);
+      white-space: nowrap;
+      line-height: 1;
+      transition: transform 0.18s ease, opacity 0.18s ease;
+    }
+
+    .section-tag {
+      text-align: center;
+      color: var(--accent);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 8px;
+      letter-spacing: 0.03em;
+      margin: 2px 0 12px;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: 1fr 126px;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 24px;
+      padding: 0 48px 0 24px;
+    }
+
+    .ascii-block {
+      width: 164px;
+      opacity: 0.38;
+      object-fit: contain;
+      margin-top: 8px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      width: 126px;
+    }
+
+    .media-card {
+      width: 57px;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      background: #ddd;
+      position: relative;
+    }
+
+    .media-card img,
+    .media-card iframe {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: 0;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: start;
+      margin-top: 8px;
+      padding: 0 42px 0 50px;
+    }
+
+    .join-link {
+      display: inline-block;
+      margin-top: 10px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      transition: transform 0.18s ease, opacity 0.18s ease;
+    }
+
+    .empty-col {
+      min-height: 40px;
+    }
+
+    .archive-panel {
+      margin-top: 18px;
+      padding: 0 50px;
+    }
+
+    .archive-panel[hidden] {
+      display: none;
+    }
+
+    .archive-box {
+      border: 1px solid rgba(17,17,17,0.18);
+      padding: 12px;
+      background: rgba(255,255,255,0.25);
+    }
+
+    .archive-box h2 {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--accent);
+      font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      cursor: grab;
-      user-select: none;
-      touch-action: none;
+      margin-bottom: 10px;
     }
 
-    .xp-titlebar:active {
-      cursor: grabbing;
-    }
-
-    .xp-actions {
-      display: flex;
-      gap: 3px;
-      flex-shrink: 0;
-    }
-
-    .xp-actions span {
-      width: 16px;
-      height: 14px;
-      border-top: 1px solid #fff;
-      border-left: 1px solid #fff;
-      border-right: 1px solid #000;
-      border-bottom: 1px solid #000;
-      background: #e9e9e9;
-      color: #000;
-      display: grid;
-      place-items: center;
-      font: 10px/1 Arial, sans-serif;
-    }
-
-    .xp-body {
-      padding: 16px 14px 14px;
-    }
-
-    .xp-body h2 {
-      margin: 0 0 10px;
-      font: 700 1.15rem/1 "Helvetica Now Display", Arial, Helvetica, sans-serif;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .xp-body p {
-      margin: 0;
-      font-family: "Times New Roman", Times, serif;
-      font-size: 1rem;
-      line-height: 1.25;
-    }
-
-    .xp-body p + p { margin-top: 6px; }
-
-    .media-layer {
-      position: absolute;
-      inset: 60px 18px 18px 18px;
-      pointer-events: none;
-      z-index: 4;
-    }
-
-    .floating-media {
-      position: absolute;
-      pointer-events: auto;
-      user-select: none;
-      transition: transform 160ms ease, filter 160ms ease;
-      filter: drop-shadow(6px 6px 0 rgba(0,0,0,0.14));
-      will-change: transform, left, top;
-    }
-
-    .floating-media:hover {
-      filter: drop-shadow(10px 10px 0 rgba(33,66,255,0.16));
-    }
-
-    .video-window {
-      position: absolute;
-      width: min(31vw, 390px);
-      background: var(--window);
-      border-top: 2px solid #fff;
-      border-left: 2px solid #fff;
-      border-right: 2px solid #1f1f1f;
-      border-bottom: 2px solid #1f1f1f;
-      box-shadow: 9px 9px 0 rgba(0,0,0,0.15);
-      overflow: hidden;
-      z-index: 7;
-      will-change: transform, left, top;
-    }
-
-    .video-window .xp-titlebar {
-      cursor: grab;
-    }
-
-    .video-window .xp-titlebar:active {
-      cursor: grabbing;
-    }
-
-    .player-shell {
-      padding: 8px;
-      background: #d4d0c8;
-    }
-
-    .player-screen {
-      border: 1px solid #000;
-      background: #000;
-      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.18);
-      overflow: hidden;
-    }
-
-    .player-screen video {
-      display: block;
-      width: 100%;
-      aspect-ratio: 4 / 5;
-      object-fit: cover;
-      background: #000;
-    }
-
-    .player-controls {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 0 0;
-      font: 11px/1 "Helvetica Now Display", Arial, Helvetica, sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .player-btn {
-      width: 22px;
-      height: 20px;
-      border-top: 1px solid #fff;
-      border-left: 1px solid #fff;
-      border-right: 1px solid #000;
-      border-bottom: 1px solid #000;
-      background: #ece9d8;
-      display: grid;
-      place-items: center;
-      font: 10px/1 Arial, sans-serif;
-      color: #000;
-      flex-shrink: 0;
-    }
-
-    .player-bar {
-      flex: 1;
-      height: 12px;
-      border-top: 1px solid #808080;
-      border-left: 1px solid #808080;
-      border-right: 1px solid #fff;
-      border-bottom: 1px solid #fff;
-      background: linear-gradient(90deg, #245edb 0 42%, #c9c7bd 42% 100%);
-    }
-
-    .player-time {
-      min-width: 44px;
-      text-align: right;
-      font-size: 10px;
-    }
-
-    .cutout-frame,
-    .pixel-frame {
-      background: transparent;
-      width: min(18vw, 240px);
-    }
-
-    .cutout-frame img,
-    .pixel-frame img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    .pixel-frame img {
-      image-rendering: pixelated;
-      image-rendering: crisp-edges;
-    }
-
-    .cap {
-      display: inline-block;
-      margin-bottom: 6px;
-      padding: 4px 6px;
-      background: rgba(255,255,255,0.72);
-      border: 1px solid var(--line);
-      font: 10px/1.2 "Helvetica Now Display", Arial, Helvetica, sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .cursor-glitter {
-      position: fixed;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,0.95) 0 20%, rgba(33,66,255,0.85) 21% 45%, rgba(215,29,29,0.65) 46% 68%, rgba(255,255,255,0) 69% 100%);
-      pointer-events: none;
-      z-index: 9999;
-      mix-blend-mode: screen;
-      box-shadow: 0 0 14px rgba(33,66,255,0.45), 0 0 22px rgba(215,29,29,0.25);
-      transform: translate(-50%, -50%);
-    }
-
-    .glitter-trail {
-      position: fixed;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      background: radial-gradient(circle, rgba(255,255,255,0.95) 0 30%, rgba(33,66,255,0.7) 31% 62%, rgba(255,255,255,0) 63% 100%);
-      box-shadow: 0 0 10px rgba(33,66,255,0.35);
-      animation: sparkleFade 700ms linear forwards;
-    }
-
-    @keyframes sparkleFade {
-      from {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-      }
-      to {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.2);
-      }
-    }
-
-    .view.page2 {
-      padding-top: 72px;
-      color: #101010;
-    }
-
-    .page2-wrap {
-      position: absolute;
-      inset: 72px 18px 18px;
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 18px;
-      min-height: 0;
-    }
-
-    .ascii-panel,
-    .profile-panel {
-      min-height: 0;
-      background: rgba(255,255,255,0.75);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .ascii-head,
-    .profile-head {
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--line);
-      font: 12px/1.2 "Helvetica Now Display", Arial, Helvetica, sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      background: rgba(255,255,255,0.8);
-    }
-
-    .ascii-screen {
-      height: calc(100% - 39px);
-      padding: 16px;
-      background: linear-gradient(180deg, #f8f8f5 0%, #efeee9 100%);
-      font-family: "PxPlus IBM VGA9", "Courier New", monospace;
-      overflow: auto;
-    }
-
-    pre {
-      margin: 0;
-      white-space: pre-wrap;
-      word-break: break-word;
-      line-height: 1.14;
-      font-size: clamp(0.72rem, 1vw, 0.9rem);
-    }
-
-    .ascii-line { transition: color 120ms ease, background 120ms ease; }
-    .ascii-line:hover { color: var(--blue); background: rgba(33,66,255,0.06); }
-
-    .profile-body {
-      padding: 16px;
-      display: grid;
-      gap: 16px;
-      overflow: auto;
-      height: calc(100% - 39px);
-    }
-
-    .profile-block {
-      border: 1px solid var(--line);
-      padding: 14px;
-      background: rgba(255,255,255,0.76);
-    }
-
-    .profile-block h2 {
-      margin: 0 0 10px;
-      font: 700 0.95rem/1.1 "Helvetica Now Display", Arial, Helvetica, sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--blue);
-    }
-
-    .profile-block p {
-      margin: 0;
-      font-family: "PxPlus IBM VGA9", "Courier New", monospace;
-      font-size: 0.95rem;
+    .archive-box p,
+    .archive-box li {
+      font-size: 8px;
       line-height: 1.5;
     }
 
-    .profile-block p + p { margin-top: 8px; }
-
-    .skills {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
+    .archive-box ul {
+      padding-left: 14px;
+      margin-top: 6px;
     }
 
-    .skill-box {
-      border: 1px solid var(--line);
-      padding: 10px;
-      background: rgba(244,243,239,0.86);
-      font-family: "PxPlus IBM VGA9", "Courier New", monospace;
-      line-height: 1.35;
+    .archive-link {
+      color: var(--accent);
     }
 
-    .footer-controls {
+    .sparkle-cursor {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: normal;
+    }
+
+    .cursor-core {
       position: absolute;
-      right: 18px;
-      bottom: 18px;
-      display: flex;
-      gap: 10px;
-      z-index: 12;
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,102,196,0.9) 45%, rgba(255,102,196,0.08) 100%);
+      box-shadow:
+        0 0 10px rgba(255,102,196,0.8),
+        0 0 18px rgba(255,102,196,0.55),
+        0 0 26px rgba(255,102,196,0.35);
+      transform: translate(-50%, -50%);
     }
 
-    .micro-caption {
+    .spark {
       position: absolute;
-      left: 18px;
-      bottom: 18px;
-      font: 12px/1.2 "PxPlus IBM VGA9", "Courier New", monospace;
-      letter-spacing: 0.04em;
-      background: rgba(255,255,255,0.72);
-      border: 1px solid var(--line);
-      padding: 8px 10px;
-      box-shadow: var(--shadow);
-      z-index: 10;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(255,102,196,0.8);
+      transform: translate(-50%, -50%);
+      animation: sparkleFade 800ms ease-out forwards;
+      box-shadow: 0 0 8px rgba(255,102,196,0.75);
     }
 
-    @media (max-width: 980px) {
-      body { overflow: auto; }
-      .site {
-        height: auto;
-        min-height: 100vh;
-        overflow: visible;
+    @keyframes sparkleFade {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.2);
+      }
+    }
+
+    @media (min-width: 900px) {
+      :root {
+        --page-width: 1000px;
       }
 
-      .view {
-        position: relative;
-        min-height: 100vh;
-        display: none;
-        overflow: visible;
+      .page {
+        padding: 8px 8px 100px;
       }
 
-      .view.active {
-        display: block;
+      .meta-bar {
+        font-size: 12px;
+        margin-bottom: 26px;
       }
 
-      .page1-grid,
-      .page2-wrap,
       .hero {
-        position: relative;
-        inset: auto;
-        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-bottom: 24px;
       }
 
-      .page1-grid {
-        margin-top: 20px;
+      .hero-logo {
+        width: 320px;
       }
 
-      .page2-wrap {
-        margin-top: 72px;
+      .hero-title-image {
+        width: 520px;
       }
 
-      .xp-zone {
-        min-height: 720px;
+      .top-links {
+        margin: 20px 0 42px;
+        padding: 0 18px;
       }
 
-      .media-layer {
-        position: relative;
-        inset: auto;
-        min-height: 760px;
-        margin-top: 20px;
+      .pill {
+        min-width: 112px;
+        padding: 10px 24px;
+        font-size: 11px;
       }
 
-      .video-window {
-        width: min(88vw, 390px);
+      .intro-grid {
+        gap: 60px;
+        padding: 0 110px 0 118px;
       }
 
-      .cutout-frame,
-      .pixel-frame {
-        width: min(42vw, 240px);
+      .code-line,
+      .info-line,
+      .section-tag,
+      .join-link,
+      .cta,
+      .archive-box p,
+      .archive-box li {
+        font-size: 11px;
       }
 
-      .ascii-panel,
-      .profile-panel {
-        min-height: 420px;
+      .intro-copy p,
+      .process-copy p,
+      .about-copy p {
+        font-size: 11px;
+        line-height: 1.58;
+        margin-bottom: 16px;
       }
 
-      .footer-controls,
-      .micro-caption {
-        position: relative;
-        left: auto;
-        right: auto;
-        bottom: auto;
+      .cta-row {
+        min-height: 36px;
+      }
+
+      .cta {
+        min-width: 176px;
+        padding: 6px 18px;
+        border-width: 1.2px;
+      }
+
+      .section-tag {
+        margin: 6px 0 16px;
+      }
+
+      .process-grid {
+        grid-template-columns: 1fr 320px;
+        gap: 34px;
+        padding: 0 116px 0 48px;
+      }
+
+      .ascii-block {
+        width: 360px;
+        margin-top: 8px;
+      }
+
+      .gallery {
+        width: 320px;
+        gap: 18px;
+      }
+
+      .media-card {
+        width: 151px;
+      }
+
+      .about-grid {
+        gap: 60px;
+        padding: 0 110px 0 118px;
+      }
+
+      .join-link {
         margin-top: 16px;
       }
+
+      .archive-panel {
+        padding: 0 118px;
+      }
+
+      .archive-box {
+        padding: 18px;
+      }
+
+      .archive-box h2 {
+        font-size: 13px;
+        margin-bottom: 12px;
+      }
     }
-    @media (max-width: 768px) {
-
-  body {
-    overflow-y: auto;
-  }
-
-  .view {
-    position: relative;
-    height: auto;
-  }
-
-  .page1-grid {
-    position: relative;
-    inset: unset;
-    margin-top: 100px;
-  }
-
-  .media-layer {
-    position: relative;
-    inset: unset;
-    margin-top: 20px;
-  }
-
-}
   </style>
 </head>
 <body>
-  <main class="site">
-    <section class="view page1 active grain" id="page1">
-      <div class="topbar">
-        <div class="tag">portfolio system / page 01</div>
-        <div class="nav">
-          <button type="button" data-view="page1">page 1</button>
-          <button type="button" data-view="page2">page 2</button>
-        </div>
-      </div>
+  <div class="sparkle-cursor" aria-hidden="true">
+    <div class="cursor-core"></div>
+  </div>
 
-      <div class="media-layer" aria-hidden="false">
-        <article class="video-window floating-media xp-window" data-depth="0.12" style="left: 29vw; top: 116px; width: min(31vw, 390px); z-index: 7; transform: rotate(2.2deg);">
-          <div class="xp-titlebar">
-            <span>media player</span>
-            <div class="xp-actions"><span>—</span><span>□</span><span>×</span></div>
-          </div>
-          <div class="player-shell">
-            <div class="player-screen">
-              <video autoplay muted loop playsinline>
-                <source src="https://files.catbox.moe/m8gq3z.mp4" type="video/mp4" />
-              </video>
-            </div>
-            <div class="player-controls" aria-hidden="true">
-              <div class="player-btn">▶</div>
-              <div class="player-btn">❚❚</div>
-              <div class="player-btn">■</div>
-              <div class="player-bar"></div>
-              <div class="player-time">00:12</div>
-            </div>
-          </div>
-        </article>
+  <main class="page">
+    <header class="meta-bar">
+      <span>QUERY_STRUCTURE SIGNAL</span>
+      <span>DEEP LEARNING_PROMPT ENGINEER</span>
+    </header>
 
-        <figure class="floating-media cutout-frame" style="left: 58vw; top: 260px; transform: rotate(-3deg);">
-          <figcaption class="cap">cutout photo</figcaption>
-          <img src="https://i.ibb.co/zV5v2ZGX/pixel-art-2.png" alt="Cutout portrait" />
-        </figure>
-
-        <figure class="floating-media pixel-frame" style="left: 76vw; top: 430px; transform: rotate(4deg);">
-          <figcaption class="cap">pixel png</figcaption>
-          <img src="https://i.ibb.co/1h4JMwb/IMG-2506.png" alt="Pixel artwork" />
-        </figure>
-      </div>
-
-      <div class="page1-grid">
-        <header class="hero">
-          <div class="hero-left">
-            <h1 class="title">FADAISI</h1>
-            <div class="subtitle">body as technology / matter remembers / hair as system</div>
-          </div>
-
-          <div class="hero-right">
-            <div class="statement">
-              <span class="small">editorial structure / no images</span>
-              <strong>text becomes image and layout becomes signal</strong>
-            </div>
-
-            <div class="editorial-lines" aria-hidden="true">
-              <span>query</span>
-              <span>structure</span>
-              <span>signal</span>
-              <span>body as archive</span>
-            </div>
-          </div>
-        </header>
-
-        <div class="xp-zone" id="xpZone">
-          <article class="xp-window" data-depth="0.22" style="left: 14px; top: 20px; width: 186px; z-index: 2; transform: rotate(-2deg);">
-            <div class="xp-titlebar">
-              <span>window 01</span>
-              <div class="xp-actions"><span>—</span><span>□</span><span>×</span></div>
-            </div>
-            <div class="xp-body">
-              <h2>YAWO</h2>
-              <p>body as system</p>
-              <p>ancestral interface</p>
-            </div>
-          </article>
-
-          <article class="xp-window" data-depth="0.3" style="left: 170px; top: 132px; width: 170px; z-index: 1; transform: rotate(1.4deg);">
-            <div class="xp-titlebar">
-              <span>window 02</span>
-              <div class="xp-actions"><span>—</span><span>□</span><span>×</span></div>
-            </div>
-            <div class="xp-body">
-              <h2>DATA</h2>
-              <p>query</p>
-              <p>structure</p>
-              <p>signal</p>
-            </div>
-          </article>
-
-          <article class="xp-window" data-depth="0.18" style="left: 20px; top: 286px; width: 214px; z-index: 3; transform: rotate(-1deg);">
-            <div class="xp-titlebar">
-              <span>window 03</span>
-              <div class="xp-actions"><span>—</span><span>□</span><span>×</span></div>
-            </div>
-            <div class="xp-body">
-              <h2>LOGIC &amp; CREATIVITY</h2>
-              <p>organized code</p>
-              <p>unstable image</p>
-              <p>machine learning systems</p>
-            </div>
-          </article>
-
-          <article class="xp-window" data-depth="0.27" style="left: 214px; top: 366px; width: 178px; z-index: 2; transform: rotate(2.3deg);">
-            <div class="xp-titlebar">
-              <span>window 04</span>
-              <div class="xp-actions"><span>—</span><span>□</span><span>×</span></div>
-            </div>
-            <div class="xp-body">
-              <h2>PLANNING</h2>
-              <p>process</p>
-              <p>structure</p>
-              <p>strategy</p>
-            </div>
-          </article>
-
-          <article class="xp-window" data-depth="0.24" style="left: 388px; top: 240px; width: 160px; z-index: 1; transform: rotate(-1.6deg);">
-            <div class="xp-titlebar">
-              <span>window 05</span>
-              <div class="xp-actions"><span>—</span><span>□</span><span>×</span></div>
-            </div>
-            <div class="xp-body">
-              <h2>SIGNAL</h2>
-              <p>text as image</p>
-              <p>moving layers</p>
-            </div>
-          </article>
-        </div>
-      </div>
-
-      <div class="micro-caption">click page 2 to enter the code view</div>
+    <section class="hero">
+      <img class="hero-logo" src="https://i.ibb.co/LX1VH1bs/logo-fadaisi.png" alt="Logo Fadaisi" />
+      <picture>
+        <source media="(min-width: 900px)" srcset="https://i.ibb.co/qMHfDFm2/live-studio-fadaisi.png" />
+        <img class="hero-title-image" src="https://i.ibb.co/TDpWhsjP/2026-live-studio-fadaisi.png" alt="LIVE STUDIO 2026" />
+      </picture>
     </section>
 
-    <section class="view page2 grain" id="page2">
-      <div class="topbar">
-        <div class="tag">profile / page 02</div>
-        <div class="nav">
-          <button type="button" data-view="page1">page 1</button>
-          <button type="button" data-view="page2">page 2</button>
+    <nav class="top-links" aria-label="Links principais">
+      <div class="pill-wrap">
+        <a class="pill" href="https://github.com/fadaisi" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="pill-wrap right">
+        <button class="pill" id="toggleArchive" type="button">Arquivo</button>
+      </div>
+    </nav>
+
+    <section class="intro-grid">
+      <div class="intro-copy">
+        <p class="code-line">print('Oi, meu nome é Janice')<br />0101, this move I made?</p>
+
+        <p>
+          Tenho 31 anos e curso a 3 anos em transição do mercado criativo para a área de
+          programação e desenvolvimento após 8 anos trabalhando como hairstylist e direção
+          criativa, e conectei esse desejo com aplicações criativas e machine learning “real”,
+          produzindo diversos estudos como esse, a partir desse corpo na indústria da moda.
+        </p>
+
+        <p>
+          Em 2022 optei guardar meus conhecimentos numa caixa e alinhei então as contingências
+          do digital, para criar um mercado de investimento na minha primeira carreira e
+          produzir esse novo presente com artefatos e dados.
+        </p>
+      </div>
+
+      <div class="intro-right">
+        <div class="cta-row">
+          <a class="cta" href="#open-studio">Acesse Live Studio</a>
+        </div>
+
+        <div class="process-copy">
+          <p>
+            A Janice de 13 anos que aprendia hardware, montagem de micro e adobe fireworks,
+            agora se chama Fadaisi e assume finalmente sua posição no mercado da tecnologia.
+          </p>
+
+          <p>
+            Agregado à Nave do Conhecimento (Prefeitura) pelo espaço de acolhimento e polos
+            como SQL, Python e BI. Nesta nova fase, atuo entre prática, teoria e machine learning.
+          </p>
+
+          <p>
+            Convido você a acompanhar um processo de Prompt Engineering e desenvolvimento no
+            meu Open Studio.
+          </p>
         </div>
       </div>
+    </section>
 
-      <div class="page2-wrap">
-        <section class="ascii-panel">
-          <div class="ascii-head">ascii / terminal field</div>
-          <div class="ascii-screen">
-<pre>
-<span class="ascii-line">FILE 02 — PROFILE</span>
-<span class="ascii-line">==============================================</span>
-<span class="ascii-line">processing...</span>
-<span class="ascii-line">input / output</span>
-<span class="ascii-line">body as interface</span>
-<span class="ascii-line">archive loading</span>
-<span class="ascii-line">----------------------------------------------</span>
-<span class="ascii-line">::::::::::@@@@@@@%%%%%%%%%#########:::::::::::</span>
-<span class="ascii-line">::::::@@@@@:::::::signal / matter / memory::::</span>
-<span class="ascii-line">::::@:::::::::::::code / structure / image::::</span>
-<span class="ascii-line">:::@@@@@@:::::::body body body as system::::::</span>
-<span class="ascii-line">::::::@@@:::::::hair hair hair as language::::</span>
-<span class="ascii-line">::::#####%%%%%%%@@@@@#########################</span>
-<span class="ascii-line">----------------------------------------------</span>
-<span class="ascii-line">read mode: active</span>
-<span class="ascii-line">visual noise: controlled</span>
-<span class="ascii-line">system status: stable</span>
-</pre>
-          </div>
-        </section>
+    <p class="section-tag">info.nnbix</p>
 
-        <section class="profile-panel">
-          <div class="profile-head">about / data / transition</div>
-          <div class="profile-body">
-            <article class="profile-block">
-              <h2>bio</h2>
-              <p>brazilian artist and creative director working across technology, data and digital culture.</p>
-              <p>early exploration with hardware, device disassembly and sculpture developed a material understanding of systems. over time, this practice moved through art, fashion and creative direction, using body and hair as language.</p>
-              <p>since 2021, active in digital environments with focus on crypto, NFTs and online distribution.</p>
-            </article>
-
-            <article class="profile-block">
-              <h2>current direction</h2>
-              <p>currently transitioning into data, with studies in python, SQL and business intelligence, developed through an autonomous learning process using machine learning systems.</p>
-              <p>seeking opportunities as data assistant or junior data analyst, integrating creative experience with data-driven systems.</p>
-            </article>
-
-            <article class="profile-block">
-              <h2>skills</h2>
-              <div class="skills">
-                <div class="skill-box">python</div>
-                <div class="skill-box">SQL</div>
-                <div class="skill-box">business intelligence</div>
-                <div class="skill-box">data organization</div>
-                <div class="skill-box">analysis</div>
-                <div class="skill-box">visualization</div>
-              </div>
-            </article>
-
-            <article class="profile-block">
-              <h2>closing line</h2>
-              <p>connecting technology, culture and data analysis through a coherent and structured visual language.</p>
-            </article>
-          </div>
-        </section>
+    <section class="process-grid">
+      <div>
+        <img class="ascii-block" src="https://i.ibb.co/1h4JMwb/IMG-2506.png" alt="ASCII art decorativa" />
       </div>
 
-      <div class="footer-controls">
-        <button class="xp-button" type="button" data-view="page1">back to page 1</button>
+      <div class="gallery">
+        <div class="media-card">
+          <iframe
+            src="https://player.vimeo.com/video/1182403263?title=0&byline=0&portrait=0"
+            title="Vídeo Live Studio"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="media-card">
+          <img src="https://i.ibb.co/hR9cVXzC/fadaisi-open-studio.png" alt="Fadaisi Open Studio" />
+        </div>
+        <div class="media-card">
+          <img src="https://i.ibb.co/6RPNMvJL/paradise.png" alt="Paradise" />
+        </div>
+        <div class="media-card">
+          <img src="https://i.ibb.co/gFFP6Tjf/fadaisi-studio.png" alt="Fadaisi Studio" />
+        </div>
+      </div>
+    </section>
+
+    <section class="about-grid" id="open-studio">
+      <div class="about-copy">
+        <p>
+          Ao me aproximar mais e mais de espaços voltados para tecnologia, percebi que o
+          aprendizado coletivo é um dos melhores formatos para evolução profissional,
+          principalmente no campo da IA aplicada à criação. As trocas, o processo vivo e a
+          convivência fazem parte do método.
+        </p>
+
+        <p>
+          A partir dessa leitura, decidi criar um branding cast de livre processo criativo,
+          para ir abrindo mais espaço para pesquisa, troca e processo em fluxo. Essa página
+          OPEN STUDIO nasce dessa virada.
+        </p>
+
+        <a class="join-link" href="#">JOIN STUDIO!</a>
+      </div>
+
+      <div class="empty-col"></div>
+    </section>
+
+    <section class="archive-panel" id="archivePanel" hidden>
+      <div class="archive-box">
+        <h2>Arquivo</h2>
+        <p>Área reservada para versões futuras do projeto, links, open studio, agenda e materiais de processo.</p>
+        <ul>
+          <li><a class="archive-link" href="https://github.com/fadaisi" target="_blank" rel="noreferrer">GitHub</a></li>
+          <li><a class="archive-link" href="#open-studio">Open Studio</a></li>
+        </ul>
       </div>
     </section>
   </main>
 
   <script>
-    const buttons = document.querySelectorAll('[data-view]');
-    const views = document.querySelectorAll('.view');
-    const cursor = document.createElement('div');
-    cursor.className = 'cursor-glitter';
-    document.body.appendChild(cursor);
+    const archiveButton = document.getElementById('toggleArchive');
+    const archivePanel = document.getElementById('archivePanel');
 
-    const xpWindows = document.querySelectorAll('.xp-window, .video-window');
-    let dragCounter = 20;
-    let activeDrag = null;
+    archiveButton.addEventListener('click', () => {
+      const isHidden = archivePanel.hasAttribute('hidden');
+      if (isHidden) {
+        archivePanel.removeAttribute('hidden');
+        archivePanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        archivePanel.setAttribute('hidden', '');
+      }
+    });
 
-    function createSpark(x, y) {
-      const spark = document.createElement('div');
-      spark.className = 'glitter-trail';
-      spark.style.left = `${x + (Math.random() * 12 - 6)}px`;
-      spark.style.top = `${y + (Math.random() * 12 - 6)}px`;
-      document.body.appendChild(spark);
-      setTimeout(() => spark.remove(), 700);
-    }
+    const cursor = document.querySelector('.sparkle-cursor');
+    const core = document.querySelector('.cursor-core');
+    let pointerX = window.innerWidth / 2;
+    let pointerY = window.innerHeight / 2;
+    let cursorX = pointerX;
+    let cursorY = pointerY;
 
-    function moveCursor(x, y) {
-      cursor.style.left = `${x}px`;
-      cursor.style.top = `${y}px`;
+    function movePointer(x, y) {
+      pointerX = x;
+      pointerY = y;
       createSpark(x, y);
     }
 
-    function switchView(target) {
-      views.forEach((view) => {
-        view.classList.toggle('active', view.id === target);
-      });
-
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
+    function createSpark(x, y) {
+      const spark = document.createElement('span');
+      spark.className = 'spark';
+      spark.style.left = x + 'px';
+      spark.style.top = y + 'px';
+      spark.style.setProperty('--dx', (Math.random() * 30 - 15) + 'px');
+      spark.style.setProperty('--dy', (Math.random() * 30 - 15) + 'px');
+      cursor.appendChild(spark);
+      window.setTimeout(() => spark.remove(), 800);
     }
 
-    buttons.forEach((button) => {
-      button.addEventListener('click', () => {
-        const target = button.getAttribute('data-view');
-        switchView(target);
-      });
-    });
-
-    xpWindows.forEach((win) => {
-      const currentTransform = win.style.transform || '';
-      const rotationMatch = currentTransform.match(/rotate\(([-\d.]+)deg\)/);
-      const baseRotation = rotationMatch ? parseFloat(rotationMatch[1]) : 0;
-      win.dataset.baseRotation = String(baseRotation);
-
-      let offsetX = 0;
-      let offsetY = 0;
-
-      const dragHandle = win.querySelector('.xp-titlebar') || win;
-
-      const startDrag = (x, y) => {
-        const rect = win.getBoundingClientRect();
-        offsetX = x - rect.left;
-        offsetY = y - rect.top;
-        activeDrag = win;
-        dragCounter += 1;
-        win.style.zIndex = dragCounter;
-        win.dataset.dragging = 'true';
-        document.body.classList.add('dragging');
-      };
-
-      const moveDrag = (x, y) => {
-        if (activeDrag !== win) return;
-        win.style.left = `${x - offsetX}px`;
-        win.style.top = `${y - offsetY}px`;
-        win.style.transform = 'none';
-        moveCursor(x, y);
-      };
-
-      const stopDrag = () => {
-        if (activeDrag !== win) return;
-        activeDrag = null;
-        win.dataset.dragging = 'false';
-        document.body.classList.remove('dragging');
-      };
-
-      dragHandle.addEventListener('mousedown', (e) => {
-        e.preventDefault();
-        startDrag(e.clientX, e.clientY);
-      });
-
-      window.addEventListener('mousemove', (e) => {
-        if (activeDrag !== win) return;
-        e.preventDefault();
-        moveDrag(e.clientX, e.clientY);
-      });
-
-      window.addEventListener('mouseup', stopDrag);
-
-      dragHandle.addEventListener('touchstart', (e) => {
-        const touch = e.touches[0];
-        if (!touch) return;
-        e.preventDefault();
-        startDrag(touch.clientX, touch.clientY);
-      }, { passive: false });
-
-      window.addEventListener('touchmove', (e) => {
-        if (activeDrag !== win) return;
-        const touch = e.touches[0];
-        if (!touch) return;
-        e.preventDefault();
-        moveDrag(touch.clientX, touch.clientY);
-      }, { passive: false });
-
-      window.addEventListener('touchend', stopDrag);
-      window.addEventListener('touchcancel', stopDrag);
-    });
-
     window.addEventListener('mousemove', (event) => {
-      if (activeDrag) return;
-      moveCursor(event.clientX, event.clientY);
+      movePointer(event.clientX, event.clientY);
     });
 
     window.addEventListener('touchmove', (event) => {
-      if (activeDrag) return;
       const touch = event.touches[0];
       if (!touch) return;
-      moveCursor(touch.clientX, touch.clientY);
+      movePointer(touch.clientX, touch.clientY);
     }, { passive: true });
 
-    window.addEventListener('mousemove', (event) => {
-      if (activeDrag) return;
+    window.addEventListener('touchstart', (event) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      movePointer(touch.clientX, touch.clientY);
+    }, { passive: true });
 
-      const normalizedY = event.clientY / window.innerHeight;
-      const normalizedX = event.clientX / window.innerWidth;
+    function animateCursor() {
+      cursorX += (pointerX - cursorX) * 0.18;
+      cursorY += (pointerY - cursorY) * 0.18;
+      core.style.left = cursorX + 'px';
+      core.style.top = cursorY + 'px';
+      requestAnimationFrame(animateCursor);
+    }
 
-      xpWindows.forEach((win) => {
-        if (win.dataset.dragging === 'true') return;
-
-        const depth = parseFloat(win.dataset.depth || '0.2');
-        const swayY = (normalizedY - 0.5) * 60 * depth * 3;
-        const swayX = (normalizedX - 0.5) * 20 * depth * 2;
-        const baseRotation = parseFloat(win.dataset.baseRotation || '0');
-
-        win.style.transform = `translate(${swayX}px, ${swayY}px) rotate(${baseRotation}deg)`;
-      });
-    });
+    animateCursor();
   </script>
 </body>
 </html>
