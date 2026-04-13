@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LIVE STUDIO — FORMULÁRIO</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="form-page">
+
+  <main class="form-wrap">
+    <section class="form-box">
+      <p class="eyebrow">LIVE STUDIO</p>
+      <h1>formulário de entrada</h1>
+      <p class="intro">
+        respostas rápidas ajudam a organizar a comunidade e melhorar o espaço coletivo.
+      </p>
+
+      <div class="user-tag">
+        <span id="userNamePreview">participante</span>
+        <span id="userEmailPreview"></span>
+      </div>
+
+      <form class="community-form" action="#" method="post">
+
+        <fieldset>
+          <legend>DADOS BÁSICOS</legend>
+
+          <label for="nomeCompleto">Nome</label>
+          <input type="text" id="nomeCompleto" name="nomeCompleto" />
+
+          <label for="emailCompleto">E-mail</label>
+          <input type="email" id="emailCompleto" name="emailCompleto" />
+
+          <label for="whatsapp">WhatsApp</label>
+          <input type="text" id="whatsapp" name="whatsapp" />
+
+          <label for="discord">@Discord</label>
+          <input type="text" id="discord" name="discord" />
+
+          <label for="idade">Idade</label>
+          <select id="idade" name="idade">
+            <option value="">selecione</option>
+            <option>18-24</option>
+            <option>25-34</option>
+            <option>35+</option>
+          </select>
+        </fieldset>
+
+        <fieldset>
+          <legend>CONTEXTO</legend>
+
+          <label for="areaAtual">Área atual</label>
+          <input type="text" id="areaAtual" name="areaAtual" />
+
+          <label for="trabalhando">Está trabalhando atualmente?</label>
+          <select id="trabalhando" name="trabalhando">
+            <option value="">selecione</option>
+            <option>Sim</option>
+            <option>Não</option>
+          </select>
+        </fieldset>
+
+        <fieldset>
+          <legend>TECNOLOGIA</legend>
+
+          <label for="ia">Contato com IA (0 a 10)</label>
+          <input type="range" id="ia" name="ia" min="0" max="10" value="5" />
+          <output for="ia" id="iaValue">5</output>
+
+          <label for="programacao">Contato com programação (0 a 10)</label>
+          <input type="range" id="programacao" name="programacao" min="0" max="10" value="5" />
+          <output for="programacao" id="programacaoValue">5</output>
+
+          <label for="arte">Contato com arte/imagem (0 a 10)</label>
+          <input type="range" id="arte" name="arte" min="0" max="10" value="5" />
+          <output for="arte" id="arteValue">5</output>
+        </fieldset>
+
+        <fieldset>
+          <legend>INTERESSE</legend>
+
+          <label for="motivo">Por que quer entrar?</label>
+          <textarea id="motivo" name="motivo" rows="4"></textarea>
+
+          <label for="preferencia">Prefere</label>
+          <select id="preferencia" name="preferencia">
+            <option value="">selecione</option>
+            <option>acompanhar</option>
+            <option>praticar</option>
+            <option>ambos</option>
+          </select>
+
+          <label for="disponibilidade">Disponibilidade semanal</label>
+          <select id="disponibilidade" name="disponibilidade">
+            <option value="">selecione</option>
+            <option>baixa</option>
+            <option>média</option>
+            <option>alta</option>
+          </select>
+        </fieldset>
+
+        <fieldset>
+          <legend>DIFICULDADES</legend>
+
+          <label for="barreira">Principal barreira hoje</label>
+          <select id="barreira" name="barreira">
+            <option value="">selecione</option>
+            <option>tempo</option>
+            <option>acesso</option>
+            <option>dinheiro</option>
+            <option>equipamento</option>
+            <option>linguagem técnica</option>
+            <option>foco</option>
+          </select>
+        </fieldset>
+
+        <fieldset>
+          <legend>MAPEAMENTO (OPCIONAL)</legend>
+
+          <label for="raca">Raça/cor</label>
+          <input type="text" id="raca" name="raca" />
+
+          <label for="genero">Identidade de gênero</label>
+          <input type="text" id="genero" name="genero" />
+
+          <label for="trans">Pessoa trans?</label>
+          <select id="trans" name="trans">
+            <option value="">selecione</option>
+            <option>Sim</option>
+            <option>Não</option>
+            <option>Prefiro não responder</option>
+          </select>
+
+          <label for="computador">Possui computador próprio?</label>
+          <select id="computador" name="computador">
+            <option value="">selecione</option>
+            <option>Sim</option>
+            <option>Não</option>
+          </select>
+
+          <label for="internet">Internet estável?</label>
+          <select id="internet" name="internet">
+            <option value="">selecione</option>
+            <option>Sim</option>
+            <option>Não</option>
+          </select>
+        </fieldset>
+
+        <button type="submit" class="submit-btn">enviar</button>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    const savedName = localStorage.getItem("liveStudioNome");
+    const savedEmail = localStorage.getItem("liveStudioEmail");
+    const savedPhone = localStorage.getItem("liveStudioTelefone");
+
+    const userNamePreview = document.getElementById("userNamePreview");
+    const userEmailPreview = document.getElementById("userEmailPreview");
+    const nomeCompleto = document.getElementById("nomeCompleto");
+    const emailCompleto = document.getElementById("emailCompleto");
+    const whatsapp = document.getElementById("whatsapp");
+
+    if (savedName) {
+      userNamePreview.textContent = savedName;
+      nomeCompleto.value = savedName;
+    }
+
+    if (savedEmail) {
+      userEmailPreview.textContent = savedEmail;
+      emailCompleto.value = savedEmail;
+    }
+
+    if (savedPhone && whatsapp) {
+      whatsapp.value = savedPhone;
+    }
+
+    function bindRange(inputId, outputId) {
+      const input = document.getElementById(inputId);
+      const output = document.getElementById(outputId);
+      input.addEventListener("input", () => {
+        output.textContent = input.value;
+      });
+    }
+
+    bindRange("ia", "iaValue");
+    bindRange("programacao", "programacaoValue");
+    bindRange("arte", "arteValue");
+  </script>
+</body>
+</html>
