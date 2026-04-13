@@ -342,6 +342,17 @@
       box-shadow: 0 0 8px rgba(255,102,196,0.75);
     }
 
+    .site-footer {
+      width: min(100%, var(--page-width));
+      margin: 32px auto 0;
+      padding: 0 8px 20px;
+      color: var(--accent);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      line-height: 1.35;
+      text-align: center;
+    }
+
     @keyframes sparkleFade {
       0% {
         opacity: 1;
@@ -399,9 +410,7 @@
      .archive-panel {
      padding: 0 16px;
 }
-     body {
-     cursor: auto;
-    }/* ==== desktop view ==== */
+/* ==== desktop view ==== */
 @media (min-width: 900px) {
   :root {
     --page-width: 1000px;
@@ -657,9 +666,11 @@
     margin-bottom: 10px;
   }
 
-  .sparkle-cursor {
-    display: none;
+  .site-footer {
+    font-size: 11px;
+    padding-bottom: 18px;
   }
+
 }
   </style>
 </head>
@@ -675,8 +686,12 @@
     </header>
 
     <section class="hero">
-      <img class="hero-logo" src="https://i.ibb.co/LX1VH1bs/logo-fadaisi.png" alt="Logo Fadaisi" />
-      <h1 class="hero-title">LIVE STUDIO 2026</h1>
+      <a href="index.html" aria-label="Voltar para a página inicial">
+        <img class="hero-logo" src="https://i.ibb.co/LX1VH1bs/logo-fadaisi.png" alt="Logo Fadaisi" />
+      </a>
+      <a href="page2.html" aria-label="Ir para Open Studio">
+        <h1 class="hero-title">LIVE STUDIO 2026</h1>
+      </a>
     </section>
 
     <nav class="top-links" aria-label="Links principais">
@@ -684,7 +699,7 @@
         <a class="pill" href="https://github.com/fadaisi" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="pill-wrap right">
-        <button class="pill" id="toggleArchive" type="button">Arquivo</button>
+        <a class="pill" href="pag3.html">Arquivo</a>
       </div>
     </nav>
 
@@ -712,7 +727,7 @@
 
       <div class="intro-right">
         <div class="cta-row">
-          <a class="cta" href="#open-studio">Acesse Live Studio</a>
+          <a class="cta" href="page2.html">Acesse Live Studio</a>
         </div>
 
         <div class="process-copy">
@@ -803,20 +818,12 @@
     </section>
   </main>
 
+  <footer class="site-footer">
+    <p>2026 ano de vitórias</p>
+    <p>desenvolvido por Fadaisi</p>
+  </footer>
+
   <script>
-    const archiveButton = document.getElementById('toggleArchive');
-    const archivePanel = document.getElementById('archivePanel');
-
-    archiveButton.addEventListener('click', () => {
-      const isHidden = archivePanel.hasAttribute('hidden');
-      if (isHidden) {
-        archivePanel.removeAttribute('hidden');
-        archivePanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      } else {
-        archivePanel.setAttribute('hidden', '');
-      }
-    });
-
     const cursor = document.querySelector('.sparkle-cursor');
     const core = document.querySelector('.cursor-core');
     let pointerX = window.innerWidth / 2;
