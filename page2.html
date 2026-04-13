@@ -8,7 +8,9 @@
     :root {
       --bg: #efefef;
       --text: #111111;
+      --muted: #d8d8d8;
       --accent: #ef2b2b;
+      --pill: #f4f0f0;
       --pink: #ff66c4;
       --page-width: 390px;
       --panel: rgba(255, 255, 255, 0.9);
@@ -40,6 +42,7 @@
     }
 
     img,
+    iframe,
     input,
     button {
       display: block;
@@ -78,7 +81,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0;
+      gap: 0px;
       margin-bottom: -18px;
     }
 
@@ -94,14 +97,14 @@
       color: #ff3131;
       font-size: 20px;
       text-align: center;
-      margin-top: 0;
+      margin-top: 0px;
     }
 
     .top-links {
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: center;
-      margin: 12px 0 28px;
+      margin: 12px 0 24px;
       gap: 16px;
     }
 
@@ -118,6 +121,9 @@
       align-items: center;
       justify-content: center;
       padding: 0;
+      min-width: unset;
+      background: none;
+      border: none;
       color: var(--accent);
       font-family: Arial, Helvetica, sans-serif;
       font-size: 12px;
@@ -126,7 +132,7 @@
       text-decoration: underline;
       line-height: 1;
       cursor: pointer;
-      transition: opacity 0.18s ease, transform 0.18s ease;
+      transition: opacity 0.18s ease;
     }
 
     .pill:hover,
@@ -321,6 +327,45 @@
       transition: transform 0.18s ease, opacity 0.18s ease;
     }
 
+    .archive-panel {
+      margin-top: 18px;
+      padding: 0 50px;
+    }
+
+    .archive-panel[hidden] {
+      display: none;
+    }
+
+    .archive-box {
+      border: 1px solid rgba(17,17,17,0.18);
+      padding: 12px;
+      background: rgba(255,255,255,0.25);
+    }
+
+    .archive-box h2 {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--accent);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+
+    .archive-box p,
+    .archive-box li {
+      font-size: 8px;
+      line-height: 1.5;
+    }
+
+    .archive-box ul {
+      padding-left: 14px;
+      margin-top: 6px;
+    }
+
+    .archive-link {
+      color: var(--accent);
+    }
+
     .sparkle-cursor {
       position: fixed;
       left: 0;
@@ -390,8 +435,12 @@
         width: 380px;
       }
 
+      .hero-title {
+        margin-top: 0;
+      }
+
       .top-links {
-        margin: 20px 0 34px;
+        margin: 20px 0 42px;
         padding: 0 18px;
       }
 
@@ -469,6 +518,19 @@
       .mini-fields input {
         font-size: 11px;
       }
+
+      .archive-panel {
+        padding: 0 118px;
+      }
+
+      .archive-box {
+        padding: 18px;
+      }
+
+      .archive-box h2 {
+        font-size: 13px;
+        margin-bottom: 12px;
+      }
     }
 
     @media (max-width: 640px) {
@@ -527,9 +589,20 @@
         <a class="pill" href="https://github.com/fadaisi" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="pill-wrap right">
-        <a class="pill" href="index.html">Arquivo</a>
+        <button class="pill" id="toggleArchive" type="button">Arquivo</button>
       </div>
     </nav>
+
+    <section class="archive-panel" id="archivePanel" hidden>
+      <div class="archive-box">
+        <h2>Arquivo</h2>
+        <p>Área reservada para versões futuras do projeto, links, formulário e materiais do processo.</p>
+        <ul>
+          <li><a class="archive-link" href="https://github.com/fadaisi" target="_blank" rel="noreferrer">GitHub</a></li>
+          <li><a class="archive-link" href="formulario.html">Formulário</a></li>
+        </ul>
+      </div>
+    </section>
 
     <section class="editorial" aria-label="Estrutura do projeto">
       <div class="row offset">
@@ -697,6 +770,21 @@
 
   <script src="gate.js"></script>
   <script>
+    const archiveButton = document.getElementById('toggleArchive');
+    const archivePanel = document.getElementById('archivePanel');
+
+    if (archiveButton && archivePanel) {
+      archiveButton.addEventListener('click', () => {
+        const isHidden = archivePanel.hasAttribute('hidden');
+        if (isHidden) {
+          archivePanel.removeAttribute('hidden');
+          archivePanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          archivePanel.setAttribute('hidden', '');
+        }
+      });
+    }
+
     const cursor = document.querySelector('.sparkle-cursor');
     const core = document.querySelector('.cursor-core');
     let pointerX = window.innerWidth / 2;
