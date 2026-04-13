@@ -7,17 +7,17 @@
 
   <style>
     :root {
-      --bg: #ececec;
+      --bg: #efefef;
       --text: #1a1a1a;
-      --accent: #ff3b30;
-      --pill-bg: rgba(255, 255, 255, 0.35);
-      --pill-border: rgba(255, 255, 255, 0.22);
+      --accent: #ef2b2b;
       --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.06);
       --shadow-hover: 0 18px 35px rgba(0, 0, 0, 0.12);
     }
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     html {
@@ -31,6 +31,7 @@
       color: var(--text);
       font-family: Arial, Helvetica, sans-serif;
       overflow-x: hidden;
+      cursor: none;
     }
 
     img {
@@ -43,101 +44,144 @@
       text-decoration: none;
     }
 
-    /* ===== FIXED HEAD / HERO ===== */
-
     .page-shell {
       position: relative;
       width: 100%;
       min-height: 100vh;
     }
 
-    .hero {
+    .page {
+      width: min(100%, 390px);
+      margin: 0 auto;
+      padding: 4px 4px 56px;
       position: relative;
-      width: 100%;
-      padding: 18px 14px 0;
     }
 
-    .signal-row {
+    .meta-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 12px;
       color: var(--accent);
-      font-size: 10px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 8px;
       line-height: 1;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
       margin-bottom: 18px;
       white-space: nowrap;
     }
 
-    .hero-logo-wrap {
-      width: 100%;
+    .hero {
       display: flex;
-      justify-content: center;
-      margin-top: 6px;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin-bottom: -10px;
     }
 
     .hero-logo {
-      width: min(66vw, 320px);
+      width: min(92vw, 220px);
       object-fit: contain;
-      filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.08));
-      user-select: none;
-      pointer-events: none;
+      margin-bottom: -8px;
     }
 
     .hero-title {
-      margin: 18px 0 16px;
+      margin: 0;
       text-align: center;
       color: var(--accent);
-      font-weight: 800;
-      font-size: clamp(18px, 3.7vw, 28px);
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 900;
+      font-size: 16px;
       line-height: 1;
-      letter-spacing: -0.03em;
       text-transform: uppercase;
     }
 
-    .pill-row {
-      display: flex;
-      justify-content: space-between;
+    .top-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       align-items: center;
       gap: 16px;
-      margin: 0 auto;
-      width: min(100%, 1120px);
-      padding: 0 4px;
+      margin: 10px 0 20px;
+      padding: 0 16px;
+    }
+
+    .pill-wrap {
+      display: flex;
+    }
+
+    .pill-wrap.right {
+      justify-content: flex-end;
     }
 
     .pill {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 58px;
-      padding: 7px 14px;
-      border-radius: 999px;
-      background: var(--pill-bg);
-      border: 1px solid var(--pill-border);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
       color: var(--accent);
-      font-size: 9px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.08em;
+      text-decoration: underline;
       line-height: 1;
-      transition: transform 0.18s ease, opacity 0.18s ease, border-color 0.18s ease;
+      transition: opacity 0.18s ease;
     }
 
     .pill:hover {
-      transform: translateY(-1px);
-      opacity: 0.82;
-      border-color: rgba(255, 59, 48, 0.16);
+      opacity: 0.92;
     }
 
-    /* ===== MAIN CONTENT ===== */
+    .sparkle-cursor {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: normal;
+    }
+
+    .cursor-core {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,102,196,0.9) 45%, rgba(255,102,196,0.08) 100%);
+      box-shadow:
+        0 0 10px rgba(255,102,196,0.8),
+        0 0 18px rgba(255,102,196,0.55),
+        0 0 26px rgba(255,102,196,0.35);
+      transform: translate(-50%, -50%);
+    }
+
+    .spark {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(255,102,196,0.8);
+      transform: translate(-50%, -50%);
+      animation: sparkleFade 800ms ease-out forwards;
+      box-shadow: 0 0 8px rgba(255,102,196,0.75);
+    }
+
+    @keyframes sparkleFade {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.2);
+      }
+    }
 
     .page3-main {
       width: min(100%, 1180px);
       margin: 0 auto;
-      padding: 26px 20px 80px;
+      padding: 4px 20px 80px;
     }
 
     /* ===== ORBIT SECTION ===== */
@@ -147,7 +191,7 @@
       width: 100%;
       display: grid;
       place-items: center;
-      margin-top: 8px;
+      margin-top: 0;
       margin-bottom: 76px;
     }
 
@@ -296,11 +340,22 @@
       height: 60px;
     }
 
+    .site-footer {
+      width: min(100%, 390px);
+      margin: 32px auto 0;
+      padding: 0 8px 20px;
+      color: var(--accent);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      line-height: 1.35;
+      text-align: center;
+    }
+
     /* ===== TABLET ===== */
 
     @media (max-width: 900px) {
       .page3-main {
-        padding-top: 28px;
+        padding-top: 0;
       }
 
       .archive-grid {
@@ -316,38 +371,8 @@
     /* ===== MOBILE ===== */
 
     @media (max-width: 768px) {
-      .hero {
-        padding: 12px 10px 0;
-      }
-
-      .signal-row {
-        font-size: 8px;
-        letter-spacing: 0.05em;
-        margin-bottom: 14px;
-      }
-
-      .hero-logo {
-        width: min(72vw, 260px);
-      }
-
-      .hero-title {
-        margin-top: 14px;
-        margin-bottom: 14px;
-        font-size: clamp(16px, 5.8vw, 22px);
-      }
-
-      .pill-row {
-        padding: 0;
-      }
-
-      .pill {
-        min-width: 56px;
-        padding: 7px 12px;
-        font-size: 8px;
-      }
-
       .page3-main {
-        padding: 20px 18px 70px;
+        padding: 0 18px 70px;
       }
 
       .orbit-section {
@@ -373,8 +398,19 @@
       }
     }
 
+    @media (max-width: 640px) {
+      .archive-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px 14px;
+      }
+
+      .archive-card {
+        max-width: 140px;
+      }
+    }
+
     @media (max-width: 520px) {
-      .signal-row {
+      .meta-bar {
         font-size: 7px;
       }
 
@@ -390,70 +426,136 @@
       .archive-card {
         max-width: 84px;
       }
+
+      .site-footer {
+        font-size: 11px;
+        padding-bottom: 18px;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .page {
+        width: min(100%, 1000px);
+        padding: 8px 8px 100px;
+      }
+
+      .meta-bar {
+        font-size: 12px;
+        margin-bottom: 26px;
+      }
+
+      .hero {
+        gap: 14px;
+        margin-bottom: 24px;
+      }
+
+      .hero-logo {
+        width: 320px;
+        margin-bottom: 0;
+      }
+
+      .hero-title {
+        font-size: 28px;
+      }
+
+      .top-links {
+        margin: 20px 0 42px;
+        padding: 0 18px;
+      }
+
+      .site-footer {
+        width: min(100%, 1000px);
+        font-size: 13px;
+        padding-bottom: 28px;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="sparkle-cursor" aria-hidden="true">
+    <div class="cursor-core"></div>
+  </div>
+
   <div class="page-shell">
-    <header class="hero">
-      <div class="signal-row">
+    <div class="page">
+      <header class="meta-bar">
         <span>QUERY_STRUCTURE SIGNAL</span>
         <span>DEEP LEARNING_PROMPT ENGINEER</span>
-      </div>
+      </header>
 
-      <div class="hero-logo-wrap">
-        <img class="hero-logo" src="assets/https://i.ibb.co/LX1VH1bs/logo-fadaisi.png" alt="Fadaisi logo" />
-      </div>
+      <section class="hero">
+        <a href="index.html" aria-label="Voltar para a página inicial">
+          <img class="hero-logo" src="https://i.ibb.co/LX1VH1bs/logo-fadaisi.png" alt="Logo Fadaisi" />
+        </a>
+        <a href="page2.html" aria-label="Ir para Open Studio">
+          <h1 class="hero-title">LIVE STUDIO 2026</h1>
+        </a>
+      </section>
 
-      <h1 class="hero-title">LIVE STUDIO 2026</h1>
-
-      <div class="pill-row">
-        <a class="pill" href="https://github.com/fadaisi/fadaisi.github.io" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <!-- TROQUE AQUI PELO SEU LINK DE DOWNLOAD / ARQUIVO -->
-        <a class="pill" href="#" target="_blank" rel="noopener noreferrer">Arquivo</a>
-      </div>
-    </header>
+      <nav class="top-links" aria-label="Links principais">
+        <div class="pill-wrap">
+          <a class="pill" href="https://github.com/fadaisi" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+        <div class="pill-wrap right">
+          <a class="pill" href="page2.html">openstudio</a>
+        </div>
+      </nav>
+    </div>
 
     <main class="page3-main">
       <section class="orbit-section" aria-label="Arquivo rotativo">
         <div class="orbit-stage" id="orbitStage">
           <div class="orbit-ring" id="orbitRing">
-            <!-- TROQUE AS IMAGENS PELOS THUMBS DOS VÍDEOS / ARQUIVOS -->
-            <a class="orbit-item" href="#" style="--i:0;"><img src="assets/thumb-01.jpg" alt="arquivo 1"></a>
-            <a class="orbit-item" href="#" style="--i:1;"><img src="assets/thumb-02.jpg" alt="arquivo 2"></a>
-            <a class="orbit-item" href="#" style="--i:2;"><img src="assets/thumb-03.jpg" alt="arquivo 3"></a>
-            <a class="orbit-item" href="#" style="--i:3;"><img src="assets/thumb-04.jpg" alt="arquivo 4"></a>
-            <a class="orbit-item" href="#" style="--i:4;"><img src="assets/thumb-05.jpg" alt="arquivo 5"></a>
-            <a class="orbit-item" href="#" style="--i:5;"><img src="assets/thumb-06.jpg" alt="arquivo 6"></a>
-            <a class="orbit-item" href="#" style="--i:6;"><img src="assets/thumb-07.jpg" alt="arquivo 7"></a>
-            <a class="orbit-item" href="#" style="--i:7;"><img src="assets/thumb-08.jpg" alt="arquivo 8"></a>
+            <!-- thumb videos e imagens -->
+            <a class="orbit-item" href="#" style="--i:0;"><img src="https://i.ibb.co/GQpGB7ry/IMG-2405.jpg" alt="arquivo 1"></a>
+            <a class="orbit-item" href="#" style="--i:1;"><img src="https://i.ibb.co/LbWwspj/IMG-2396.jpg" alt="arquivo 2"></a>
+            <a class="orbit-item" href="#" style="--i:2;"><img src="https://i.ibb.co/XrMDrRhR/IMG-2395.jpg" alt="arquivo 3"></a>
+            <a class="orbit-item" href="#" style="--i:3;"><img src="https://i.ibb.co/sdC1jm7H/Ebervdpiccas-Janice-Mascarenhas-preselection-5.jpg" alt="arquivo 4"></a>
+            <a class="orbit-item" href="#" style="--i:4;"><img src="https://i.ibb.co/LmGWf2s/janicemascarenhas-httpss-mj-run-FUw0of-VZRZg-httpss-mj-run-E99n-I-4edd278f-a69d-4c3f-91bc-0dab7843d8.png
+                                                                    " alt="arquivo 5"></a>
+            <a class="orbit-item" href="#" style="--i:5;"><img src="https://i.ibb.co/5XC76mdy/the-souza-family-3.png" alt="arquivo 6"></a>
+            <a class="orbit-item" href="#" style="--i:6;"><img src="https://i.ibb.co/ZpQ5hrw5/lodo-experimento.webp" alt="arquivo 7"></a>
+            <a class="orbit-item" href="#" style="--i:7;"><img src="https://i.ibb.co/ks3js3D7/PROJETO-DES.jpg" alt="arquivo 8"></a>
           </div>
         </div>
       </section>
 
       <section class="archive-grid" aria-label="Grade de arquivos">
         <!-- TROQUE AS IMAGENS DE BAIXO -->
-        <a class="archive-card" href="#"><img src="assets/grid-01.jpg" alt="arquivo abaixo 1"></a>
-        <a class="archive-card" href="#"><img src="assets/grid-02.jpg" alt="arquivo abaixo 2"></a>
-        <a class="archive-card" href="#"><img src="assets/grid-03.jpg" alt="arquivo abaixo 3"></a>
-        <a class="archive-card" href="#"><img src="assets/grid-04.jpg" alt="arquivo abaixo 4"></a>
-        <a class="archive-card" href="#"><img src="assets/grid-05.jpg" alt="arquivo abaixo 5"></a>
-        <a class="archive-card" href="#"><img src="assets/grid-06.jpg" alt="arquivo abaixo 6"></a>
-        <a class="archive-card" href="#"><img src="assets/grid-07.jpg" alt="arquivo abaixo 7"></a>
-        <a class="archive-card" href="#"><img src="assets/grid-08.jpg" alt="arquivo abaixo 8"></a>
+        <a class="archive-card" href="#"><img src="https://i.ibb.co/k6mmjFvY/janicemascarenhas-httpss-mj-runa4q-U8-Td-PWDI-this-person-with-t-a6cf8474-13f4-4aee-b4f0-e39fc47dc5a4.png" alt="arquivo abaixo 1"></a>
+        <a class="archive-card" href="#"><img src="https://i.ibb.co/kgpFX5p9/mown.png" alt="arquivo abaixo 2"></a>
+        <a class="archive-card" href="#"><img src="https://i.ibb.co/qLrCmZqv/janicemascarenhas-httpss-mj-run-B-7-Cfstj-Qtg-improve-the-shape-of-3c1d4c15-ccbd-4d74-b065-3551f79077.png" alt="arquivo abaixo 3"></a>
+        <a class="archive-card" href="#"><img src="https://i.ibb.co/v6yTnKDC/Janice-Mascarenhas-De-volta-para-o-futuro.jpg" alt="arquivo abaixo 4"></a>
+        <a class="archive-card" href="#"><img src="https://i.ibb.co/WNrWdDD3/Mulher-e-instala-o-escult-rica-em-cena-calma.png" alt="arquivo abaixo 5"></a>
+        <a class="archive-card" href="#"><img src="https://i.ibb.co/FbcB0G4G/fadaisi-studio.png" alt="arquivo abaixo 6"></a>
+        <a class="archive-card" href="#"><img src="https://i.ibb.co/wZvGwd3p/fadaisi-open-studio.png" alt="arquivo abaixo 7"></a>
+        <a class="archive-card" href="#"><img src="https://i.ibb.co/rRHKs6N1/Gemini-Generated-Image-yl3meoyl3meoyl3m-removebg-preview.png" alt="arquivo abaixo 8"></a>
       </section>
 
       <div class="bottom-space"></div>
     </main>
   </div>
 
+  <footer class="site-footer">
+    <p>2026 ano de vitórias</p>
+    <p>desenvolvido por Fadaisi</p>
+  </footer>
+
   <script>
     const orbitStage = document.getElementById("orbitStage");
     const orbitItems = Array.from(document.querySelectorAll(".orbit-item"));
+    const cursor = document.querySelector(".sparkle-cursor");
+    const core = document.querySelector(".cursor-core");
 
     let baseAngle = -Math.PI / 2;
     let targetAngle = baseAngle;
     let currentAngle = baseAngle;
+    let pointerX = window.innerWidth / 2;
+    let pointerY = window.innerHeight / 2;
+    let cursorX = pointerX;
+    let cursorY = pointerY;
+    let autoRotateOffset = 0;
+    let lastInteraction = Date.now();
 
     function getOrbitRadius() {
       const w = orbitStage.clientWidth;
@@ -484,23 +586,95 @@
     }
 
     function animateOrbit() {
+      const isTouchDevice = window.matchMedia("(pointer: coarse)").matches || window.innerWidth <= 768;
+      if (isTouchDevice && Date.now() - lastInteraction > 1200) {
+        autoRotateOffset += 0.01;
+        targetAngle = baseAngle + autoRotateOffset;
+      }
+
       currentAngle += (targetAngle - currentAngle) * 0.08;
       positionOrbit();
       requestAnimationFrame(animateOrbit);
     }
 
-    orbitStage.addEventListener("mousemove", (event) => {
+    function updateAngleFromClientX(clientX) {
       const rect = orbitStage.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
-      const deltaX = event.clientX - centerX;
+      const deltaX = clientX - centerX;
       targetAngle = baseAngle + deltaX * 0.0085;
+      lastInteraction = Date.now();
+    }
+
+    function movePointer(x, y) {
+      pointerX = x;
+      pointerY = y;
+      createSpark(x, y);
+    }
+
+    function createSpark(x, y) {
+      if (!cursor) return;
+      const spark = document.createElement("span");
+      spark.className = "spark";
+      spark.style.left = x + "px";
+      spark.style.top = y + "px";
+      spark.style.setProperty("--dx", Math.random() * 30 - 15 + "px");
+      spark.style.setProperty("--dy", Math.random() * 30 - 15 + "px");
+      cursor.appendChild(spark);
+      window.setTimeout(() => spark.remove(), 800);
+    }
+
+    orbitStage.addEventListener("mousemove", (event) => {
+      updateAngleFromClientX(event.clientX);
     });
 
     orbitStage.addEventListener("mouseleave", () => {
       targetAngle = baseAngle;
+      lastInteraction = Date.now();
     });
 
-    window.addEventListener("resize", positionOrbit);
+    orbitStage.addEventListener("touchstart", (event) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      updateAngleFromClientX(touch.clientX);
+      movePointer(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    orbitStage.addEventListener("touchmove", (event) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      updateAngleFromClientX(touch.clientX);
+      movePointer(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    window.addEventListener("mousemove", (event) => {
+      movePointer(event.clientX, event.clientY);
+    });
+
+    window.addEventListener("touchmove", (event) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      movePointer(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    window.addEventListener("touchstart", (event) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      movePointer(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    function animateCursor() {
+      if (!core) return;
+      cursorX += (pointerX - cursorX) * 0.18;
+      cursorY += (pointerY - cursorY) * 0.18;
+      core.style.left = cursorX + "px";
+      core.style.top = cursorY + "px";
+      requestAnimationFrame(animateCursor);
+    }
+
+    window.addEventListener("resize", () => {
+      positionOrbit();
+      lastInteraction = Date.now();
+    });
 
     orbitItems.forEach((item) => {
       item.addEventListener("mouseenter", () => {
@@ -510,6 +684,7 @@
 
     positionOrbit();
     animateOrbit();
+    animateCursor();
   </script>
 </body>
 </html>
