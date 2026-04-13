@@ -3,440 +3,493 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Live Studio 2026</title>
-
+  <title>LIVE STUDIO 2026</title>
   <style>
-    :root{
-  --bg:#efefef;
-  --red:#ff3131;
-  --text:#111111;
-  --muted:#d8d8d8;
-  --pill:#f4f0f0;
-  --page-width:390px;
-}
-
-.page2{
-  width:min(100%, var(--page-width));
-  min-height:100vh;
-  margin:0 auto;
-  padding:4px 4px 56px;
-  position:relative;
-}
-
-.wrap{
-  width:100%;
-  margin:0;
-  position:relative;
-}
-
-    /* topo fino */
- .meta-bar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  color:var(--red);
-  font-family:Arial, Helvetica, sans-serif;
-  font-size:8px;
-  text-transform:uppercase;
-  letter-spacing:.04em;
-  margin-bottom:18px;
-  line-height:1;
-  white-space:nowrap;
-}
-
-.hero{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:0;
-  margin-bottom:-18px;
-}
-
-.hero-logo{
-  width:470px;
-  object-fit:contain;
-  margin-bottom:-15px;
-}
-
-.hero-title{
-  font-family:Arial, Helvetica, sans-serif;
-  font-weight:900;
-  color:#ff3131;
-  font-size:20px;
-  text-align:center;
-  margin-top:0;
-}
-
-.top-links{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  align-items:center;
-  margin:12px 0 24px;
-  gap:16px;
-}
-
-.pill-wrap{
-  display:flex;
-}
-
-.pill-wrap.right{
-  justify-content:flex-end;
-}
-
-.pill{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding:0;
-  min-width:unset;
-  background:none;
-  border:none;
-  color:var(--red);
-  font-family:Arial, Helvetica, sans-serif;
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:.08em;
-  text-decoration:underline;
-  line-height:1;
-  cursor:pointer;
-  transition:opacity .18s ease;
-}
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width:86px;
-      padding:8px 14px;
-      border-radius:999px;
-      background:rgba(232, 225, 225, .75);
-      color:rgba(255,59,48,.65);
-      font-family:Arial, Helvetica, sans-serif;
-      font-size:9px;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-      border:1px solid rgba(255,59,48,.05);
+    :root {
+      --bg: #efefef;
+      --text: #111111;
+      --muted: #d8d8d8;
+      --accent: #ef2b2b;
+      --pill: #f4f0f0;
+      --pink: #ff66c4;
+      --page-width: 390px;
     }
 
-    /* poster area */
-    .poster{
-      position:relative;
-      min-height:1280px;
-      padding:0 8px;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    .section-title{
-      font-family:Arial, Helvetica, sans-serif;
-      font-weight:900;
-      text-transform:uppercase;
-      color:var(--red);
-      letter-spacing:-0.055em;
-      line-height:.92;
-      font-size:62px;
+    html {
+      scroll-behavior: smooth;
     }
 
-    .copy{
-      font-size:11px;
-      line-height:1.62;
-      max-width:255px;
-      color:#111;
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      cursor: none;
     }
 
-    .copy p + p{
-      margin-top:10px;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    /* posições desktop */
-    .sobre-title{
-      position:absolute;
-      top:86px;
-      left:0;
+    img {
+      display: block;
+      max-width: 100%;
     }
 
-    .sobre-copy{
-      position:absolute;
-      top:176px;
-      left:62px;
+    button {
+      font: inherit;
+      background: none;
+      border: none;
     }
 
-    .porque-title{
-      position:absolute;
-      top:328px;
-      right:0;
+    .page {
+      width: min(100%, var(--page-width));
+      margin: 0 auto;
+      padding: 4px 4px 56px;
+      position: relative;
     }
 
-    .porque-copy{
-      position:absolute;
-      top:416px;
-      right:28px;
+    .meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--accent);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 18px;
+      line-height: 1;
+      white-space: nowrap;
     }
 
-    .formato-title{
-      position:absolute;
-      top:612px;
-      left:0;
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin-bottom: -18px;
     }
 
-    .formato-copy{
-      position:absolute;
-      top:704px;
-      left:30px;
+    .hero-logo {
+      width: 470px;
+      object-fit: contain;
+      margin-bottom: -15px;
     }
 
-    .rede-title{
-      position:absolute;
-      top:870px;
-      right:0;
+    .hero-title {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 900;
+      color: #ff3131;
+      font-size: 20px;
+      text-align: center;
+      margin-top: 0;
     }
 
-    .rede-copy{
-      position:absolute;
-      top:958px;
-      right:28px;
+    .top-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      margin: 12px 0 24px;
+      gap: 16px;
     }
 
-    .network-figure{
-      position:absolute;
-      left:50%;
-      transform:translateX(-50%);
-      bottom:8px;
-      width:min(420px, 66%);
-      opacity:.4;
-      pointer-events:none;
-      user-select:none;
+    .pill-wrap {
+      display: flex;
     }
 
-    /* ajuda visual leve */
-    .poster::after{
-      content:"";
-      position:absolute;
-      left:50%;
-      transform:translateX(-50%);
-      bottom:0;
-      width:76%;
-      height:1px;
-      background:transparent;
+    .pill-wrap.right {
+      justify-content: flex-end;
     }
 
-    /* tablet */
-    @media (max-width: 900px){
-      .wrap{
-        width:min(100%, 690px);
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      min-width: unset;
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-decoration: underline;
+      line-height: 1;
+      cursor: pointer;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+
+    .pill:hover,
+    .section-link:hover,
+    .sparkle-cursor .cursor-core:hover {
+      transform: translateY(-1px);
+      opacity: 0.92;
+    }
+
+    .section-tag {
+      text-align: center;
+      color: var(--accent);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 8px;
+      letter-spacing: 0.03em;
+      margin: 2px 0 16px;
+    }
+
+    .project-layout {
+      padding: 0 24px 20px;
+    }
+
+    .project-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .project-block {
+      display: grid;
+      gap: 10px;
+    }
+
+    .project-block.right {
+      justify-items: end;
+      text-align: right;
+    }
+
+    .project-title {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #ff3131;
+      letter-spacing: -0.055em;
+      line-height: 0.92;
+      font-size: 38px;
+      max-width: 100%;
+    }
+
+    .project-copy {
+      width: min(100%, 235px);
+      font-size: 8px;
+      line-height: 1.5;
+      text-align: justify;
+    }
+
+    .project-copy p + p {
+      margin-top: 10px;
+    }
+
+    .network-figure-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 8px;
+      padding-top: 8px;
+    }
+
+    .network-figure {
+      width: min(100%, 280px);
+      opacity: 0.36;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .section-link {
+      display: inline-block;
+      margin-top: 8px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      transition: transform 0.18s ease, opacity 0.18s ease;
+    }
+
+    .sparkle-cursor {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: normal;
+    }
+
+    .cursor-core {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,102,196,0.9) 45%, rgba(255,102,196,0.08) 100%);
+      box-shadow:
+        0 0 10px rgba(255,102,196,0.8),
+        0 0 18px rgba(255,102,196,0.55),
+        0 0 26px rgba(255,102,196,0.35);
+      transform: translate(-50%, -50%);
+    }
+
+    .spark {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(255,102,196,0.8);
+      transform: translate(-50%, -50%);
+      animation: sparkleFade 800ms ease-out forwards;
+      box-shadow: 0 0 8px rgba(255,102,196,0.75);
+    }
+
+    @keyframes sparkleFade {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
       }
-
-      .poster{
-        min-height:1220px;
-      }
-
-      .section-title{
-        font-size:56px;
-      }
-
-      .copy{
-        font-size:11px;
-        max-width:235px;
-      }
-
-      .sobre-copy{ left:48px; }
-      .porque-copy{ right:18px; }
-      .formato-copy{ left:20px; }
-      .rede-copy{ right:18px; }
-
-      .network-figure{
-        width:min(360px, 72%);
+      100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.2);
       }
     }
 
-    /* celular */
-    @media (max-width: 640px){
-      .page2{
-        padding-top:10px;
+    @media (min-width: 900px) {
+      :root {
+        --page-width: 1000px;
       }
 
-      .wrap{
-        width:min(100%, 420px);
+      .page {
+        padding: 8px 8px 100px;
       }
 
-      .microhead{
-        grid-template-columns:1fr;
-        gap:4px;
-        text-align:center;
-        margin-bottom:10px;
+      .meta-bar {
+        font-size: 12px;
+        margin-bottom: 26px;
       }
 
-      .microhead .left,
-      .microhead .right{
-        justify-self:center;
-        text-align:center;
+      .hero {
+        gap: 14px;
+        margin-bottom: 24px;
       }
 
-      .logo{
-        width:min(290px, 82vw);
-        margin-bottom:8px;
+      .hero-logo {
+        width: 380px;
       }
 
-      .live-title{
-        font-size:16px;
+      .top-links {
+        margin: 20px 0 42px;
+        padding: 0 18px;
       }
 
-      .nav-row{
-        margin:10px 0 18px;
+      .pill {
+        min-width: 112px;
+        padding: 10px 24px;
+        font-size: 11px;
       }
 
-      .pill{
-        min-width:82px;
-        font-size:8px;
-        padding:7px 12px;
+      .section-tag,
+      .section-link {
+        font-size: 11px;
       }
 
-      .poster{
-        min-height:auto;
-        display:flex;
-        flex-direction:column;
-        gap:28px;
-        padding:0 0 230px;
+      .project-layout {
+        padding: 0 92px 28px;
       }
 
-      .section-title,
-      .copy,
-      .sobre-title,
-      .sobre-copy,
-      .porque-title,
-      .porque-copy,
-      .formato-title,
-      .formato-copy,
-      .rede-title,
-      .rede-copy{
-        position:static;
+      .project-grid {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 92px;
+        row-gap: 54px;
+        align-items: start;
       }
 
-      .section-title{
-        font-size:34px;
-        margin-bottom:10px;
+      .project-block {
+        gap: 14px;
       }
 
-      .copy{
-        max-width:none;
-        font-size:12px;
-        line-height:1.58;
+      .project-block.right {
+        margin-top: 96px;
       }
 
-      .block{
-        position:relative;
+      .project-title {
+        font-size: 74px;
       }
 
-      .block.left{
-        width:100%;
-        padding-right:56px;
+      .project-copy {
+        width: 280px;
+        font-size: 11px;
+        line-height: 1.58;
       }
 
-      .block.right{
-        width:100%;
-        padding-left:76px;
+      .network-figure-wrap {
+        grid-column: 1 / -1;
+        margin-top: 6px;
       }
 
-      .network-figure{
-        width:min(310px, 88vw);
-        bottom:0;
+      .network-figure {
+        width: min(100%, 360px);
       }
     }
   </style>
 </head>
 <body>
-  <main class="page2">
-    <div class="wrap">
-<header class="meta-bar">
-  <span>QUERY_STRUCTURE SIGNAL</span>
-  <span>DEEP LEARNING_PROMPT ENGINEER</span>
-</header>
-
-<section class="hero">
-  <img class="hero-logo" src="https://i.ibb.co/LX1VH1bs/logo-fadaisi.png" alt="Logo Fadaisi" />
-  <h1 class="hero-title">LIVE STUDIO 2026</h1>
-</section>
-
-<nav class="top-links" aria-label="Links principais">
-  <div class="pill-wrap">
-    <a class="pill" href="https://github.com/fadaisi" target="_blank" rel="noreferrer">GitHub</a>
+  <div class="sparkle-cursor" aria-hidden="true">
+    <div class="cursor-core"></div>
   </div>
-  <div class="pill-wrap right">
-    <a class="pill" href="index.html">Arquivo</a>
-  </div>
-</nav>
 
-      <section class="poster">
-        <div class="block left">
-          <h2 class="section-title sobre-title">Sobre</h2>
-          <div class="copy sobre-copy">
+  <main class="page">
+    <header class="meta-bar">
+      <span>QUERY_STRUCTURE SIGNAL</span>
+      <span>DEEP LEARNING_PROMPT ENGINEER</span>
+    </header>
+
+    <section class="hero">
+      <img class="hero-logo" src="https://i.ibb.co/LX1VH1bs/logo-fadaisi.png" alt="Logo Fadaisi" />
+      <h1 class="hero-title">LIVE STUDIO 2026</h1>
+    </section>
+
+    <nav class="top-links" aria-label="Links principais">
+      <div class="pill-wrap">
+        <a class="pill" href="https://github.com/fadaisi" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="pill-wrap right">
+        <a class="pill" href="index.html">Voltar</a>
+      </div>
+    </nav>
+
+    <section class="project-layout" aria-label="Estrutura do projeto">
+      <div class="project-grid">
+        <article class="project-block left">
+          <h2 class="project-title">Sobre</h2>
+          <div class="project-copy">
             <p>
-              Esse projeto nasce como um espaço de encontros em processo
-              interessado em inteligência artificial, machine learning, redes
-              neurais e código. Um lugar para estudar e trabalhar ao mesmo tempo,
-              com proximidade entre processo, erro, prática, repertório e troca.
+              Esse projeto nasce como um espaco de encontro em processo, voltado para inteligencia
+              artificial, machine learning, redes neurais e codigo. Um lugar para estudar,
+              experimentar e produzir ao mesmo tempo, com proximidade entre pratica, erro,
+              repertorio e troca.
             </p>
             <p>
-              Ao invés de funcionar como um curso tradicional, esse espaço opera
-              como laboratório vivo, explorando ferramentas, construção de
-              imagem, raciocínio técnico, escrita e pensamento coletivo.
+              Em vez de funcionar como um curso tradicional, a proposta opera como um laboratorio
+              vivo, onde imagem, pesquisa, escrita, pensamento tecnico e construcao coletiva
+              acontecem lado a lado.
             </p>
           </div>
-        </div>
+        </article>
 
-        <div class="block right">
-          <h2 class="section-title porque-title">Porque</h2>
-          <div class="copy porque-copy">
+        <article class="project-block right">
+          <h2 class="project-title">Porque</h2>
+          <div class="project-copy">
             <p>
-              A criação desse espaço vem de um momento de transição de carreira
-              e aproximação com novas tecnologias. Ao longo desse processo,
-              ficou evidente que muitas pessoas estão buscando caminhos
-              parecidos.
+              A criacao desse espaco vem de um momento de transicao de carreira e aproximacao com
+              novas tecnologias. Ao longo desse processo, ficou evidente que muitas pessoas estao
+              buscando caminhos parecidos, mas ainda estudam de forma isolada.
             </p>
             <p>
-              Esse projeto surge como uma forma de sair do estudo isolado,
-              criando uma comunidade horizontal, fluida e aberta, onde o
-              aprendizado acontece de forma compartilhada.
+              O projeto surge para transformar essa busca em presenca coletiva, criando uma
+              comunidade horizontal, fluida e aberta, onde aprendizado e construcao acontecem de
+              forma compartilhada.
             </p>
           </div>
-        </div>
+        </article>
 
-        <div class="block left">
-          <h2 class="section-title formato-title">Formato</h2>
-          <div class="copy formato-copy">
+        <article class="project-block left">
+          <h2 class="project-title">Formato</h2>
+          <div class="project-copy">
             <p>
-              A comunidade acontece principalmente através do Discord, que
-              funciona como espaço de troca contínua: referências, texto,
-              estudos e código podem circular juntos em conversas, encontros ao
-              vivo, exercícios e observações de processo.
+              A comunidade acontece principalmente por meio do Discord, que funciona como espaco
+              continuo de troca. Referencias, textos, estudos, experimentos visuais e codigo podem
+              circular juntos em conversas, encontros ao vivo, exercicios e observacoes de
+              processo.
             </p>
             <p>
-              O número reduzido de participantes garante qualidade de troca e
-              proximidade.
+              O numero reduzido de participantes ajuda a manter proximidade, escuta e qualidade de
+              troca, sem perder a liberdade do ambiente.
             </p>
           </div>
-        </div>
+        </article>
 
-        <div class="block right">
-          <h2 class="section-title rede-title">Rede Neural</h2>
-          <div class="copy rede-copy">
+        <article class="project-block right">
+          <h2 class="project-title">Rede Neural</h2>
+          <div class="project-copy">
             <p>
-              A criação desse espaço vem de um momento de transição de carreira e
-              aproximação com novas tecnologias. Ao longo desse processo, ficou
-              evidente que muitas pessoas estão buscando caminhos parecidos.
+              Mais do que uma turma, a proposta e formar uma rede de pessoas interessadas em criar,
+              aprender e documentar seus proprios processos. O valor esta tanto nas tecnicas quanto
+              nas conexoes que surgem durante a caminhada.
             </p>
             <p>
-              Esse projeto surge como uma forma de sair do estudo isolado,
-              criando uma comunidade horizontal, fluida e aberta, onde o
-              aprendizado acontece de forma compartilhada.
+              Essa pagina pode crescer com novos blocos, cronogramas e chamadas sem perder o
+              padrao visual. Basta substituir os textos desta area central e manter o restante da
+              estrutura intacto.
             </p>
+            <a class="section-link" href="index.html#open-studio">Open Studio</a>
           </div>
-        </div>
+        </article>
 
-        <img
-          class="network-figure"
-          src="https://s.criacaostatic.cc/wisertecnologiajrda5ejn/uploads/2024/12/1678388366160.png"
-          alt="Rede neural"
-        >
-      </section>
-    </div>
+        <div class="network-figure-wrap" aria-hidden="true">
+          <img
+            class="network-figure"
+            src="https://i.ibb.co/zjnjtyP/image-removebg-preview.png"
+            alt="Rede neural decorativa"
+          />
+        </div>
+      </div>
+    </section>
   </main>
+
+  <script>
+    const cursor = document.querySelector('.sparkle-cursor');
+    const core = document.querySelector('.cursor-core');
+    let pointerX = window.innerWidth / 2;
+    let pointerY = window.innerHeight / 2;
+    let cursorX = pointerX;
+    let cursorY = pointerY;
+
+    function movePointer(x, y) {
+      pointerX = x;
+      pointerY = y;
+      createSpark(x, y);
+    }
+
+    function createSpark(x, y) {
+      const spark = document.createElement('span');
+      spark.className = 'spark';
+      spark.style.left = x + 'px';
+      spark.style.top = y + 'px';
+      spark.style.setProperty('--dx', (Math.random() * 30 - 15) + 'px');
+      spark.style.setProperty('--dy', (Math.random() * 30 - 15) + 'px');
+      cursor.appendChild(spark);
+      window.setTimeout(() => spark.remove(), 800);
+    }
+
+    window.addEventListener('mousemove', (event) => {
+      movePointer(event.clientX, event.clientY);
+    });
+
+    window.addEventListener('touchmove', (event) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      movePointer(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    window.addEventListener('touchstart', (event) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      movePointer(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    function animateCursor() {
+      cursorX += (pointerX - cursorX) * 0.18;
+      cursorY += (pointerY - cursorY) * 0.18;
+      core.style.left = cursorX + 'px';
+      core.style.top = cursorY + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+
+    animateCursor();
+  </script>
 </body>
 </html>
