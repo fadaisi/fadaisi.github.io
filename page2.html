@@ -401,6 +401,17 @@
       box-shadow: 0 0 8px rgba(255,102,196,0.75);
     }
 
+    .site-footer {
+      width: min(100%, var(--page-width));
+      margin: 32px auto 0;
+      padding: 0 8px 20px;
+      color: var(--accent);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      line-height: 1.35;
+      text-align: center;
+    }
+
     @keyframes sparkleFade {
       0% {
         opacity: 1;
@@ -432,7 +443,7 @@
       }
 
       .hero-logo {
-        width: 380px;
+        width: 320px;
       }
 
       .hero-title {
@@ -548,22 +559,28 @@
       }
 
       .hero-logo {
-        width: 470px;
-        max-width: none;
-        margin-bottom: -15px;
+        width: 92vw;
+        max-width: 220px;
+        margin-bottom: -8px;
       }
 
       .hero-title {
-        font-size: 18px;
+        font-size: 16px;
       }
 
       .top-links {
         margin: 10px 0 20px;
-        gap: 12px;
+        gap: 16px;
+        padding: 0 16px;
       }
 
       .pill {
-        font-size: 10px;
+        font-size: 11px;
+      }
+
+      .site-footer {
+        font-size: 11px;
+        padding-bottom: 18px;
       }
     }
   </style>
@@ -580,8 +597,12 @@
     </header>
 
     <section class="hero">
-      <img class="hero-logo" src="https://i.ibb.co/LX1VH1bs/logo-fadaisi.png" alt="Logo Fadaisi" />
-      <h1 class="hero-title">LIVE STUDIO 2026</h1>
+      <a href="index.html" aria-label="Voltar para a página inicial">
+        <img class="hero-logo" src="https://i.ibb.co/LX1VH1bs/logo-fadaisi.png" alt="Logo Fadaisi" />
+      </a>
+      <a href="page2.html" aria-label="Ir para Open Studio">
+        <h1 class="hero-title">LIVE STUDIO 2026</h1>
+      </a>
     </section>
 
     <nav class="top-links" aria-label="Links principais">
@@ -589,11 +610,7 @@
         <a class="pill" href="https://github.com/fadaisi" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="pill-wrap right">
-        <button class="pill" id="toggleArchive" type="button">Arquivo</button>
-        <div class="intro-right">
-        <div class="cta-row">
-          <a class="cta" href="page3.html">Acesse Live Studio</a>
-        </div>
+        <a class="pill" href="pag3.html">Arquivo</a>
       </div>
     </nav>
 
@@ -772,23 +789,13 @@
     </section>
   </main>
 
+  <footer class="site-footer">
+    <p>2026 ano de vitórias</p>
+    <p>desenvolvido por Fadaisi</p>
+  </footer>
+
   <script src="gate.js"></script>
   <script>
-    const archiveButton = document.getElementById('toggleArchive');
-    const archivePanel = document.getElementById('archivePanel');
-
-    if (archiveButton && archivePanel) {
-      archiveButton.addEventListener('click', () => {
-        const isHidden = archivePanel.hasAttribute('hidden');
-        if (isHidden) {
-          archivePanel.removeAttribute('hidden');
-          archivePanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-          archivePanel.setAttribute('hidden', '');
-        }
-      });
-    }
-
     const cursor = document.querySelector('.sparkle-cursor');
     const core = document.querySelector('.cursor-core');
     let pointerX = window.innerWidth / 2;
