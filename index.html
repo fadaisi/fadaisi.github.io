@@ -351,317 +351,125 @@
         opacity: 0;
         transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.2);
       }
-    } 
-         .hero-logo {
-      width: min(92vw, 320px);
-      margin-bottom: -8px;
-}
+    }
+
+    @media (min-width: 900px) {
+      :root {
+        --page-width: 1000px;
+      }
+
+      .page {
+        padding: 8px 8px 100px;
+      }
+
+      .meta-bar {
+        font-size: 12px;
+        margin-bottom: 26px;
+      }
+
+      .hero {
+        gap: 14px;
+        margin-bottom: 24px;
+      }
+    .hero-logo {
+      width: 380px;
+    }
+
      .hero-title {
-      font-size: 16px;
-}
-     .meta-bar {
-     font-size: 7px;
-     gap: 12px;
-}
-     .top-links {
-     margin: 10px 0 20px;
-      padding: 0 16px;
-}
-     .pill {
-     font-size: 11px;
-}
-     .intro-grid,
-     .process-grid,
-     .about-grid {
-     grid-template-columns: 1fr;
-      gap: 20px;
-     padding: 0 16px;
-}
-     .cta-row {
-     justify-content: center;
-}
-     .process-grid {
-     margin-bottom: 20px;
-}
-     .gallery {
-      width: 100%;
-      grid-template-columns: 1fr 1fr;
-     gap: 10px;
-}
-     .media-card {
-     width: 100%;
-}
-     .ascii-block {
-     width: 100%;
-     max-width: 220px;
-     margin: 0 auto;
-}
-     .archive-panel {
-     padding: 0 16px;
-}
-     body {
-     cursor: auto;
-    }/* ==== desktop view ==== */
-@media (min-width: 900px) {
-  :root {
-    --page-width: 1000px;
-  }
+     margin-top: 0; 
+    }
+      }
 
-  .page {
-    width: min(100%, var(--page-width));
-    margin: 0 auto;
-    padding: 8px 8px 100px;
-  }
+      .top-links {
+        margin: 20px 0 42px;
+        padding: 0 18px;
+      }
 
-  .meta-bar {
-    font-size: 12px;
-    margin-bottom: 26px;
-  }
+      .pill {
+        min-width: 112px;
+        padding: 10px 24px;
+        font-size: 11px;
+      }
 
-  .hero {
-    gap: 14px;
-    margin-bottom: 24px;
-  }
+      .intro-grid {
+        gap: 60px;
+        padding: 0 110px 0 118px;
+      }
 
-  .hero-logo {
-    width: 320px;
-  }
+      .code-line,
+      .info-line,
+      .section-tag,
+      .join-link,
+      .cta,
+      .archive-box p,
+      .archive-box li {
+        font-size: 11px;
+      }
 
-  .hero-title {
-    font-size: 28px;
-    margin-top: 0;
-  }
+      .intro-copy p,
+      .process-copy p,
+      .about-copy p {
+        font-size: 11px;
+        line-height: 1.58;
+        margin-bottom: 16px;
+      }
 
-  .top-links {
-    margin: 20px 0 42px;
-    padding: 0 18px;
-  }
+      .cta-row {
+        min-height: 36px;
+      }
 
-  .pill {
-    min-width: 112px;
-    padding: 10px 24px;
-    font-size: 11px;
-  }
+      .cta {
+        min-width: 176px;
+        padding: 6px 18px;
+        border-width: 1.2px;
+      }
 
-  .intro-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    padding: 0 110px 0 118px;
-  }
+      .section-tag {
+        margin: 6px 0 16px;
+      }
 
-  .code-line,
-  .info-line,
-  .section-tag,
-  .join-link,
-  .cta,
-  .archive-box p,
-  .archive-box li {
-    font-size: 11px;
-  }
+      .process-grid {
+        grid-template-columns: 1fr 320px;
+        gap: 34px;
+        padding: 0 116px 0 48px;
+      }
 
-  .intro-copy p,
-  .process-copy p,
-  .about-copy p {
-    font-size: 11px;
-    line-height: 1.58;
-    margin-bottom: 16px;
-  }
+      .ascii-block {
+        width: 360px;
+        margin-top: 8px;
+      }
 
-  .cta-row {
-    min-height: 36px;
-  }
+      .gallery {
+        width: 320px;
+        gap: 18px;
+      }
 
-  .cta {
-    min-width: 176px;
-    padding: 6px 18px;
-    border-width: 1.2px;
-  }
+      .media-card {
+        width: 151px;
+      }
 
-  .section-tag {
-    margin: 6px 0 16px;
-  }
+      .about-grid {
+        gap: 60px;
+        padding: 0 110px 0 118px;
+      }
 
-  .process-grid {
-    grid-template-columns: 1fr 320px;
-    gap: 34px;
-    padding: 0 116px 0 48px;
-  }
+      .join-link {
+        margin-top: 16px;
+      }
 
-  .ascii-block {
-    width: 360px;
-    margin-top: 8px;
-  }
+      .archive-panel {
+        padding: 0 118px;
+      }
 
-  .gallery {
-    width: 320px;
-    gap: 18px;
-  }
+      .archive-box {
+        padding: 18px;
+      }
 
-  .media-card {
-    width: 151px;
-  }
-
-  .about-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    padding: 0 110px 0 118px;
-  }
-
-  .join-link {
-    margin-top: 16px;
-  }
-
-  .archive-panel {
-    padding: 0 118px;
-  }
-
-  .archive-box {
-    padding: 18px;
-  }
-
-  .archive-box h2 {
-    font-size: 13px;
-    margin-bottom: 12px;
-  }
-}
-
-/* ==== mobile view ==== */
-@media (max-width: 899px) {
-  :root {
-    --page-width: 390px;
-  }
-
-  html,
-  body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-  }
-
-  .page {
-    width: min(100%, var(--page-width));
-    margin: 0 auto;
-    padding: 4px 4px 56px;
-  }
-
-  .meta-bar {
-    font-size: 8px;
-    margin-bottom: 6px;
-  }
-
-  .hero {
-    gap: 2px;
-    margin-bottom: 4px;
-  }
-
-  .hero-logo {
-  width: 92vw;
-  max-width: 220px;
- margin-top: -16px;
-  margin-bottom: 20px;
-  }
-
-  .hero-title {
-    font-size: 15px;
-    margin-top: -20px;
-  }
-
-  .top-links {
-    margin: 12px 0 24px;
-    gap: 16px;
-  }
-
-  .pill {
-    min-width: 54px;
-    padding: 6px 13px;
-    font-size: 8px;
-  }
-
-  .intro-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 22px;
-    padding: 0 42px 0 50px;
-  }
-
-  .code-line,
-  .info-line,
-  .section-tag,
-  .join-link,
-  .cta,
-  .archive-box p,
-  .archive-box li {
-    font-size: 8px;
-  }
-
-  .intro-copy p,
-  .process-copy p,
-  .about-copy p {
-    font-size: 8px;
-    line-height: 1.5;
-    margin-bottom: 12px;
-  }
-
-  .cta-row {
-    min-height: 22px;
-  }
-
-  .cta {
-    min-width: 108px;
-    padding: 4px 10px;
-    border-width: 1px;
-  }
-
-  .section-tag {
-    margin: 2px 0 12px;
-  }
-
-  .process-grid {
-    grid-template-columns: 1fr 126px;
-    gap: 16px;
-    padding: 0 48px 0 24px;
-  }
-
-  .ascii-block {
-    width: 164px;
-    margin-top: 8px;
-  }
-
-  .gallery {
-    width: 126px;
-    gap: 12px;
-  }
-
-  .media-card {
-    width: 57px;
-  }
-
-  .about-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 22px;
-    padding: 0 42px 0 50px;
-  }
-
-  .join-link {
-    margin-top: 10px;
-  }
-
-  .archive-panel {
-    padding: 0 50px;
-  }
-
-  .archive-box {
-    padding: 12px;
-  }
-
-  .archive-box h2 {
-    font-size: 10px;
-    margin-bottom: 10px;
-  }
-
-  .sparkle-cursor {
-    display: none;
-  }
-}
+      .archive-box h2 {
+        font-size: 13px;
+        margin-bottom: 12px;
+      }
+    
   </style>
 </head>
 <body>
@@ -687,7 +495,8 @@
       <div class="pill-wrap right">
         <button class="pill" id="toggleArchive" type="button">Arquivo</button>
       </div>
-  
+    </nav>
+
     <section class="intro-grid">
       <div class="intro-copy">
         <p class="code-line">print('Oi, meu nome é Janice')<br />Oi, meu nome é Janice</p>
@@ -738,8 +547,7 @@
       </div>
     </section>
 
-    <p class="section-tag">informação abaixo</p>
-
+    <p class="section-tag">info.nnbix</p>
 
     <section class="process-grid">
       <div>
@@ -748,7 +556,7 @@
 
       <div class="gallery">
         <div class="media-card">
-        <video autoplay muted loop playsinline controls>
+        <video autoplay muted loop playsinline>
         <source src="https://files.catbox.moe/7e2jtc.mp4" type="video/mp4">
      </video>
     </div>
