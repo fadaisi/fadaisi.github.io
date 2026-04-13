@@ -7,6 +7,33 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="form-page">
+  <div class="sparkle-cursor" aria-hidden="true">
+    <div class="cursor-core"></div>
+  </div>
+  <header class="site-header">
+    <div class="meta-bar">
+      <span>QUERY_STRUCTURE SIGNAL</span>
+      <span>DEEP LEARNING_PROMPT ENGINEER</span>
+    </div>
+
+    <section class="hero">
+      <a href="index.html" aria-label="Voltar para a página inicial">
+        <img class="hero-logo" src="https://i.ibb.co/LX1VH1bs/logo-fadaisi.png" alt="Logo Fadaisi" />
+      </a>
+      <a href="page2.html" aria-label="Ir para Open Studio">
+        <h1 class="hero-title">LIVE STUDIO 2026</h1>
+      </a>
+    </section>
+
+    <nav class="top-links" aria-label="Links principais">
+      <div class="pill-wrap">
+        <a class="pill" href="https://github.com/fadaisi" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="pill-wrap right">
+        <a class="pill" href="pag3.html">Arquivo</a>
+      </div>
+    </nav>
+  </header>
 
   <main class="form-wrap">
     <section class="form-box">
@@ -152,6 +179,11 @@
     </section>
   </main>
 
+  <footer class="site-footer">
+    <p>2026 ano de vitórias</p>
+    <p>desenvolvido por Fadaisi</p>
+  </footer>
+
   <script>
     const savedName = localStorage.getItem("liveStudioNome");
     const savedEmail = localStorage.getItem("liveStudioEmail");
@@ -188,6 +220,58 @@
     bindRange("ia", "iaValue");
     bindRange("programacao", "programacaoValue");
     bindRange("arte", "arteValue");
+
+    const cursor = document.querySelector(".sparkle-cursor");
+    const core = document.querySelector(".cursor-core");
+    let pointerX = window.innerWidth / 2;
+    let pointerY = window.innerHeight / 2;
+    let cursorX = pointerX;
+    let cursorY = pointerY;
+
+    function movePointer(x, y) {
+      pointerX = x;
+      pointerY = y;
+      createSpark(x, y);
+    }
+
+    function createSpark(x, y) {
+      if (!cursor) return;
+      const spark = document.createElement("span");
+      spark.className = "spark";
+      spark.style.left = x + "px";
+      spark.style.top = y + "px";
+      spark.style.setProperty("--dx", Math.random() * 30 - 15 + "px");
+      spark.style.setProperty("--dy", Math.random() * 30 - 15 + "px");
+      cursor.appendChild(spark);
+      window.setTimeout(() => spark.remove(), 800);
+    }
+
+    window.addEventListener("mousemove", (event) => {
+      movePointer(event.clientX, event.clientY);
+    });
+
+    window.addEventListener("touchmove", (event) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      movePointer(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    window.addEventListener("touchstart", (event) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      movePointer(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    function animateCursor() {
+      if (!core) return;
+      cursorX += (pointerX - cursorX) * 0.18;
+      cursorY += (pointerY - cursorY) * 0.18;
+      core.style.left = cursorX + "px";
+      core.style.top = cursorY + "px";
+      requestAnimationFrame(animateCursor);
+    }
+
+    animateCursor();
   </script>
 </body>
 </html>
