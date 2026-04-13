@@ -3,14 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LIVE STUDIO / PAGE 2</title>
+  <title>Live Studio 2026</title>
 
   <style>
     :root {
-      --bg: #efefef;
+      --bg: #f3f3f3;
       --text: #111111;
-      --accent: #ef2b2b;
-      --page-width: 390px;
+      --muted: #7a7a7a;
+      --red: #ff3b30;
+      --pill: #ece8e8;
+      --line: rgba(0, 0, 0, 0.08);
+      --max: 1240px;
     }
 
     * {
@@ -27,8 +30,13 @@
       background: var(--bg);
       color: var(--text);
       font-family: "Times New Roman", Times, serif;
-      min-height: 100vh;
-      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
     }
 
     a {
@@ -36,388 +44,413 @@
       text-decoration: none;
     }
 
-    img {
-      display: block;
-      max-width: 100%;
+    .page2 {
+      width: 100%;
+      min-height: 100vh;
+      padding: 18px 0 72px;
+      overflow-x: clip;
     }
 
-    .page {
-      width: min(100%, var(--page-width));
+    .shell {
+      width: min(calc(100% - 28px), var(--max));
       margin: 0 auto;
-      padding: 4px 4px 56px;
     }
 
-    .meta-bar {
-      display: flex;
-      justify-content: space-between;
+    /* topo */
+    .micro-top {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      color: var(--accent);
+      gap: 16px;
       font-family: Arial, Helvetica, sans-serif;
-      font-size: 8px;
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 14px;
-      line-height: 1;
-      white-space: nowrap;
-    }
-
-    .hero {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
+      letter-spacing: 0.18em;
+      color: var(--red);
       margin-bottom: 18px;
     }
 
-    .hero-logo {
-      width: 92vw;
-      max-width: 320px;
-      margin-top: -8px;
-      margin-bottom: -6px;
+    .micro-top .left {
+      justify-self: start;
+      opacity: 0.9;
     }
 
-    .hero-title {
+    .micro-top .right {
+      justify-self: end;
+      opacity: 0.9;
+      text-align: right;
+    }
+
+    .brand-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .brand-logo {
+      width: min(100%, 420px);
+      object-fit: contain;
+      filter: grayscale(1) contrast(1.1);
+    }
+
+    .title {
       font-family: Arial, Helvetica, sans-serif;
-      font-weight: 900;
-      color: var(--accent);
-      font-size: 18px;
+      font-size: clamp(28px, 4vw, 54px);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
       text-transform: uppercase;
-      letter-spacing: 0.03em;
+      color: var(--red);
       text-align: center;
     }
 
-    .top-links {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      margin: 10px 0 24px;
-      padding: 0 16px;
-      gap: 16px;
+    .sub {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: clamp(12px, 1.4vw, 18px);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--red);
+      text-align: center;
+      margin-top: 4px;
     }
 
-    .pill-wrap {
+    .toolbar {
       display: flex;
-    }
-
-    .pill-wrap.right {
-      justify-content: flex-end;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 10px 0 34px;
     }
 
     .pill {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0;
-      background: none;
-      border: none;
-      color: var(--accent);
+      min-width: 96px;
+      min-height: 34px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--pill);
+      color: rgba(255, 59, 48, 0.75);
       font-family: Arial, Helvetica, sans-serif;
-      font-size: 11px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      text-decoration: underline;
-      line-height: 1;
-      cursor: pointer;
+      border: 1px solid rgba(255, 59, 48, 0.06);
+      transition: transform 0.18s ease, opacity 0.18s ease;
     }
 
-    .layout-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
-      padding: 0 16px;
+    .pill:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
     }
 
-    .grid-two {
+    /* grid editorial */
+    .editorial-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 34px 26px;
       align-items: start;
     }
 
-    .grid-bottom {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      align-items: stretch;
+    .block {
+      position: relative;
     }
 
-    .section-card {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    .block.left {
+      grid-column: 1 / span 6;
+    }
+
+    .block.right {
+      grid-column: 7 / -1;
     }
 
     .section-title {
       font-family: Arial, Helvetica, sans-serif;
-      font-weight: 800;
-      color: var(--accent);
-      font-size: 14px;
+      font-size: clamp(40px, 5.2vw, 84px);
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.06em;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      line-height: 1;
+      color: var(--red);
+      margin-bottom: 18px;
     }
 
-    .section-box {
-      min-height: 110px;
+    .section-title.align-right {
+      text-align: left;
     }
 
-    .section-box p {
-      font-size: 11px;
-      line-height: 1.58;
-      text-align: justify;
+    .copy {
+      max-width: 42ch;
+      font-size: clamp(15px, 1.15vw, 19px);
+      line-height: 1.85;
+      color: #111;
     }
 
-    .section-box p + p {
-      margin-top: 12px;
+    .copy p + p {
+      margin-top: 14px;
     }
 
-    .inscricao-box {
-      min-height: 140px;
+    .block.right .copy {
+      margin-left: auto;
+    }
+
+    .spacer-lg {
+      padding-top: 22px;
+    }
+
+    .network-area {
+      margin-top: 30px;
+      position: relative;
+      min-height: 360px;
+      border-radius: 10px;
+      overflow: hidden;
       display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      gap: 10px;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 10px;
     }
 
-    .forms-box {
-      min-height: 140px;
-      border: 1px solid rgba(17, 17, 17, 0.2);
-      background: rgba(255,255,255,0.18);
-      padding: 12px;
+    .network-area::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("https://s.criacaostatic.cc/wisertecnologiajrda5ejn/uploads/2024/12/1678388366160.png");
+      background-repeat: no-repeat;
+      background-position: center bottom;
+      background-size: contain;
+      opacity: 0.4;
+      pointer-events: none;
     }
 
-    .fake-form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .fake-input,
-    .fake-textarea,
-    .fake-button {
-      width: 100%;
-      border: 1px solid rgba(17,17,17,0.28);
-      background: rgba(255,255,255,0.55);
+    .network-caption {
+      position: relative;
+      z-index: 1;
       font-family: Arial, Helvetica, sans-serif;
-      font-size: 10px;
-      color: #666;
-      padding: 8px 10px;
-    }
-
-    .fake-textarea {
-      min-height: 80px;
-      resize: none;
-    }
-
-    .fake-button {
-      color: var(--accent);
+      font-size: 11px;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      text-align: center;
-      font-weight: 700;
+      color: rgba(0, 0, 0, 0.34);
     }
 
-    @media (min-width: 900px) {
-      :root {
-        --page-width: 1000px;
+    .footer-space {
+      height: 40px;
+    }
+
+    /* respiro entre blocos em desktop */
+    .sobre {
+      margin-top: 8px;
+    }
+
+    .porque {
+      margin-top: 84px;
+    }
+
+    .formato {
+      margin-top: 58px;
+    }
+
+    .rede {
+      margin-top: 54px;
+    }
+
+    /* mobile */
+    @media (max-width: 900px) {
+      .page2 {
+        padding-top: 14px;
       }
 
-      .page {
-        width: min(100%, var(--page-width));
-        margin: 0 auto;
-        padding: 8px 8px 100px;
+      .micro-top {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        text-align: center;
       }
 
-      .meta-bar {
-        font-size: 12px;
-        margin-bottom: 26px;
+      .micro-top .left,
+      .micro-top .right {
+        justify-self: center;
+        text-align: center;
       }
 
-      .hero {
+      .brand-wrap {
         gap: 10px;
-        margin-bottom: 26px;
+        margin-bottom: 18px;
       }
 
-      .hero-logo {
-        width: 320px;
-        max-width: none;
-        margin-top: 0;
-        margin-bottom: -4px;
+      .brand-logo {
+        width: min(92%, 300px);
       }
 
-      .hero-title {
-        font-size: 28px;
+      .toolbar {
+        margin: 8px 0 22px;
       }
 
-      .top-links {
-        margin: 20px 0 42px;
-        padding: 0 18px;
-      }
-
-      .pill {
-        font-size: 11px;
-      }
-
-      .layout-stack {
-        padding: 0 118px;
+      .editorial-grid {
+        display: flex;
+        flex-direction: column;
         gap: 34px;
       }
 
-      .grid-two,
-      .grid-bottom {
-        gap: 54px;
+      .block.left,
+      .block.right {
+        grid-column: auto;
       }
 
       .section-title {
-        font-size: 20px;
+        font-size: clamp(34px, 12vw, 58px);
+        margin-bottom: 12px;
       }
 
-      .section-box p {
-        font-size: 12px;
-        line-height: 1.68;
+      .copy,
+      .block.right .copy {
+        max-width: none;
+        margin-left: 0;
+        font-size: 15px;
+        line-height: 1.72;
       }
 
-      .section-box {
-        min-height: 150px;
+      .sobre,
+      .porque,
+      .formato,
+      .rede {
+        margin-top: 0;
       }
 
-      .inscricao-box,
-      .forms-box {
+      .network-area {
         min-height: 220px;
+        margin-top: 18px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .shell {
+        width: min(calc(100% - 20px), var(--max));
       }
 
-      .forms-box {
-        padding: 18px;
+      .title {
+        font-size: 15vw;
       }
 
-      .fake-input,
-      .fake-textarea,
-      .fake-button {
-        font-size: 11px;
-        padding: 10px 12px;
+      .sub {
+        font-size: 18px;
+      }
+
+      .toolbar {
+        gap: 10px;
+      }
+
+      .pill {
+        min-width: 84px;
+        min-height: 30px;
+        padding: 7px 12px;
+        font-size: 9px;
+      }
+
+      .section-title {
+        letter-spacing: -0.07em;
       }
     }
   </style>
 </head>
 <body>
-  <main class="page">
-    <header class="meta-bar">
-      <span>QUERY_STRUCTURE SIGNAL</span>
-      <span>DEEP LEARNING_PROMPT ENGINEER</span>
-    </header>
-
-    <section class="hero">
-      <img class="hero-logo" src="https://i.ibb.co/LX1VH1bs/logo-fadaisi.png" alt="Logo Fadaisi">
-      <h1 class="hero-title">LIVE STUDIO / COMMUNITY</h1>
-    </section>
-
-    <nav class="top-links" aria-label="Links principais">
-      <div class="pill-wrap">
-        <a class="pill" href="index.html">voltar</a>
+  <main class="page2">
+    <div class="shell">
+      <div class="micro-top">
+        <div class="left">QUERY_STRUCTURE SIGNAL</div>
+        <div></div>
+        <div class="right">DEEP LEARNING_PROMPT ENGINEER</div>
       </div>
-      <div class="pill-wrap right">
-        <a class="pill" href="#">arquivo</a>
-      </div>
-    </nav>
 
-    <section class="layout-stack">
-      <section class="grid-two">
-        <article class="section-card">
-          <h2 class="section-title">sobre</h2>
-          <div class="section-box">
+      <header class="brand-wrap">
+        <!-- troca o src pelo teu logo, se quiser -->
+        <img class="brand-logo" src="fadaisi-logo.png" alt="Logo Fadaisi" />
+        <div class="sub">LIVE STUDIO 2026</div>
+      </header>
+
+      <nav class="toolbar" aria-label="Navegação da página">
+        <a class="pill" href="index.html">GitHub</a>
+        <a class="pill" href="index.html">Arquivo</a>
+      </nav>
+
+      <section class="editorial-grid">
+        <article class="block left sobre">
+          <h2 class="section-title">Sobre</h2>
+          <div class="copy">
             <p>
-              Live Studio nasce como uma proposta de aprendizagem em processo,
-              voltada para criação, observação e troca contínua. Em vez de um
-              curso tradicional, esta estrutura propõe presença, escuta,
-              repertório e acompanhamento de prática.
+              Esse projeto nasce como um espaço de encontros em processo
+              interessado em inteligência artificial, machine learning, redes
+              neurais e código. Um lugar para estudar e trabalhar a mesma tempo,
+              com proximidade entre processo, erro, prática, repertório e troca.
             </p>
             <p>
-              A ideia é reunir pessoas interessadas em inteligência artificial,
-              imagem, linguagem, código e cultura visual dentro de um ambiente
-              mais vivo, coletivo e menos hierárquico.
+              A comunidade funciona como um ambiente coletivo, menos rígido que
+              um curso tradicional, e mais próximo de um laboratório vivo.
+              Ferramentas, imagens, raciocínios e métodos aparecem junto com a
+              construção de linguagem.
             </p>
           </div>
         </article>
 
-        <article class="section-card">
-          <h2 class="section-title">por quê</h2>
-          <div class="section-box">
+        <article class="block right porque spacer-lg">
+          <h2 class="section-title align-right">Porque</h2>
+          <div class="copy">
             <p>
-              Porque aprender sozinho pode ser potente, mas também cansativo.
-              Muitos processos técnicos se tornam mais claros quando vistos em
-              convivência, em tempo real, acompanhando escolhas, falhas,
-              repetições, desvios e pequenos ajustes.
+              A criação desse espaço vem de um momento de transição de carreira e
+              aproximação com novas tecnologias. Ao longo desse processo, ficou
+              visível o quanto estudar em grupo pode abrir caminhos inesperados.
             </p>
             <p>
-              Esta comunidade existe para criar proximidade entre estudo,
-              prática e experimentação visual, sem separar demais teoria e
-              produção.
-            </p>
-          </div>
-        </article>
-      </section>
-
-      <section class="grid-two">
-        <article class="section-card">
-          <h2 class="section-title">formato</h2>
-          <div class="section-box">
-            <p>
-              O formato mistura observação de processo, encontros, troca de
-              referência, exercícios e momentos de construção coletiva.
-              Ferramentas, prompts, raciocínio visual, pesquisa e pequenas
-              metodologias podem aparecer de formas diferentes ao longo da
-              experiência.
-            </p>
-            <p>
-              A estrutura é aberta, mas organizada. Existe direção, mas também
-              espaço para desvio, descoberta e adaptação conforme os interesses
-              das pessoas envolvidas.
+              Esse projeto surge como uma forma de sair do estudo isolado, criar
+              uma comunidade horizontal e cultivar troca contínua, escuta e
+              convivência entre quem também está buscando estrutura para aprender.
             </p>
           </div>
         </article>
 
-        <article class="section-card">
-          <h2 class="section-title">inscrição</h2>
-          <div class="section-box inscricao-box">
+        <article class="block left formato">
+          <h2 class="section-title">Formato</h2>
+          <div class="copy">
             <p>
-              A entrada será feita por adesão simples, com número reduzido de
-              participantes para preservar qualidade de troca e atenção ao
-              processo.
+              A comunidade acontece principalmente através do Discord, que
+              funciona como espaço de encontros, referências, texto, estudos e
+              prática compartilhada. O formato pode reunir observação de
+              processos, pesquisa, exercícios, conversas e momentos ao vivo.
             </p>
             <p>
-              Este bloco pode depois receber informações reais sobre valor,
-              calendário, vagas, acesso à comunidade e critérios de entrada.
-            </p>
-          </div>
-        </article>
-      </section>
-
-      <section class="grid-bottom">
-        <article class="section-card">
-          <h2 class="section-title">inscrição</h2>
-          <div class="section-box">
-            <p>
-              Preencha seus dados, deixe um pequeno texto sobre seu interesse e
-              indique de que forma você gostaria de participar. Essa área pode
-              ser adaptada depois para formulário real, Pix, Discord ou lista
-              de espera.
+              O número reduzido de participantes ajuda a manter qualidade de
+              troca, proximidade e acompanhamento real.
             </p>
           </div>
         </article>
 
-        <article class="section-card">
-          <h2 class="section-title">forms</h2>
-          <div class="forms-box">
-            <div class="fake-form">
-              <div class="fake-input">nome</div>
-              <div class="fake-input">e-mail</div>
-              <div class="fake-textarea">mensagem / interesse</div>
-              <div class="fake-button">enviar</div>
-            </div>
+        <article class="block right rede">
+          <h2 class="section-title align-right">Rede Neural</h2>
+          <div class="copy">
+            <p>
+              A criação desse espaço vem de um momento de transição de carreira e
+              aproximação com novas tecnologias. Ao longo desse processo, ficou
+              visível que estudar junto também cria repertório, prática e
+              continuidade.
+            </p>
+            <p>
+              Esse bloco pode funcionar como área visual de apoio, conectando a
+              linguagem do site com diagramas, sistemas e imagens técnicas de
+              machine learning.
+            </p>
+          </div>
+
+          <div class="network-area" aria-hidden="true">
+            <div class="network-caption">Neural structure signal</div>
           </div>
         </article>
       </section>
-    </section>
+
+      <div class="footer-space"></div>
+    </div>
   </main>
 </body>
 </html>
