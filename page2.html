@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LIVE STUDIO / PAGE 2</title>
+
+  <style>
+    :root {
+      --bg: #efefef;
+      --text: #111111;
+      --accent: #ef2b2b;
+      --page-width: 390px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Times New Roman", Times, serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .page {
+      width: min(100%, var(--page-width));
+      margin: 0 auto;
+      padding: 4px 4px 56px;
+    }
+
+    .meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--accent);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 14px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    .hero-logo {
+      width: 92vw;
+      max-width: 320px;
+      margin-top: -8px;
+      margin-bottom: -6px;
+    }
+
+    .hero-title {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 900;
+      color: var(--accent);
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      text-align: center;
+    }
+
+    .top-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      margin: 10px 0 24px;
+      padding: 0 16px;
+      gap: 16px;
+    }
+
+    .pill-wrap {
+      display: flex;
+    }
+
+    .pill-wrap.right {
+      justify-content: flex-end;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-decoration: underline;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .layout-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      padding: 0 16px;
+    }
+
+    .grid-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .grid-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .section-card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .section-title {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 800;
+      color: var(--accent);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+
+    .section-box {
+      min-height: 110px;
+    }
+
+    .section-box p {
+      font-size: 11px;
+      line-height: 1.58;
+      text-align: justify;
+    }
+
+    .section-box p + p {
+      margin-top: 12px;
+    }
+
+    .inscricao-box {
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 10px;
+    }
+
+    .forms-box {
+      min-height: 140px;
+      border: 1px solid rgba(17, 17, 17, 0.2);
+      background: rgba(255,255,255,0.18);
+      padding: 12px;
+    }
+
+    .fake-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .fake-input,
+    .fake-textarea,
+    .fake-button {
+      width: 100%;
+      border: 1px solid rgba(17,17,17,0.28);
+      background: rgba(255,255,255,0.55);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 10px;
+      color: #666;
+      padding: 8px 10px;
+    }
+
+    .fake-textarea {
+      min-height: 80px;
+      resize: none;
+    }
+
+    .fake-button {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    @media (min-width: 900px) {
+      :root {
+        --page-width: 1000px;
+      }
+
+      .page {
+        width: min(100%, var(--page-width));
+        margin: 0 auto;
+        padding: 8px 8px 100px;
+      }
+
+      .meta-bar {
+        font-size: 12px;
+        margin-bottom: 26px;
+      }
+
+      .hero {
+        gap: 10px;
+        margin-bottom: 26px;
+      }
+
+      .hero-logo {
+        width: 320px;
+        max-width: none;
+        margin-top: 0;
+        margin-bottom: -4px;
+      }
+
+      .hero-title {
+        font-size: 28px;
+      }
+
+      .top-links {
+        margin: 20px 0 42px;
+        padding: 0 18px;
+      }
+
+      .pill {
+        font-size: 11px;
+      }
+
+      .layout-stack {
+        padding: 0 118px;
+        gap: 34px;
+      }
+
+      .grid-two,
+      .grid-bottom {
+        gap: 54px;
+      }
+
+      .section-title {
+        font-size: 20px;
+      }
+
+      .section-box p {
+        font-size: 12px;
+        line-height: 1.68;
+      }
+
+      .section-box {
+        min-height: 150px;
+      }
+
+      .inscricao-box,
+      .forms-box {
+        min-height: 220px;
+      }
+
+      .forms-box {
+        padding: 18px;
+      }
+
+      .fake-input,
+      .fake-textarea,
+      .fake-button {
+        font-size: 11px;
+        padding: 10px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="meta-bar">
+      <span>QUERY_STRUCTURE SIGNAL</span>
+      <span>DEEP LEARNING_PROMPT ENGINEER</span>
+    </header>
+
+    <section class="hero">
+      <img class="hero-logo" src="https://i.ibb.co/LX1VH1bs/logo-fadaisi.png" alt="Logo Fadaisi">
+      <h1 class="hero-title">LIVE STUDIO / COMMUNITY</h1>
+    </section>
+
+    <nav class="top-links" aria-label="Links principais">
+      <div class="pill-wrap">
+        <a class="pill" href="index.html">voltar</a>
+      </div>
+      <div class="pill-wrap right">
+        <a class="pill" href="#">arquivo</a>
+      </div>
+    </nav>
+
+    <section class="layout-stack">
+      <section class="grid-two">
+        <article class="section-card">
+          <h2 class="section-title">sobre</h2>
+          <div class="section-box">
+            <p>
+              Live Studio nasce como uma proposta de aprendizagem em processo,
+              voltada para criação, observação e troca contínua. Em vez de um
+              curso tradicional, esta estrutura propõe presença, escuta,
+              repertório e acompanhamento de prática.
+            </p>
+            <p>
+              A ideia é reunir pessoas interessadas em inteligência artificial,
+              imagem, linguagem, código e cultura visual dentro de um ambiente
+              mais vivo, coletivo e menos hierárquico.
+            </p>
+          </div>
+        </article>
+
+        <article class="section-card">
+          <h2 class="section-title">por quê</h2>
+          <div class="section-box">
+            <p>
+              Porque aprender sozinho pode ser potente, mas também cansativo.
+              Muitos processos técnicos se tornam mais claros quando vistos em
+              convivência, em tempo real, acompanhando escolhas, falhas,
+              repetições, desvios e pequenos ajustes.
+            </p>
+            <p>
+              Esta comunidade existe para criar proximidade entre estudo,
+              prática e experimentação visual, sem separar demais teoria e
+              produção.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <section class="grid-two">
+        <article class="section-card">
+          <h2 class="section-title">formato</h2>
+          <div class="section-box">
+            <p>
+              O formato mistura observação de processo, encontros, troca de
+              referência, exercícios e momentos de construção coletiva.
+              Ferramentas, prompts, raciocínio visual, pesquisa e pequenas
+              metodologias podem aparecer de formas diferentes ao longo da
+              experiência.
+            </p>
+            <p>
+              A estrutura é aberta, mas organizada. Existe direção, mas também
+              espaço para desvio, descoberta e adaptação conforme os interesses
+              das pessoas envolvidas.
+            </p>
+          </div>
+        </article>
+
+        <article class="section-card">
+          <h2 class="section-title">inscrição</h2>
+          <div class="section-box inscricao-box">
+            <p>
+              A entrada será feita por adesão simples, com número reduzido de
+              participantes para preservar qualidade de troca e atenção ao
+              processo.
+            </p>
+            <p>
+              Este bloco pode depois receber informações reais sobre valor,
+              calendário, vagas, acesso à comunidade e critérios de entrada.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <section class="grid-bottom">
+        <article class="section-card">
+          <h2 class="section-title">inscrição</h2>
+          <div class="section-box">
+            <p>
+              Preencha seus dados, deixe um pequeno texto sobre seu interesse e
+              indique de que forma você gostaria de participar. Essa área pode
+              ser adaptada depois para formulário real, Pix, Discord ou lista
+              de espera.
+            </p>
+          </div>
+        </article>
+
+        <article class="section-card">
+          <h2 class="section-title">forms</h2>
+          <div class="forms-box">
+            <div class="fake-form">
+              <div class="fake-input">nome</div>
+              <div class="fake-input">e-mail</div>
+              <div class="fake-textarea">mensagem / interesse</div>
+              <div class="fake-button">enviar</div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
